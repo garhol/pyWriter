@@ -19,5 +19,11 @@ urlpatterns += patterns('',
 )
 
 urlpatterns += patterns('',
-   url(r'^story/', 'pyWriter.lib.apps.story.views.index'),
+	url(r'^$', 'pyWriter.lib.apps.story.views.index'),
 )
+
+urlpatterns += patterns('',
+   url(r'^login/$', 'pyWriter.lib.apps.login.views.login_view', name="login_view"),
+   url(r'^logout/$', 'pyWriter.lib.apps.login.views.logout_view'),
+)
+
