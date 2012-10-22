@@ -66,11 +66,11 @@ class Location(models.Model):
         return self.name
 
 
-from django.models.signals import pre_save
+from django.db.models.signals import pre_save
 from django.dispatch import receiver
 
 
-@receiver(pre_save, Scene)
+@receiver(pre_save, sender=Scene)
 def create_narrator(instance, **kwargs):
     if not instance.pk:
         narrator, created = Character.objects.get_or_create(user=user, firstname='John', nicknames='Narrator')
