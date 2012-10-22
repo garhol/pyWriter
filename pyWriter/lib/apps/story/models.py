@@ -1,29 +1,67 @@
 from django.db import models
+from django.contrib.auth.models import User
+
 
 class Story(models.Model):
-	title = models.CharField(max_length=256)
-	author = models.CharField(max_length=128)
+    user = models.ForeignKey(User)
+    title = models.CharField(max_length=256)
+    author = models.CharField(max_length=128)
 
-	def __unicode__(self):
-		return self.title
+    def __unicode__(self):
+        return self.title
+
 
 class Chapter(models.Model):
-	story = models.ForeignKey(Story)
-	title = models.CharField(max_length=256)
-	
-	def __unicode__(self):
-		return self.title
+    user = models.ForeignKey(User)
+    story = models.ForeignKey(Story)
+    title = models.CharField(max_length=256)
+    weight = models.IntegerField(default=1)
+    
+    def __unicode__(self):
+        return self.title
+
 
 class Scene(models.Model):
-	Chapter = models.ForeignKey(Chapter)
-	description = models.TextField()
+    user = models.ForeignKey(User)
+    name = models.CharField(max_length=255)
+    perspective = models.ForeignKey('Character', related_name='perspective', null=True, blank=True)
+    chapter = models.ForeignKey(Chapter, null=True, blank=True)
+    description = models.TextField(null=True, blank=True)
+    characters = models.ManyToManyField('Character', null=True, blank=True)
+    location = models.ManyToManyField('Location', null=True, blank=True)
+    artifacts = models.ManyToManyField('Artifact', null=True, blank=True)
 
-	def __unicode__(self):
-		return self.description
+    def __unicode__(self):
+        return self.description
+
+
+class Character(models.Model):
+    user = models.ForeignKey(User)
+    firstname = models.CharField(max_length=255)
+    lastname = models.CharField(max_length=255)
+    nicknames = models.TextField(null=True, blank=True)
+    description = models.TextField(null=True, blank=True)
+    bio = models.TextField(null=True, blank=True)
+    date_of_birth = models.DateField(null=True, blank=True)
+    date_of_death = models.DateField(null=True, blank=True)
+    
+    def __unicode__(self):
+        return "%s %s" % (self.firstname, self.lastname)
+    
+    
+class Artifact(models.Model):
+    user = models.ForeignKey(User)
+    name = models.CharField(max_length=255)
+    description = models.TextField(null=True, blank=True)
+    owner = models.ForeignKey(Character, null=True, blank=True)
+    location = models.ForeignKey('Location', null=True, blank=True)
+    
 
 class Location(models.Model):
-	description = models.TextField()
+    user = models.ForeignKey(User)
+    name = models.CharField(max_length=255)
+    description = models.TextField(null=True, blank=True)
 
-	def __unicode__(self):
-		return self.description
-	
+    def __unicode__(self):
+        return self.name
+    
