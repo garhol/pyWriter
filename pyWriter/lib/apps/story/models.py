@@ -1,5 +1,8 @@
 from django.db import models
+from django.forms import ModelForm
+
 from django.contrib.auth.models import User
+
 
 
 class Story(models.Model):
@@ -9,7 +12,6 @@ class Story(models.Model):
 
     def __unicode__(self):
         return self.title
-
 
 class Chapter(models.Model):
     user = models.ForeignKey(User)
@@ -30,9 +32,10 @@ class Scene(models.Model):
     characters = models.ManyToManyField('Character', null=True, blank=True)
     location = models.ManyToManyField('Location', null=True, blank=True)
     artifacts = models.ManyToManyField('Artifact', null=True, blank=True)
+    content = models.TextField(null=True, blank=True)
 
     def __unicode__(self):
-        return self.description
+        return self.name
 
 
 class Character(models.Model):
@@ -56,6 +59,9 @@ class Artifact(models.Model):
     owner = models.ForeignKey(Character, null=True, blank=True)
     location = models.ForeignKey('Location', null=True, blank=True)
     
+    def __unicode__(self):
+        return self.name
+    
 
 class Location(models.Model):
     user = models.ForeignKey(User)
@@ -65,6 +71,11 @@ class Location(models.Model):
     def __unicode__(self):
         return self.name
 
+
+class SceneForm(ModelForm):
+    class Meta:
+        model = Scene
+        
 
 from django.db.models.signals import pre_save
 from django.dispatch import receiver

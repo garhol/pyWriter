@@ -27,3 +27,7 @@ urlpatterns += patterns('',
    url(r'^logout/$', 'pyWriter.lib.apps.login.views.logout_view'),
 )
 
+urlpatterns += patterns('',
+	url(r'^scene/(?P<scene>\d+)/$', 'pyWriter.lib.apps.story.views.scene', name="scene"),
+)
+

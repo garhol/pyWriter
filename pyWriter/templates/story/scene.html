@@ -1,0 +1,9 @@
+<p>user:{{ user.username }}</p>
+<p><a href="/logout/">logout</a></p>
+
+<h1>{{scene.name}}</h1>
+<form action="" method="post">
+	{% csrf_token %}
+	{{ form.as_p }}
+	<input type="submit" value="Submit" />
+</form>
