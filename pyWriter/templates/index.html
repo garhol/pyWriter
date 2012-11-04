@@ -1,12 +1,26 @@
-<p>user:{{ user.username }}</p>
-<p><a href="/logout/">logout</a></p>
+{% extends "base-templates/base.html" %}
+{% block "login" %}
+<p>{{ user.username }} - <a href="/logout/">logout</a></p>
+{% endblock %}
 
-<p><strong>Stories:</strong>{% for s in stories %}{{s}} <br />{% endfor %}}</p>
-<p><strong>Chapters:</strong>{% for c in chapters %}{{c}} <br />{% endfor %}</p>
-<h3>Scenes:</h3>
-{% for sc in scenes %}
-<p><a href="/scene/{{sc.pk}}">edit {{sc}}</a></p>
-{% endfor %}
-<p><strong>Characters:</strong>{% for ch in characters %}{{ch}} <br />{% endfor %}</p>
-<p><strong>Artifacts:</strong>{% for a in artifacts %}{{a}} <br />{% endfor %}</p>
-<p><strong>Locations:</strong>{% for l in locations %}{{l}} <br />{% endfor %}</p>
+{% block "main" %}
+    <h3>Stories:</h3>
+    <p>{% for s in stories %}{{s}} <br />{% endfor %}</p>
+    
+    <h3>Chapters:</h3>
+    <p>{% for c in chapters %}{{c}} <br />{% endfor %}</p>
+    
+    <h3>Edit scenes:</h3>
+    {% for sc in scenes %}
+    <p><a href="/scene/{{sc.pk}}">{{sc}}</a></p>
+    {% endfor %}
+    
+    <h3>Characters:</h3>
+    <p>{% for ch in characters %}{{ch}} <br />{% endfor %}</p>
+    
+    <h3>Artifacts:</h3>
+    <p>{% for a in artifacts %}{{a}} <br />{% endfor %}</p>
+
+    <h3>Locations:</h3>
+    <p>{% for l in locations %}{{l}} <br />{% endfor %}</p>
+{% endblock %}

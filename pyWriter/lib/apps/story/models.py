@@ -1,9 +1,8 @@
 from django.db import models
 from django.forms import ModelForm
-
+from tinymce.widgets import TinyMCE
 from django.contrib.auth.models import User
-
-
+from django import forms
 
 class Story(models.Model):
     user = models.ForeignKey(User)
@@ -36,7 +35,7 @@ class Scene(models.Model):
 
     def __unicode__(self):
         return self.name
-
+       
 
 class Character(models.Model):
     user = models.ForeignKey(User)
@@ -72,11 +71,15 @@ class Location(models.Model):
         return self.name
 
 
-class SceneForm(ModelForm):
+class SceneForm(forms.ModelForm):
+    user = forms.CharField(widget=forms.HiddenInput)
+    description = forms.CharField(widget=TinyMCE(), help_text="Enter a simple description of the scene")
+    content = forms.CharField(widget=TinyMCE(attrs={'cols': 80, 'rows': 30}))
+   
     class Meta:
         model = Scene
         
-
+        
 from django.db.models.signals import pre_save
 from django.dispatch import receiver
 

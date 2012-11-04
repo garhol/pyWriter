@@ -5,6 +5,7 @@ from django.http import HttpResponseRedirect
 from .models import Story, Chapter, Scene, Character, Artifact, Location, SceneForm
 
 
+
 def index(request):
 	if not request.user.is_authenticated():
 		return HttpResponseRedirect('/login/?next=%s' % request.path)
@@ -19,7 +20,7 @@ def index(request):
 		context['characters'] = Character.objects.all();
 		context['artifacts'] = Artifact.objects.all();
 		context['locations'] = Location.objects.all();
-		return render_to_response(template, context)
+		return render_to_response(template, context, context_instance=RequestContext(request))
 		
 def scene(request, scene):
 	if not request.user.is_authenticated():
@@ -38,6 +39,4 @@ def scene(request, scene):
 		else:
 			context['form'] = SceneForm(instance=sc)
 			template = 'story/scene.html'
-			return render_to_response(template,
-									context,
-									context_instance=RequestContext(request))
+			return render_to_response(template, context, context_instance=RequestContext(request))
