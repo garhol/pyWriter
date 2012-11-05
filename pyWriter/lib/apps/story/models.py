@@ -72,10 +72,9 @@ class Location(models.Model):
 
 
 class SceneForm(forms.ModelForm):
-    user = forms.CharField(widget=forms.HiddenInput)
     description = forms.CharField(widget=TinyMCE(), help_text="Enter a simple description of the scene")
     content = forms.CharField(widget=TinyMCE(attrs={'cols': 80, 'rows': 30}))
-   
+  
     class Meta:
         model = Scene
         
