@@ -51,7 +51,7 @@ USE_TZ = True
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/home/media/media.lawrence.com/media/"
 #MEDIA_ROOT = '/home/garhol/sites/pyWriter/pyWriter/static/'
-MEDIA_ROOT = '/home/garhol/webapps/staticonly/'
+MEDIA_ROOT = '/home/garhol/webapps/writerstatic/'
 
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
