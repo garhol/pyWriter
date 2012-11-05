@@ -14,12 +14,12 @@ def index(request):
 		template = 'index.html'    
 		context['title'] = "logged in"
 		context['user'] = request.user
-		context['stories'] = Story.objects.all();
-		context['chapters'] = Chapter.objects.all();
-		context['scenes'] = Scene.objects.all();
-		context['characters'] = Character.objects.all();
-		context['artifacts'] = Artifact.objects.all();
-		context['locations'] = Location.objects.all();
+		context['stories'] = Story.objects.filter(user=request.user);
+		context['chapters'] = Chapter.objects.filter(user=request.user);
+		context['scenes'] = Scene.objects.filter(user=request.user);
+		context['characters'] = Character.objects.filter(user=request.user);
+		context['artifacts'] = Artifact.objects.filter(user=request.user);
+		context['locations'] = Location.objects.filter(user=request.user);
 		return render_to_response(template, context, context_instance=RequestContext(request))
 		
 def scene(request, scene):
