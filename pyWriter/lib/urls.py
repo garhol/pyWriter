@@ -25,7 +25,7 @@ if settings.DEBUG:
 	)
 
 urlpatterns += patterns('',
-	url(r'^$', 'pyWriter.lib.apps.story.views.index'),
+	url(r'^$', 'pyWriter.pyWriter.lib.apps.story.views.index'),
 )
 
 urlpatterns += patterns('',
@@ -33,11 +33,11 @@ urlpatterns += patterns('',
 )
 
 urlpatterns += patterns('',
-   url(r'^login/$', 'pyWriter.lib.apps.login.views.login_view', name="login_view"),
-   url(r'^logout/$', 'pyWriter.lib.apps.login.views.logout_view'),
+   url(r'^login/$', 'pyWriter.pyWriter.lib.apps.login.views.login_view', name="login_view"),
+   url(r'^logout/$', 'pyWriter.pyWriter.lib.apps.login.views.logout_view'),
 )
 
 urlpatterns += patterns('',
-	url(r'^scene/(?P<scene>\d+)/$', 'pyWriter.lib.apps.story.views.scene', name="scene"),
+	url(r'^scene/(?P<scene>\d+)/$', 'pyWriter.pyWriter.lib.apps.story.views.scene', name="scene"),
 )
 
