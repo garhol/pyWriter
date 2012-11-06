@@ -1,4 +1,4 @@
-from pyWriter.pyWriter.lib.apps.story.models import Story, Chapter, Scene, Location, Character, Artifact
+from pyWriter.lib.apps.story.models import Story, Chapter, Scene, Location, Character, Artifact
 from django.contrib import admin
 
 admin.site.register(Story)

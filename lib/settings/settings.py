@@ -104,7 +104,7 @@ MIDDLEWARE_CLASSES = (
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
-ROOT_URLCONF = 'pyWriter.pyWriter.lib.urls'
+ROOT_URLCONF = 'pyWriter.lib.urls'
 
 # Python dotted path to the WSGI application used by Django's runserver.
 WSGI_APPLICATION = 'pyWriter.wsgi.application'
@@ -127,7 +127,7 @@ INSTALLED_APPS = (
     # 'django.contrib.admindocs',
 
     #pyWriter apps
-    'pyWriter.pyWriter.lib.apps.story',
+    'pyWriter.lib.apps.story',
 
 )
 

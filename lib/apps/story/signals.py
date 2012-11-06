@@ -1,6 +1,6 @@
 from django.models.signals import pre_save
 from django.dispatch import receiver
-from pyWriter.lib.apps.story.models import Character, Scene
+from .models import Character, Scene
 
 
 @receiver(pre_save, Scene)
