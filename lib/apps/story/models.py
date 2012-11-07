@@ -4,10 +4,19 @@ from tinymce.widgets import TinyMCE
 from django.contrib.auth.models import User
 from django import forms
 
+class Genre(models.Model):
+    name=models.CharField(max_length=256)
+    description = models.TextField(blank=True)
+
+    def __unicode__(self):
+        return self.name
+
 class Story(models.Model):
     user = models.ForeignKey(User)
     title = models.CharField(max_length=256)
     author = models.CharField(max_length=128)
+    genre = models.ForeignKey(Genre, null=True, blank=True)
+    fiction = models.BooleanField(default=True)
 
     def __unicode__(self):
         return self.title
@@ -40,7 +49,8 @@ class Scene(models.Model):
 class Character(models.Model):
     user = models.ForeignKey(User)
     firstname = models.CharField(max_length=255)
-    lastname = models.CharField(max_length=255)
+    middlename = models.CharField(max_length=255, blank=True)
+    lastname = models.CharField(max_length=255, blank=True)
     nicknames = models.TextField(null=True, blank=True)
     description = models.TextField(null=True, blank=True)
     bio = models.TextField(null=True, blank=True)
