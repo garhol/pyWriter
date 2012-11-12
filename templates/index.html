@@ -12,18 +12,20 @@
     
     <h3>Scenes:</h3>
     {% for sc in scenes %}
-    <div class="scenePod" style="width:200px; float:left; margin-right:1em; margin-bottom:1em">
+    <div class="scenePod" style="width:200px; float:left; padding:5px; margin-right:1em; margin-bottom:1em; border:1px solid #444;">
         <h4><a href="/scene/{{sc.pk}}">{{sc}}</a></h4>
         {{sc.description|safe}}
     </div>
     {% endfor %}
     
-    <h3 style="clear:left">Characters:</h3>
+    <h3 style="clear:left">Characters (not including the narrator):</h3>
     {% for ch in characters %}
+        {% if ch.firstname != "Narrator" %}
         <div class="charPod" style="width:100px; float:left; margin-right:1em; text-align:center; margin-bottom:2em">
             {% if ch.image %}<img src="{{ch.image.url}}" alt="{{ch}}" style="width:100px" /><br />{% endif %}
             <h4><a href="/character/{{ch.pk}}">{{ch}}</a></h4>
         </div>
+        {% endif %}
     {% endfor %}
     
     <h3 style="clear:left">Artifacts:</h3>

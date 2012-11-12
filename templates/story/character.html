@@ -5,42 +5,12 @@
 
 {% block "rh" %}
     {{block.super}}
-    <h3>{{character.name}}</h3>
+    <h3>{% if character.firstname %}{{character.firstname}}{% endif %}{% if character.middlename %} {{character.middlename}}{% endif %}{% if character.lastname %} {{character.lastname}}{% endif %}</h3>
+    {% if character.nicknames %} <h4>aka {{character.nicknames}}</h4>{% endif %}
     {% if character.image %}
     <img src="{{MEDIA_URL}}{{ character.image }}" alt="{{character}}" class="characterImage" />
     {% endif %}
-    <section class="ac-container">
-        <div>
-            <input id="ac-1" name="accordion-1" type="radio" checked />
-            <label for="ac-1">Characters ({{characters.count}})</label>
-            <article class="ac-small">
-                {% for c in characters %}
-                    <p><a href="/character/{{c.pk}}">{{ c }}</a></p>
-                {% endfor %}
-            </article>
         </div>
-        <div>
-            <input id="ac-2" name="accordion-1" type="radio" />
-            <label for="ac-2">Artifacts ({{artifacts.count}})</label>
-            <article class="ac-small">
-                {% for a in artifacts %}
-                    <p><a href="/artifact/{{a.pk}}">{{ a }}</a></p>
-                {% endfor %}
-            </article>
-        </div>
-        <div>
-            <input id="ac-3" name="accordion-1" type="radio" />
-            <label for="ac-3">Locations ({{locations.count}})</label>
-            <article class="ac-small">
-                {% for l in locations %}
-                    <p><a href="/location/{{l.pk}}">{{ l }}</a></p>
-                {% endfor %}
-            </article>
-        </div>
-
-    </section>
-    
-    </div>
 {% endblock %}
 
 {% block "main" %}
@@ -54,87 +24,7 @@ span.helptext{font-size:0.8em; float:left;}
 .formRow label {width:120px; float:left;}
 select{min-width:200px;}
 
-.ac-container{
-    width: 200px;
-    margin: 10px auto 30px auto;
-}
 
-.ac-container label{
-    font-family: 'BebasNeueRegular', 'Arial Narrow', Arial, sans-serif;
-    padding: 5px 20px;
-    position: relative;
-    z-index: 20;
-    display: block;
-    height: 30px;
-    cursor: pointer;
-    color: #777;
-    text-shadow: 1px 1px 1px rgba(255,255,255,0.8);
-    line-height: 33px;
-    font-size: 19px;
-    background: #ffffff;
-	background: -moz-linear-gradient(top, #ffffff 1%, #eaeaea 100%);
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(1%,#ffffff), color-stop(100%,#eaeaea));
-	background: -webkit-linear-gradient(top, #ffffff 1%,#eaeaea 100%);
-	background: -o-linear-gradient(top, #ffffff 1%,#eaeaea 100%);
-	background: -ms-linear-gradient(top, #ffffff 1%,#eaeaea 100%);
-	background: linear-gradient(top, #ffffff 1%,#eaeaea 100%);
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#eaeaea',GradientType=0 );
-	box-shadow: 
-		0px 0px 0px 1px rgba(155,155,155,0.3), 
-		1px 0px 0px 0px rgba(255,255,255,0.9) inset, 
-		0px 2px 2px rgba(0,0,0,0.1);
-}
-
-.ac-container label:hover{
-    background: #fff;
-}
-
-.ac-container input:checked + label, .ac-container input:checked + label:hover{
-    background: #c6e1ec;
-    color: #3d7489;
-    text-shadow: 0px 1px 1px rgba(255,255,255, 0.6);
-    box-shadow: 
-        0px 0px 0px 1px rgba(155,155,155,0.3), 
-        0px 2px 2px rgba(0,0,0,0.1);
-}
-
-.ac-container input{
-    display: none;
-}
-
-.ac-container article{
-    background: rgba(255, 255, 255, 1);
-    margin-top: -1px;
-    overflow: hidden;
-    height: 0px;
-    position: relative;
-    z-index: 10;
-    transition: 
-        height 0.3s ease-in-out, 
-        box-shadow 0.6s linear;
-}
-.ac-container input:checked ~ article{
-    transition: 
-        height 0.5s ease-in-out, 
-        box-shadow 0.1s linear;
-    box-shadow: 0px 0px 0px 1px rgba(155,155,155,0.3);
-}
-
-.ac-container article p{
-    font-style: italic;
-    color: #777;
-    padding: 0.5em;
-}
-
-.ac-container input:checked ~ article.ac-small{
-    height: 140px;
-}
-.ac-container input:checked ~ article.ac-medium{
-    height: 180px;
-}
-.ac-container input:checked ~ article.ac-large{
-    height: 230px;
-}
 </style>
 
 {% if error %}
