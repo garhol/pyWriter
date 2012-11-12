@@ -21,7 +21,7 @@
     <h3 style="clear:left">Characters:</h3>
     {% for ch in characters %}
         <div class="charPod" style="width:100px; float:left; margin-right:1em; text-align:center; margin-bottom:2em">
-            <img src="{{ch.image.url}}" alt="{{ch}}" style="width:100px" /><br />
+            {% if ch.image %}<img src="{{ch.image.url}}" alt="{{ch}}" style="width:100px" /><br />{% endif %}
             <h4><a href="/character/{{ch.pk}}">{{ch}}</a></h4>
         </div>
     {% endfor %}
