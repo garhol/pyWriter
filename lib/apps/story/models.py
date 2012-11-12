@@ -82,13 +82,31 @@ class Location(models.Model):
 
 
 class SceneForm(forms.ModelForm):
+    def __init__(self, *args,**kwargs):
+        
+        self.user = kwargs.pop('user', None) # get user for the scene form to limit the content
+        super (SceneForm, self).__init__(*args,**kwargs) # populates the post
+        
+        self.fields['perspective'].queryset = Character.objects.filter(user=self.user)
+        self.fields['characters'].queryset = Character.objects.filter(user=self.user)
+        self.fields['location'].queryset = Location.objects.filter(user=self.user)
+        self.fields['artifacts'].queryset = Artifact.objects.filter(user=self.user)
+
     description = forms.CharField(widget=TinyMCE(), help_text="Enter a simple description of the scene")
     content = forms.CharField(widget=TinyMCE(attrs={'cols': 80, 'rows': 30}, mce_attrs={'theme':'advanced','theme_advanced_toolbar_location':'top','theme_advanced_statusbar_location':'bottom','plugins':'wordcount' } ))
-  
+
     class Meta:
         model = Scene
+        fields =('name', 'perspective', 'chapter', 'description', 'characters', 'location', 'artifacts', 'content')
+
+
+class CharacterForm(forms.ModelForm):
+
+    class Meta:
+        model = Character
+        fields =('firstname', 'middlename', 'lastname', 'nicknames', 'description', 'bio', 'date_of_birth', 'date_of_death')
         
-        
+            
 from django.db.models.signals import pre_save
 from django.dispatch import receiver
 
@@ -96,7 +114,7 @@ from django.dispatch import receiver
 @receiver(pre_save, sender=Scene)
 def create_narrator(instance, **kwargs):
     if not instance.pk:
-        narrator, created = Character.objects.get_or_create(user=instance.user, firstname='John', nicknames='Narrator')
+        narrator, created = Character.objects.get_or_create(user=instance.user, firstname='Narrator', nicknames='John')
         if not instance.perspective:
             instance.perspective = narrator
     

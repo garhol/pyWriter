@@ -16,7 +16,9 @@
     {% endfor %}
     
     <h3>Characters:</h3>
-    <p>{% for ch in characters %}{{ch}} <br />{% endfor %}</p>
+    {% for ch in characters %}
+    <p><a href="/character/{{ch.pk}}">{{ch}}</a></p>
+    {% endfor %}
     
     <h3>Artifacts:</h3>
     <p>{% for a in artifacts %}{{a}} <br />{% endfor %}</p>

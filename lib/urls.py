@@ -41,3 +41,16 @@ urlpatterns += patterns('',
 	url(r'^scene/(?P<scene>\d+)/$', 'pyWriter.lib.apps.story.views.scene', name="scene"),
 )
 
+urlpatterns += patterns('',
+	url(r'^character/(?P<character>\d+)/$', 'pyWriter.lib.apps.story.views.character', name="character"),
+)
+
+
+if settings.DEBUG:
+    urlpatterns += patterns('',
+        url(r'^static/(?P<path>.*)$', 'django.views.static.serve', {
+            'document_root': settings.STATIC_ROOT,
+        }),
+   )
+
+

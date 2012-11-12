@@ -5,7 +5,7 @@
 
 {% block "rh" %}
     {{block.super}}
-    <h3>{{scene.name}}</h3>
+    <h3>{{character.name}}</h3>
 
     <section class="ac-container">
         <div>
@@ -139,7 +139,7 @@ select{min-width:200px;}
     <p>There was an error in processing, please check below.</p>
 {% endif %}
 {% if saved %}
-    <p>Scene saved</p>
+    <p>Character saved</p>
 {% endif %}
 <form action="" method="post">
 	{% csrf_token %}
