@@ -6,7 +6,9 @@
 {% block "rh" %}
     {{block.super}}
     <h3>{{character.name}}</h3>
+    {% if character.image %}
     <img src="{{MEDIA_URL}}{{ character.image }}" alt="{{character}}" class="characterImage" />
+    {% endif %}
     <section class="ac-container">
         <div>
             <input id="ac-1" name="accordion-1" type="radio" checked />
