@@ -6,7 +6,7 @@
 {% block "rh" %}
     {{block.super}}
     <h3>{{character.name}}</h3>
-
+    <img src="{{MEDIA_URL}}{{ character.image }}" alt="{{character}}" class="characterImage" />
     <section class="ac-container">
         <div>
             <input id="ac-1" name="accordion-1" type="radio" checked />
@@ -141,9 +141,8 @@ select{min-width:200px;}
 {% if saved %}
     <p>Character saved</p>
 {% endif %}
-<form action="" method="post">
+<form enctype="multipart/form-data" action="" method="post">
 	{% csrf_token %}
-    
      {% for field in form %}
         <div class="formRow">
             {{ field.errors }}

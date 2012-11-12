@@ -31,7 +31,7 @@ def character(request, character):
         context['character'] = ch
         template = 'story/character.html'
         if request.method == 'POST':
-            form = CharacterForm(request.POST, instance=ch)
+            form = CharacterForm(request.POST, request.FILES, instance=ch)
             if form.is_valid(): # save it and tell them that all is well
                 form.save()
                 context['saved'] = True

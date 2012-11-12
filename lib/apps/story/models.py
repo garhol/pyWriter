@@ -53,6 +53,7 @@ class Character(models.Model):
     lastname = models.CharField(max_length=255, blank=True)
     nicknames = models.TextField(null=True, blank=True)
     description = models.TextField(null=True, blank=True)
+    image = models.ImageField(upload_to='characters/%Y/%m/%d', null=True, blank=True)
     bio = models.TextField(null=True, blank=True)
     date_of_birth = models.DateField(null=True, blank=True)
     date_of_death = models.DateField(null=True, blank=True)
@@ -104,7 +105,7 @@ class CharacterForm(forms.ModelForm):
 
     class Meta:
         model = Character
-        fields =('firstname', 'middlename', 'lastname', 'nicknames', 'description', 'bio', 'date_of_birth', 'date_of_death')
+        fields =('firstname', 'middlename', 'lastname', 'nicknames', 'description', 'image', 'bio', 'date_of_birth', 'date_of_death')
         
             
 from django.db.models.signals import pre_save
