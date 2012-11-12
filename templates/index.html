@@ -10,17 +10,23 @@
     <h3>Chapters:</h3>
     <p>{% for c in chapters %}{{c}} <br />{% endfor %}</p>
     
-    <h3>Edit scenes:</h3>
+    <h3>Scenes:</h3>
     {% for sc in scenes %}
-    <p><a href="/scene/{{sc.pk}}">{{sc}}</a></p>
+    <div class="scenePod" style="width:200px; float:left; margin-right:1em; margin-bottom:1em">
+        <h4><a href="/scene/{{sc.pk}}">{{sc}}</a></h4>
+        {{sc.description|safe}}
+    </div>
     {% endfor %}
     
-    <h3>Characters:</h3>
+    <h3 style="clear:left">Characters:</h3>
     {% for ch in characters %}
-    <p><a href="/character/{{ch.pk}}">{{ch}}</a></p>
+        <div class="charPod" style="width:100px; float:left; margin-right:1em; text-align:center; margin-bottom:2em">
+            <img src="{{ch.image.url}}" alt="{{ch}}" style="width:100px" /><br />
+            <h4><a href="/character/{{ch.pk}}">{{ch}}</a></h4>
+        </div>
     {% endfor %}
     
-    <h3>Artifacts:</h3>
+    <h3 style="clear:left">Artifacts:</h3>
     <p>{% for a in artifacts %}{{a}} <br />{% endfor %}</p>
 
     <h3>Locations:</h3>
