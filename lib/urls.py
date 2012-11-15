@@ -44,6 +44,12 @@ urlpatterns += patterns('',
 urlpatterns += patterns('',
 	url(r'^character/(?P<character>\d+)/$', 'pyWriter.lib.apps.story.views.character', name="character"),
 )
+urlpatterns += patterns('',
+	url(r'^location/(?P<location>\d+)/$', 'pyWriter.lib.apps.story.views.location', name="location"),
+)
+urlpatterns += patterns('',
+	url(r'^artifact/(?P<artifact>\d+)/$', 'pyWriter.lib.apps.story.views.artifact', name="artifact"),
+)
 
 
 if settings.DEBUG:

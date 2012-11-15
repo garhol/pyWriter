@@ -29,8 +29,12 @@
     {% endfor %}
     
     <h3 style="clear:left">Artifacts:</h3>
-    <p>{% for a in artifacts %}{{a}} <br />{% endfor %}</p>
+        {% for a in artifacts %}
+            <p><a href="/artifact/{{a.pk}}">{{ a }}</a></p>
+        {% endfor %}
 
     <h3>Locations:</h3>
-    <p>{% for l in locations %}{{l}} <br />{% endfor %}</p>
+    {% for l in locations %}
+        <p><a href="/location/{{l.pk}}">{{ l }}</a></p>
+    {% endfor %}
 {% endblock %}

@@ -2,7 +2,7 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.conf import settings
 from django.http import HttpResponseRedirect
-from .models import Story, Chapter, Scene, Character, Artifact, Location, SceneForm, CharacterForm
+from .models import Story, Chapter, Scene, Character, Artifact, Location, SceneForm, CharacterForm, ArtifactForm, LocationForm
 
 
 
@@ -45,8 +45,53 @@ def character(request, character):
             context['form'] = CharacterForm(instance=ch)
             return render_to_response(template, context, context_instance=RequestContext(request))
 
-        
-        
+def location(request, location):
+    if not request.user.is_authenticated():
+        return HttpResponseRedirect('/login/?next=%s' % request.path)
+    else:
+        context ={}
+        lo = Location.objects.get(pk=location)
+        context['location'] = lo
+        template = 'story/location.html'
+        if request.method == 'POST':
+            form = LocationForm(request.POST, request.FILES, instance=lo)
+            if form.is_valid(): # save it and tell them that all is well
+                form.save()
+                context['saved'] = True
+                context['form'] = LocationForm(instance=lo)
+                return render_to_response(template, context, context_instance=RequestContext(request))
+            else: # bung an error
+                context['form'] = LocationForm(instance=lo)
+                context['error'] = True
+                return render_to_response(template, context, context_instance=RequestContext(request))
+        else: # not in post, show them the location
+            context['form'] = LocationForm(instance=lo)
+            return render_to_response(template, context, context_instance=RequestContext(request))
+ 
+ 
+ 
+def artifact(request, artifact):
+    if not request.user.is_authenticated():
+        return HttpResponseRedirect('/login/?next=%s' % request.path)
+    else:
+        context ={}
+        ar = Artifact.objects.get(pk=artifact)
+        context['artifact'] = ar
+        template = 'story/artifact.html'
+        context['form'] = ArtifactForm(instance=ar)
+        if request.method == 'POST':
+            form = ArtifactForm(request.POST, request.FILES, instance=ar)
+            if form.is_valid(): # save it and tell them that all is well
+                form.save()
+                context['saved'] = True
+                return render_to_response(template, context, context_instance=RequestContext(request))
+            else: # bung an error                
+                context['error'] = True
+                return render_to_response(template, context, context_instance=RequestContext(request))
+        else: # not in post, show them the artifact
+            return render_to_response(template, context, context_instance=RequestContext(request))
+            
+                    
 def scene(request, scene):
     if not request.user.is_authenticated():
         return HttpResponseRedirect('/login/?next=%s' % request.path) # not logged in. Kick them out.

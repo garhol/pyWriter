@@ -141,7 +141,7 @@ select{min-width:200px;}
 {% if saved %}
     <p>Scene saved</p>
 {% endif %}
-<form action="" method="post">
+<form enctype="multipart/form-data" action="" method="post">
 	{% csrf_token %}
     
      {% for field in form %}

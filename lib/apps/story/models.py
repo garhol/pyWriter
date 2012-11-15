@@ -106,8 +106,22 @@ class CharacterForm(forms.ModelForm):
     class Meta:
         model = Character
         fields =('firstname', 'middlename', 'lastname', 'nicknames', 'description', 'image', 'bio', 'date_of_birth', 'date_of_death')
-        
-            
+
+
+class LocationForm(forms.ModelForm):
+
+    class Meta:
+        model = Location
+        fields =('name', 'description')
+
+
+class ArtifactForm(forms.ModelForm):
+
+    class Meta:
+        model = Artifact
+        fields =('name', 'description', 'owner', 'location')
+
+
 from django.db.models.signals import pre_save
 from django.dispatch import receiver
 
