@@ -1,4 +1,4 @@
-from django.shortcuts import render_to_response
+from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
 from django.conf import settings
 from django.http import HttpResponseRedirect
@@ -26,7 +26,7 @@ def character(request, character=None):
 	context ={}
 	template = 'story/character.html'
 	if character:
-		ch = Character.objects.get(pk=character)
+		ch = get_object_or_404(Character, pk=character, user=request.user)
 		context['character'] = ch
 		context['form'] = CharacterForm(instance=ch)              
 	else:
@@ -53,7 +53,7 @@ def location(request, location=None):
 	context ={}
 	template = 'story/location.html'
 	if location:
-		lo = Location.objects.get(pk=location)
+		lo = get_object_or_404(Location, pk=location, user=request.user)
 		context['location'] = lo
 		context['form'] = LocationForm(instance=lo)
 	else:
@@ -82,7 +82,7 @@ def artifact(request, artifact=None):
 	context ={}
 	template = 'story/artifact.html'
 	if (artifact):
-		ar = Artifact.objects.get(pk=artifact)
+		ar = get_object_or_404(Artifact, pk=artifact, user=request.user)
 		context['artifact'] = ar       
 		context['form'] = ArtifactForm(instance=ar)
 	else:
@@ -108,7 +108,7 @@ def artifact(request, artifact=None):
 def scene(request, scene=None):
 	context ={}
 	context['user'] = request.user
-	sc = Scene.objects.get(pk=scene)
+	ar = get_object_or_404(Scene, pk=scene, user=request.user)
 	context['scene'] = sc
 	context['characters'] = Character.objects.filter(scene=sc, user=request.user)
 	context['locations'] = Location.objects.filter(scene=sc, user=request.user)
