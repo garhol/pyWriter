@@ -2,6 +2,8 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.conf import settings
 from django.http import HttpResponseRedirect
+from django.core.urlresolvers import reverse
+
 from .models import Story, Chapter, Scene, Character, Artifact, Location, SceneForm, CharacterForm, ArtifactForm, LocationForm
 
 
@@ -22,65 +24,88 @@ def index(request):
         context['locations'] = Location.objects.filter(user=request.user);
         return render_to_response(template, context, context_instance=RequestContext(request))
 
-def character(request, character):
+def character(request, character=None):
     if not request.user.is_authenticated():
         return HttpResponseRedirect('/login/?next=%s' % request.path)
     else:
         context ={}
-        ch = Character.objects.get(pk=character)
-        context['character'] = ch
         template = 'story/character.html'
+        if character:
+            ch = Character.objects.get(pk=character)
+            context['character'] = ch
+            context['form'] = CharacterForm(instance=ch)              
+        else:
+            context['form'] = CharacterForm()
+        
         if request.method == 'POST':
-            form = CharacterForm(request.POST, request.FILES, instance=ch)
+            if character:
+                form = CharacterForm(request.POST, request.FILES, instance = ch)
+            else:
+                character = Character(user_id = request.user.pk)
+                form = CharacterForm(request.POST, request.FILES, instance = character)
             if form.is_valid(): # save it and tell them that all is well
                 form.save()
                 context['saved'] = True
-                context['form'] = CharacterForm(instance=ch)              
                 return render_to_response(template, context, context_instance=RequestContext(request))
             else: # bung an error
-                context['form'] = CharacterForm(instance=ch)
                 context['error'] = True
                 return render_to_response(template, context, context_instance=RequestContext(request))
         else: # not in post, show them the scene
-            context['form'] = CharacterForm(instance=ch)
             return render_to_response(template, context, context_instance=RequestContext(request))
 
-def location(request, location):
+
+def location(request, location=None):
     if not request.user.is_authenticated():
         return HttpResponseRedirect('/login/?next=%s' % request.path)
     else:
         context ={}
-        lo = Location.objects.get(pk=location)
-        context['location'] = lo
         template = 'story/location.html'
+        if location:
+            lo = Location.objects.get(pk=location)
+            context['location'] = lo
+            context['form'] = LocationForm(instance=lo)
+        else:
+            context['form'] = LocationForm()
+            
         if request.method == 'POST':
-            form = LocationForm(request.POST, request.FILES, instance=lo)
+            if location:
+                form = LocationForm(request.POST, request.FILES, instance=lo)
+            else:
+                location = Location(user_id = request.user.pk)
+                form = LocationForm(request.POST, request.FILES, instance=location)
             if form.is_valid(): # save it and tell them that all is well
-                form.save()
-                context['saved'] = True
-                context['form'] = LocationForm(instance=lo)
-                return render_to_response(template, context, context_instance=RequestContext(request))
+                newlocation = form.save()
+                context['saved'] = True                
+                return HttpResponseRedirect(reverse('edit_location', args=(newlocation.pk,)))
+                #return render_to_response(template, context, context_instance=RequestContext(request))
             else: # bung an error
-                context['form'] = LocationForm(instance=lo)
                 context['error'] = True
+                
                 return render_to_response(template, context, context_instance=RequestContext(request))
         else: # not in post, show them the location
-            context['form'] = LocationForm(instance=lo)
             return render_to_response(template, context, context_instance=RequestContext(request))
  
  
  
-def artifact(request, artifact):
+def artifact(request, artifact=None):
     if not request.user.is_authenticated():
         return HttpResponseRedirect('/login/?next=%s' % request.path)
     else:
         context ={}
-        ar = Artifact.objects.get(pk=artifact)
-        context['artifact'] = ar
         template = 'story/artifact.html'
-        context['form'] = ArtifactForm(instance=ar)
+        if (artifact):
+            ar = Artifact.objects.get(pk=artifact)
+            context['artifact'] = ar       
+            context['form'] = ArtifactForm(instance=ar)
+        else:
+            context['form'] = ArtifactForm()
+        
         if request.method == 'POST':
-            form = ArtifactForm(request.POST, request.FILES, instance=ar)
+            if (artifact):
+                form = ArtifactForm(request.POST, request.FILES, instance=ar)
+            else:
+                artifact = Artifact(user_id = request.user.pk)
+                form = ArtifactForm(request.POST, request.FILES, instance=artifact)
             if form.is_valid(): # save it and tell them that all is well
                 form.save()
                 context['saved'] = True
@@ -92,7 +117,7 @@ def artifact(request, artifact):
             return render_to_response(template, context, context_instance=RequestContext(request))
             
                     
-def scene(request, scene):
+def scene(request, scene=None):
     if not request.user.is_authenticated():
         return HttpResponseRedirect('/login/?next=%s' % request.path) # not logged in. Kick them out.
     else:

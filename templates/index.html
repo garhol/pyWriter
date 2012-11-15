@@ -27,14 +27,19 @@
         </div>
         {% endif %}
     {% endfor %}
+    <p style="clear:left"><a href="/character/add/">&gt; add a character</a></p>
     
     <h3 style="clear:left">Artifacts:</h3>
         {% for a in artifacts %}
             <p><a href="/artifact/{{a.pk}}">{{ a }}</a></p>
         {% endfor %}
-
+    <br />
+    <p><a href="/artifact/add/">&gt; add an artifact</a></p>
+    
     <h3>Locations:</h3>
     {% for l in locations %}
         <p><a href="/location/{{l.pk}}">{{ l }}</a></p>
     {% endfor %}
+    <br />
+    <p><a href="/location/add/">&gt; add a location</a></p>
 {% endblock %}

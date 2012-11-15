@@ -42,13 +42,16 @@ urlpatterns += patterns('',
 )
 
 urlpatterns += patterns('',
-	url(r'^character/(?P<character>\d+)/$', 'pyWriter.lib.apps.story.views.character', name="character"),
+    url(r'^character/add/$', 'pyWriter.lib.apps.story.views.character', name="add_character"),
+	url(r'^character/(?P<character>\d+)/$', 'pyWriter.lib.apps.story.views.character', name="edit_character"),
 )
 urlpatterns += patterns('',
-	url(r'^location/(?P<location>\d+)/$', 'pyWriter.lib.apps.story.views.location', name="location"),
+    url(r'^location/add/$', 'pyWriter.lib.apps.story.views.location', name="add_location"),
+	url(r'^location/(?P<location>\d+)/$', 'pyWriter.lib.apps.story.views.location', name="edit_location"),
 )
 urlpatterns += patterns('',
-	url(r'^artifact/(?P<artifact>\d+)/$', 'pyWriter.lib.apps.story.views.artifact', name="artifact"),
+    url(r'^artifact/add/$', 'pyWriter.lib.apps.story.views.artifact', name="add_artifact"),
+	url(r'^artifact/(?P<artifact>\d+)/$', 'pyWriter.lib.apps.story.views.artifact', name="edit_artifact"),
 )
 
 
