@@ -126,6 +126,7 @@ INSTALLED_APPS = (
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
     'south',
+    'easy_thumbnails',
 
     #pyWriter apps
     'pyWriter.lib.apps.story',
