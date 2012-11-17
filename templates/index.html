@@ -64,6 +64,8 @@ div.charBio{float:left; max-width:300px;}
             
                 {% if ch.image %}
                 <img class="charPodImage" src="{% thumbnail ch.image 100x100 %}" alt="{{ch}}" />
+                {% else %}
+                    <img class="charPodImage" src="{{ MEDIA_URL }}images/icons/nocharacter.png" alt="{{ch}}" style="width:100px" />
                 {% endif %}
                 <div class="charBio">
                 <p class="character-description"><strong>Born:</strong><br / >{{ch.date_of_birth}}</p>
