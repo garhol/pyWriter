@@ -108,7 +108,7 @@ def artifact(request, artifact=None):
 def scene(request, scene=None):
 	context ={}
 	context['user'] = request.user
-	ar = get_object_or_404(Scene, pk=scene, user=request.user)
+	sc = get_object_or_404(Scene, pk=scene, user=request.user)
 	context['scene'] = sc
 	context['characters'] = Character.objects.filter(scene=sc, user=request.user)
 	context['locations'] = Location.objects.filter(scene=sc, user=request.user)
