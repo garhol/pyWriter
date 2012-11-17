@@ -5,7 +5,7 @@ from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 
-from .models import Story, Chapter, Scene, Character, Artifact, Location, SceneForm, CharacterForm, ArtifactForm, LocationForm
+from .models import Story, Chapter, Scene, Character, Artifact, Location, SceneForm, CharacterForm, ArtifactForm, LocationForm, StoryForm
 
 @login_required
 def index(request):
@@ -21,6 +21,37 @@ def index(request):
 	context['locations'] = Location.objects.filter(user=request.user);
 	return render_to_response(template, context, context_instance=RequestContext(request))
 
+
+@login_required
+def story(request, story=None):
+	context ={}
+	template = 'story/story.html'
+	if story:
+		st = get_object_or_404(Story, pk=story, user=request.user)
+		context['story'] = st
+		context['form'] = StoryForm(instance=st)
+	else:
+		context['form'] = StoryForm()
+		
+	if request.method == 'POST':
+		if story:
+			form = StoryForm(request.POST, request.FILES, instance=st)
+		else:
+			story = Story(user_id = request.user.pk)
+			form = StoryForm(request.POST, request.FILES, instance=story)
+		if form.is_valid(): # save it and tell them that all is well
+			newstory = form.save()
+			context['saved'] = True                
+			return HttpResponseRedirect(reverse('edit_story', args=(newstory.pk,)))
+			#return render_to_response(template, context, context_instance=RequestContext(request))
+		else: # bung an error
+			context['error'] = True
+			
+			return render_to_response(template, context, context_instance=RequestContext(request))
+	else: # not in post, show them the location
+		return render_to_response(template, context, context_instance=RequestContext(request))
+        
+        
 @login_required
 def character(request, character=None):
 	context ={}

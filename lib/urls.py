@@ -40,7 +40,10 @@ urlpatterns += patterns('',
 urlpatterns += patterns('',
 	url(r'^scene/(?P<scene>\d+)/$', 'pyWriter.lib.apps.story.views.scene', name="scene"),
 )
-
+urlpatterns += patterns('',
+    url(r'^story/add/$', 'pyWriter.lib.apps.story.views.story', name="add_story"),
+	url(r'^story/(?P<story>\d+)/$', 'pyWriter.lib.apps.story.views.story', name="edit_story"),
+)
 urlpatterns += patterns('',
     url(r'^character/add/$', 'pyWriter.lib.apps.story.views.character', name="add_character"),
 	url(r'^character/(?P<character>\d+)/$', 'pyWriter.lib.apps.story.views.character', name="edit_character"),

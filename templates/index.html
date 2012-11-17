@@ -40,10 +40,11 @@ div.charBio{float:left; max-width:300px;}
         <p class="story_title"><a href="/story/{{s.pk}}" style="padding-top:110px;display:block">{{s}}</a></p>
         </div>
         {% endfor %}
+        <p style="clear:left"><a href="/story/add/">&gt; add a story</a></p>
     </div>
     
     <div id="chaptertab" class="tabcontent">
-        <p>{% for c in chapters %}{{c}} <br />{% endfor %}</p>
+        <p>{% for c in chapters %}{{c}}<br />{% endfor %}</p>
     </div>       
 
     <div id="scenetab" class="tabcontent">

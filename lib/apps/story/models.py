@@ -121,6 +121,12 @@ class ArtifactForm(forms.ModelForm):
         model = Artifact
         fields =('name', 'description', 'owner', 'location')
 
+class StoryForm(forms.ModelForm):
+
+    class Meta:
+        model = Story
+        fields =('title', 'author', 'genre', 'fiction')
+
 
 from django.db.models.signals import pre_save
 from django.dispatch import receiver
