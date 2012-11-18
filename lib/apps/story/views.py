@@ -139,24 +139,30 @@ def artifact(request, artifact=None):
 @login_required                  
 def scene(request, scene=None):
     context ={}
-    context['user'] = request.user
-    sc = get_object_or_404(Scene, pk=scene, user=request.user)
-    context['scene'] = sc
-    context['characters'] = Character.objects.filter(scene=sc, user=request.user)
-    context['locations'] = Location.objects.filter(scene=sc, user=request.user)
-    context['artifacts'] = Artifact.objects.filter(scene=sc, user=request.user)
     template = 'story/scene.html'
+    if(scene):
+        sc = get_object_or_404(Scene, pk=scene, user=request.user)
+        context['scene'] = sc
+        context['user'] = request.user
+        context['characters'] = Character.objects.filter(scene=sc, user=request.user)
+        context['locations'] = Location.objects.filter(scene=sc, user=request.user)
+        context['artifacts'] = Artifact.objects.filter(scene=sc, user=request.user)
+        context['form'] = SceneForm(instance=sc, user=request.user)
+    else:
+        context['form'] = SceneForm(user=request.user)
+        
     if request.method == 'POST':
-        form = SceneForm(request.POST, instance=sc, user=request.user)
+        if (scene):
+            form = SceneForm(request.POST, request.FILES, instance=sc, user=request.user)
+        else:
+            scene = Scene(user_id = request.user.pk)
+            form = SceneForm(request.POST, request.FILES, instance=scene, user=request.user)
         if form.is_valid(): # save it and tell them that all is well
             form.save()
             messages.success(request, 'Location details updated.')
-            context['form'] = SceneForm(instance=sc, user=request.user)              
             return render_to_response(template, context, context_instance=RequestContext(request))
         else: # bung an error
-            context['form'] = SceneForm(instance=sc, user=request.user)
             messages.error(request, 'There was an error - Look out below.')
             return render_to_response(template, context, context_instance=RequestContext(request))
     else: # not in post, show them the scene
-        context['form'] = SceneForm(instance=sc, user=request.user)
         return render_to_response(template, context, context_instance=RequestContext(request))
