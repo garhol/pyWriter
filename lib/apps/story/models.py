@@ -66,6 +66,7 @@ class Artifact(models.Model):
     user = models.ForeignKey(User)
     name = models.CharField(max_length=255)
     description = models.TextField(null=True, blank=True)
+    image = models.ImageField(upload_to='artifacts/%Y/%m/%d', null=True, blank=True)
     owner = models.ForeignKey(Character, null=True, blank=True)
     location = models.ForeignKey('Location', null=True, blank=True)
     
@@ -77,6 +78,7 @@ class Location(models.Model):
     user = models.ForeignKey(User)
     name = models.CharField(max_length=255)
     description = models.TextField(null=True, blank=True)
+    image = models.ImageField(upload_to='locations/%Y/%m/%d', null=True, blank=True)
 
     def __unicode__(self):
         return self.name
