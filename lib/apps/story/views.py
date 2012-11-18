@@ -100,9 +100,9 @@ def character(request, character=None):
             character = Character(user_id = request.user.pk)
             form = CharacterForm(request.POST, request.FILES, instance = character)
         if form.is_valid(): # save it and tell them that all is well
-            form.save()
-            messages.success(request, 'Character details updated.')
-            return render_to_response(template, context, context_instance=RequestContext(request))
+            newcharacter = form.save()
+            messages.success(request, 'Character details updated.')             
+            return HttpResponseRedirect(reverse('edit_character', args=(newcharacter.pk,)))
         else: # bung an error
             messages.error(request, 'There was an error - Look out below.')
             return render_to_response(template, context, context_instance=RequestContext(request))
@@ -130,7 +130,6 @@ def location(request, location=None):
             newlocation = form.save()
             messages.success(request, 'Location details updated.')             
             return HttpResponseRedirect(reverse('edit_location', args=(newlocation.pk,)))
-            #return render_to_response(template, context, context_instance=RequestContext(request))
         else: # bung an error
             messages.error(request, 'There was an error - Look out below.')
             
@@ -156,9 +155,9 @@ def artifact(request, artifact=None):
             artifact = Artifact(user_id = request.user.pk)
             form = ArtifactForm(request.POST, request.FILES, instance=artifact, user=request.user)
         if form.is_valid(): # save it and tell them that all is well
-            form.save()
-            messages.success(request, 'Artifact details updated.')
-            return render_to_response(template, context, context_instance=RequestContext(request))
+            newartifact = form.save()
+            messages.success(request, 'Artifact details updated.')             
+            return HttpResponseRedirect(reverse('edit_artifact', args=(newartifact.pk,)))
         else: # bung an error
             messages.error(request, 'There was an error - Look out below.')
             return render_to_response(template, context, context_instance=RequestContext(request))
@@ -187,9 +186,9 @@ def scene(request, scene=None):
             scene = Scene(user_id = request.user.pk)
             form = SceneForm(request.POST, request.FILES, instance=scene, user=request.user)
         if form.is_valid(): # save it and tell them that all is well
-            form.save()
-            messages.success(request, 'Location details updated.')
-            return render_to_response(template, context, context_instance=RequestContext(request))
+            newscene = form.save()
+            messages.success(request, 'Scene details updated.')             
+            return HttpResponseRedirect(reverse('edit_Scene', args=(newscene.pk,)))
         else: # bung an error
             messages.error(request, 'There was an error - Look out below.')
             return render_to_response(template, context, context_instance=RequestContext(request))
