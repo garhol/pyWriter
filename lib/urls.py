@@ -46,6 +46,10 @@ urlpatterns += patterns('',
 	url(r'^story/(?P<story>\d+)/$', 'pyWriter.lib.apps.story.views.story', name="edit_story"),
 )
 urlpatterns += patterns('',
+    url(r'^chapter/add/$', 'pyWriter.lib.apps.story.views.chapter', name="add_chapter"),
+	url(r'^chapter/(?P<chapter>\d+)/$', 'pyWriter.lib.apps.story.views.chapter', name="edit_chapter"),
+)
+urlpatterns += patterns('',
     url(r'^character/add/$', 'pyWriter.lib.apps.story.views.character', name="add_character"),
 	url(r'^character/(?P<character>\d+)/$', 'pyWriter.lib.apps.story.views.character', name="edit_character"),
 )

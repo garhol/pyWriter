@@ -44,7 +44,21 @@ div.charBio{float:left; max-width:290px;}
     </div>
     
     <div id="chaptertab" class="tabcontent">
-        <p>{% for c in chapters %}{{c}}<br />{% endfor %}</p>
+        <p class="addLink"><a href="/chapter/add/" class="button medium green">add a chapter</a></p>
+        <p>{% for c in chapters %}
+        <div class="charPod">
+            <h4><a href="/chapter/{{c.pk}}">{{c}}</a></h4>
+            <div class="charBio">
+                <p class="character-description"><strong>Weight:</strong><br / >
+                {{c.weight}}
+                </p>
+                <p class="character-description"><strong>Story:</strong><br / >
+                {{c.story}}
+                </p>
+            </div>
+            <p style="clear:left"><a href="/chapter/{{c.pk}}" class="button medium green">View</a></p>
+        </div>
+        {% endfor %}</p>
     </div>       
 
     <div id="scenetab" class="tabcontent">

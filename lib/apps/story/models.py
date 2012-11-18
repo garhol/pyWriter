@@ -146,6 +146,12 @@ class StoryForm(forms.ModelForm):
         fields =('title', 'author', 'genre', 'fiction')
 
 
+class ChapterForm(forms.ModelForm):
+
+    class Meta:
+        model = Chapter
+        fields =('story', 'title', 'weight')
+        
 from django.db.models.signals import pre_save
 from django.dispatch import receiver
 

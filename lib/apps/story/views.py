@@ -6,7 +6,7 @@ from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 
-from .models import Story, Chapter, Scene, Character, Artifact, Location, SceneForm, CharacterForm, ArtifactForm, LocationForm, StoryForm
+from .models import Story, Chapter, Scene, Character, Artifact, Location, SceneForm, CharacterForm, ArtifactForm, LocationForm, StoryForm, ChapterForm
 
 @login_required
 def index(request):
@@ -51,7 +51,36 @@ def story(request, story=None):
             return render_to_response(template, context, context_instance=RequestContext(request))
     else: # not in post, show them the location
         return render_to_response(template, context, context_instance=RequestContext(request))
+
+@login_required
+def chapter(request, chapter=None):
+    context ={}
+    template = 'story/chapter.html'
+    if chapter:
+        ch = get_object_or_404(Chapter, pk=chapter, user=request.user)
+        context['chapter'] = ch
+        context['form'] = ChapterForm(instance=ch)
+    else:
+        context['form'] = ChapterForm()
         
+    if request.method == 'POST':
+        if chapter:
+            form = ChapterForm(request.POST, request.FILES, instance=ch)
+        else:
+            chapter = Chapter(user_id = request.user.pk)
+            form = ChapterForm(request.POST, request.FILES, instance=chapter)
+        if form.is_valid(): # save it and tell them that all is well
+            newchapter = form.save()
+            messages.success(request, 'Chapter details updated.')              
+            return HttpResponseRedirect(reverse('edit_chapter', args=(newchapter.pk,)))
+            #return render_to_response(template, context, context_instance=RequestContext(request))
+        else: # bung an error
+            messages.error(request, 'There was an error - Look out below.')
+            
+            return render_to_response(template, context, context_instance=RequestContext(request))
+    else: # not in post, show them the location
+        return render_to_response(template, context, context_instance=RequestContext(request))
+
         
 @login_required
 def character(request, character=None):
