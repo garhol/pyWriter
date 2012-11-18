@@ -39,9 +39,17 @@ width:960px;
 float:left;
 margin:2em 0;
 }
+
 #header h1{
-float:left;
+float: left;
+font-family: Palatino, Georgia;
+font-size: 1.8em;
+color: #ECECEC;
 }
+#header h1 a{
+    color:#ECECEC;
+}
+
 .login{
 width:20%;
 float:right;
@@ -209,7 +217,6 @@ li{font-size:0.75em;}
 }
 
 .titleDiv{
-	background: url(/static/ahoy/images/title.png) top center no-repeat;
 	height:113px;
 	width:auto;
 }
