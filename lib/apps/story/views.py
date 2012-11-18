@@ -46,7 +46,7 @@ def story(request, story=None):
             return HttpResponseRedirect(reverse('edit_story', args=(newstory.pk,)))
             #return render_to_response(template, context, context_instance=RequestContext(request))
         else: # bung an error
-            context['error'] = True
+            messages.error(request, 'There was an error - Look out below.')
             
             return render_to_response(template, context, context_instance=RequestContext(request))
     else: # not in post, show them the location
@@ -75,7 +75,7 @@ def character(request, character=None):
             messages.success(request, 'Character details updated.')
             return render_to_response(template, context, context_instance=RequestContext(request))
         else: # bung an error
-            context['error'] = True
+            messages.error(request, 'There was an error - Look out below.')
             return render_to_response(template, context, context_instance=RequestContext(request))
     else: # not in post, show them the scene
         return render_to_response(template, context, context_instance=RequestContext(request))
@@ -103,7 +103,7 @@ def location(request, location=None):
             return HttpResponseRedirect(reverse('edit_location', args=(newlocation.pk,)))
             #return render_to_response(template, context, context_instance=RequestContext(request))
         else: # bung an error
-            context['error'] = True
+            messages.error(request, 'There was an error - Look out below.')
             
             return render_to_response(template, context, context_instance=RequestContext(request))
     else: # not in post, show them the location
@@ -131,6 +131,7 @@ def artifact(request, artifact=None):
             messages.success(request, 'Artifact details updated.')
             return render_to_response(template, context, context_instance=RequestContext(request))
         else: # bung an error
+            messages.error(request, 'There was an error - Look out below.')
             return render_to_response(template, context, context_instance=RequestContext(request))
     else: # not in post, show them the artifact
         return render_to_response(template, context, context_instance=RequestContext(request))
@@ -154,7 +155,7 @@ def scene(request, scene=None):
             return render_to_response(template, context, context_instance=RequestContext(request))
         else: # bung an error
             context['form'] = SceneForm(instance=sc, user=request.user)
-            context['error'] = True
+            messages.error(request, 'There was an error - Look out below.')
             return render_to_response(template, context, context_instance=RequestContext(request))
     else: # not in post, show them the scene
         context['form'] = SceneForm(instance=sc, user=request.user)

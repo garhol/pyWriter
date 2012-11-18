@@ -51,6 +51,8 @@ span.helptext{font-size:0.8em; float:left;}
 .formRow{clear:left; padding:10px;}
 .formRow label {width:120px; float:left;}
 select{min-width:200px;}
+ul.messages li.success{color:green;}
+ul.messages li.error{color:red;}
 
 .ac-container{
     width: 200px;
@@ -135,12 +137,6 @@ select{min-width:200px;}
 }
 </style>
 
-{% if error %}
-    <p>There was an error in processing, please check below.</p>
-{% endif %}
-{% if saved %}
-    <p>Scene saved</p>
-{% endif %}
 <form enctype="multipart/form-data" action="" method="post">
 	{% csrf_token %}
     
