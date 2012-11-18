@@ -78,7 +78,7 @@ div.tabcontents a
     color:#000;
     text-decoration:none;
 }
-
+div.tabcontents a.green,div.tabcontents a.gray{color:#fff;}
 div.tabcontents a:hover
 {
     color:#333;

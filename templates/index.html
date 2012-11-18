@@ -35,12 +35,12 @@ div.charBio{float:left; max-width:290px;}
 
 <div class="tabcontents clearfix">
     <div id="storytab" class="tabcontent">
+        <p class="addLink"><a href="/story/add/" class="button medium green">add a story</a></p>
         {% for s in stories %}
         <div class="storyPod" style="width: 104px; padding: 1em; float: left; ">
         <p class="story_title"><a href="/story/{{s.pk}}" style="padding-top:110px;display:block">{{s}}</a></p>
         </div>
         {% endfor %}
-        <p style="clear:left"><a href="/story/add/">&gt; add a story</a></p>
     </div>
     
     <div id="chaptertab" class="tabcontent">
@@ -72,12 +72,13 @@ div.charBio{float:left; max-width:290px;}
                     {{ sc.get_status_display }}
                 </p>
             </div>
-            <p style="clear:left"><a href="/scene/{{sc.pk}}">&gt; View</a></p>
+            <p style="clear:left"><a href="/scene/{{sc.pk}}" class="button medium green">View</a></p>
         </div>
         {% endfor %}
     </div>
 
     <div id="charactertab" class="tabcontent">
+        <p class="addLink"><a href="/character/add/" class="button medium green">add a character</a></p>
         {% for ch in characters %}
             {% if ch.firstname != "Narrator" %}
             <div class="charPod">
@@ -93,14 +94,14 @@ div.charBio{float:left; max-width:290px;}
                     {% if ch.date_of_death %}<p class="character-description"><strong>Died:</strong><br / >{{ch.date_of_death}}</p>{% endif %}
                     <p class="character-description"><strong>Description:</strong><br />{{ch.description|truncatewords:30}}</p>
                 </div>
-                <p style="clear:left"><a href="/character/{{ch.pk}}">&gt; View</a></p>
+                <p style="clear:left"><a href="/character/{{ch.pk}}" class="button medium green">View</a></p>
             </div>
             {% endif %}
         {% endfor %}
-        <p style="clear:left"><a href="/character/add/">&gt; add a character</a></p>
     </div>       
     
     <div id="artifacttab" class="tabcontent">
+        <p class="addLink"><a href="/artifact/add/" class="button medium green">add an artifact</a></p>
        {% for a in artifacts %}
         <div class="charPod">
             <h4><a href="/artifact/{{a.pk}}">{{ a }}</a></h4>
@@ -112,13 +113,13 @@ div.charBio{float:left; max-width:290px;}
             <div class="charBio">
                 <p class="character-description"><strong>Description:</strong><br />{{a.description|truncatewords:30}}</p>
             </div>
-            <p style="clear:left"><a href="/artifact/{{a.pk}}">&gt; View</a></p>            
+            <p style="clear:left"><a href="/artifact/{{a.pk}}" class="button medium green">View</a></p>   
         </div>
         {% endfor %}
-        <p style="clear:left"><a href="/artifact/add/">&gt; add an artifact</a></p>
     </div>       
     
     <div id="locationtab" class="tabcontent">
+        <p class="addLink"><a href="/location/add/" class="button medium green">add a location</a></p>
        {% for l in locations %}
            <div class="charPod">
                 <h4><a href="/location/{{l.pk}}">{{ l }}</a></h4>
@@ -130,10 +131,9 @@ div.charBio{float:left; max-width:290px;}
                 <div class="charBio">
                     <p class="character-description"><strong>Description:</strong><br />{{l.description|truncatewords:30}}</p>
                 </div>
-                <p style="clear:left"><a href="/location/{{l.pk}}">&gt; View</a></p>            
+                <p style="clear:left"><a href="/location/{{l.pk}}" class="button medium green">View</a></p>
             </div>
         {% endfor %}
-        <p style="clear:left"><a href="/location/add/">&gt; add a location</a></p>
     </div>       
 </div>
 
