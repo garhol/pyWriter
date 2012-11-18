@@ -17,7 +17,7 @@ div.scenePod, div.charPod {width:200px; float:left; margin:1em; border-radius:0.
 img.charPodImage{display:block; margin-left:0.5em; float:left;}
 div.charPod p.character-description{float:left; padding-top:0px; clear:left;}
 div.charPod{width:400px;}
-div.charBio{float:left; max-width:300px;}
+div.charBio{float:left; max-width:290px;}
 </style>
 <link href="{{ MEDIA_URL }}css/tabcontent.css" rel="stylesheet" type="text/css" />
 <script src="{{ MEDIA_URL }}js/tabcontent.js" type="text/javascript"></script>
@@ -84,7 +84,14 @@ div.charBio{float:left; max-width:300px;}
        {% for a in artifacts %}
         <div class="charPod">
             <h4><a href="/artifact/{{a.pk}}">{{ a }}</a></h4>
-            <p class="character-description"><strong>Description:</strong><br />{{a.description|truncatewords:30}}</p>
+            {% if a.image %}
+                <img class="charPodImage" src="{% thumbnail a.image 100x100 %}" alt="{{a}}" />
+            {% else %}
+                <img class="charPodImage" src="{{ MEDIA_URL }}images/icons/nocharacter.png" alt="{{a}}" style="width:100px" />
+            {% endif %}
+            <div class="charBio">
+                <p class="character-description"><strong>Description:</strong><br />{{a.description|truncatewords:30}}</p>
+            </div>
             <p style="clear:left"><a href="/artifact/{{a.pk}}">&gt; View</a></p>            
         </div>
         {% endfor %}
@@ -95,7 +102,14 @@ div.charBio{float:left; max-width:300px;}
        {% for l in locations %}
            <div class="charPod">
                 <h4><a href="/location/{{l.pk}}">{{ l }}</a></h4>
-                <p class="character-description"><strong>Description:</strong><br />{{l.description|truncatewords:30}}</p>
+                {% if l.image %}
+                    <img class="charPodImage" src="{% thumbnail l.image 100x100 %}" alt="{{l}}" />
+                {% else %}
+                    <img class="charPodImage" src="{{ MEDIA_URL }}images/icons/nocharacter.png" alt="{{l}}" style="width:100px" />
+                {% endif %}
+                <div class="charBio">
+                    <p class="character-description"><strong>Description:</strong><br />{{l.description|truncatewords:30}}</p>
+                </div>
                 <p style="clear:left"><a href="/location/{{l.pk}}">&gt; View</a></p>            
             </div>
         {% endfor %}

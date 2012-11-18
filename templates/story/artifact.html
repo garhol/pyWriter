@@ -1,11 +1,18 @@
 {% extends "base-templates/base.html" %}
+{% load thumbnail %}
 {% block "login" %}
 <p>{{ user.username }} - <a href="/logout/">logout</a></p>
 {% endblock %}
 
 {% block "rh" %}
     {{block.super}}
-   
+    <h3>{% if artifact.name %}{{artifact.name}}{% endif %}</h3>
+    {% if location.image %}
+        <img  src="{% thumbnail artifact.image 200x200 %}"  alt="{{artifact}}" class="characterImage" />
+    {% else %}
+        <img class="charPodImage" src="{{ MEDIA_URL }}images/icons/nocharacter.png" alt="{{artifact}}" style="width:200px" />
+    {% endif %}
+        </div>
 {% endblock %}
 
 {% block "main" %}
