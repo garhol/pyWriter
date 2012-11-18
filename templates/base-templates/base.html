@@ -13,7 +13,9 @@
             <h1><a href="/">pyWriter</a></h1>
             <div class="login">
             {% block "login" %}
-            
+            {% if user.username %}
+                <p>{{ user.username }} - <a class="button red medium" href="/logout/">logout</a></p>
+            {% endif %}
             {% endblock %}
             </div>
         </div>
