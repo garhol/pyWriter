@@ -16,7 +16,7 @@ def index(request):
     context['user'] = request.user
     context['stories'] = Story.objects.filter(user=request.user).order_by('title');
     context['chapters'] = Chapter.objects.filter(user=request.user).order_by('title');
-    context['scenes'] = Scene.objects.filter(user=request.user).order_by('name');
+    context['scenes'] = Scene.objects.filter(user=request.user).order_by('importance', 'name');
     context['characters'] = Character.objects.filter(user=request.user).order_by('-major_character', 'firstname');
     context['artifacts'] = Artifact.objects.filter(user=request.user).order_by('name');
     context['locations'] = Location.objects.filter(user=request.user).order_by('name');

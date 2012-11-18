@@ -64,7 +64,7 @@ h4 a.majorCharTitle{background:url({{ MEDIA_URL }}images/icons/star-icon.png) no
         <p class="addLink"><a href="/scene/add/" class="button medium green">add a scene</a></p>
         {% for sc in scenes %}
         <div class="charPod">
-            <h4><a href="/scene/{{sc.pk}}">{{sc}}</a></h4>
+            <h4><a {% ifequal sc.importance 'MP' %}class="majorCharTitle" title="Main plot"{% else %}title="Subplot"{% endifequal %} href="/scene/{{sc.pk}}">{{sc}}</a></h4>
             
             <div class="charBio">
                 <p class="character-description"><strong>Description:</strong><br / >
@@ -96,7 +96,7 @@ h4 a.majorCharTitle{background:url({{ MEDIA_URL }}images/icons/star-icon.png) no
         {% for ch in characters %}
             {% if ch.firstname != "Narrator" %}
             <div class="charPod">
-                <h4><a {% if ch.major_character %}class="majorCharTitle" title="major character"{% endif %} href="/character/{{ch.pk}}">{{ch}}</a></h4>
+                <h4><a {% if ch.major_character %}class="majorCharTitle" title="Major character"{% endif %} href="/character/{{ch.pk}}">{{ch}}</a></h4>
             
                 {% if ch.image %}
                 <img class="charPodImage" src="{% thumbnail ch.image 100x100 %}" alt="{{ch}}" />

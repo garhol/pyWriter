@@ -37,7 +37,15 @@ class Scene(models.Model):
     FIRSTEDIT = 'FE'
     SECONDEDIT = 'SE'
     DONE = 'DO'
-
+    
+    SUBPLOT = 'SP'
+    MAINPLOT = 'MP'
+    
+    PLOT_CHOICES = (
+        (MAINPLOT, 'Main plot'),
+        (SUBPLOT, 'Subplot'),
+    )    
+    
     STATUS_CHOICES = (
         (OUTLINE, 'Outline'),
         (DRAFT, 'Draft'),
@@ -46,9 +54,9 @@ class Scene(models.Model):
         (DONE, 'Complete'),
     )
     
-
     user = models.ForeignKey(User)
     name = models.CharField(max_length=255)
+    importance = models.CharField(max_length=15, choices=PLOT_CHOICES, default=SUBPLOT)
     status = models.CharField(max_length=15 ,choices=STATUS_CHOICES, default=OUTLINE)
     perspective = models.ForeignKey('Character', related_name='perspective', null=True, blank=True)
     chapter = models.ForeignKey(Chapter, null=True, blank=True)
@@ -117,7 +125,7 @@ class SceneForm(forms.ModelForm):
 
     class Meta:
         model = Scene
-        fields =('name', 'status', 'perspective', 'chapter', 'description', 'characters', 'location', 'artifacts', 'content')
+        fields =('name', 'status', 'importance', 'perspective', 'chapter', 'description', 'characters', 'location', 'artifacts', 'content')
 
 
 class CharacterForm(forms.ModelForm):
