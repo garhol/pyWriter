@@ -32,8 +32,24 @@ class Chapter(models.Model):
 
 
 class Scene(models.Model):
+    OUTLINE = 'OL'
+    DRAFT = 'DR'
+    FIRSTEDIT = 'FE'
+    SECONDEDIT = 'SE'
+    DONE = 'DO'
+
+    STATUS_CHOICES = (
+        (OUTLINE, 'Outline'),
+        (DRAFT, 'Draft'),
+        (FIRSTEDIT, '1st Edit'),
+        (SECONDEDIT, '2nd Edit'),
+        (DONE, 'Complete'),
+    )
+    
+
     user = models.ForeignKey(User)
     name = models.CharField(max_length=255)
+    status = models.CharField(max_length=15 ,choices=STATUS_CHOICES, default=OUTLINE)
     perspective = models.ForeignKey('Character', related_name='perspective', null=True, blank=True)
     chapter = models.ForeignKey(Chapter, null=True, blank=True)
     description = models.TextField(null=True, blank=True)
@@ -100,7 +116,7 @@ class SceneForm(forms.ModelForm):
 
     class Meta:
         model = Scene
-        fields =('name', 'perspective', 'chapter', 'description', 'characters', 'location', 'artifacts', 'content')
+        fields =('name', 'status', 'perspective', 'chapter', 'description', 'characters', 'location', 'artifacts', 'content')
 
 
 class CharacterForm(forms.ModelForm):
