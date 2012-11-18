@@ -49,10 +49,27 @@ div.charBio{float:left; max-width:290px;}
 
     <div id="scenetab" class="tabcontent">
         {% for sc in scenes %}
-        <div class="scenePod">
+        <div class="charPod">
             <h4><a href="/scene/{{sc.pk}}">{{sc}}</a></h4>
-            {{sc.description|safe}}
-            <p><a href="/scene/{{sc.pk}}">&gt; View</a></p>
+            
+            <div class="charBio">
+                <p class="character-description"><strong>Description:</strong><br / >
+                {{sc.description|striptags}}
+                </p>
+                <p class="character-description"><strong>Location:</strong><br / >
+                {% for loc in sc.location.all %}{{ loc }}{% endfor %}
+                </p>
+                <p class="character-description"><strong>Viewpoint:</strong><br / >
+                {{sc.perspective}}
+                </p>
+                <p class="character-description"><strong>Characters:</strong><br / >
+                {% for char in sc.characters.all %}{{ char }}{% if not forloop.last %}, {% endif %}{% endfor %}
+                </p>
+                <p class="character-description"><strong>Artifacts:</strong><br / >
+                {% for arti in sc.artifacts.all %}{{ arti }}{% if not forloop.last %}, {% endif %}{% endfor %}                
+                </p>
+            </div>
+            <p style="clear:left"><a href="/scene/{{sc.pk}}">&gt; View</a></p>
         </div>
         {% endfor %}
     </div>
