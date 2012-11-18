@@ -114,14 +114,14 @@ class LocationForm(forms.ModelForm):
 
     class Meta:
         model = Location
-        fields =('name', 'description')
+        fields =('name', 'description', 'image')
 
 
 class ArtifactForm(forms.ModelForm):
 
     class Meta:
         model = Artifact
-        fields =('name', 'description', 'owner', 'location')
+        fields =('name', 'description', 'image', 'owner', 'location')
 
 class StoryForm(forms.ModelForm):
 
