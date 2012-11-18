@@ -59,16 +59,16 @@ def chapter(request, chapter=None):
     if chapter:
         ch = get_object_or_404(Chapter, pk=chapter, user=request.user)
         context['chapter'] = ch
-        context['form'] = ChapterForm(instance=ch)
+        context['form'] = ChapterForm(instance=ch, user=request.user)
     else:
-        context['form'] = ChapterForm()
+        context['form'] = ChapterForm(user=request.user)
         
     if request.method == 'POST':
         if chapter:
-            form = ChapterForm(request.POST, request.FILES, instance=ch)
+            form = ChapterForm(request.POST, request.FILES, instance=ch, user=request.user)
         else:
             chapter = Chapter(user_id = request.user.pk)
-            form = ChapterForm(request.POST, request.FILES, instance=chapter)
+            form = ChapterForm(request.POST, request.FILES, instance=chapter, user=request.user)
         if form.is_valid(): # save it and tell them that all is well
             newchapter = form.save()
             messages.success(request, 'Chapter details updated.')              
@@ -145,16 +145,16 @@ def artifact(request, artifact=None):
     if (artifact):
         ar = get_object_or_404(Artifact, pk=artifact, user=request.user)
         context['artifact'] = ar       
-        context['form'] = ArtifactForm(instance=ar)
+        context['form'] = ArtifactForm(instance=ar, user=request.user)
     else:
-        context['form'] = ArtifactForm()
+        context['form'] = ArtifactForm(user=request.user)
     
     if request.method == 'POST':
         if (artifact):
-            form = ArtifactForm(request.POST, request.FILES, instance=ar)
+            form = ArtifactForm(request.POST, request.FILES, instance=ar, user=request.user)
         else:
             artifact = Artifact(user_id = request.user.pk)
-            form = ArtifactForm(request.POST, request.FILES, instance=artifact)
+            form = ArtifactForm(request.POST, request.FILES, instance=artifact, user=request.user)
         if form.is_valid(): # save it and tell them that all is well
             form.save()
             messages.success(request, 'Artifact details updated.')

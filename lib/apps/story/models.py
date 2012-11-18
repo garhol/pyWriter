@@ -116,6 +116,7 @@ class SceneForm(forms.ModelForm):
         super (SceneForm, self).__init__(*args,**kwargs) # populates the post
         
         self.fields['perspective'].queryset = Character.objects.filter(user=self.user)
+        self.fields['chapter'].queryset = Chapter.objects.filter(user=self.user)
         self.fields['characters'].queryset = Character.objects.filter(user=self.user)
         self.fields['location'].queryset = Location.objects.filter(user=self.user)
         self.fields['artifacts'].queryset = Artifact.objects.filter(user=self.user)
@@ -143,7 +144,13 @@ class LocationForm(forms.ModelForm):
 
 
 class ArtifactForm(forms.ModelForm):
-
+    def __init__(self, *args,**kwargs):
+        self.user = kwargs.pop('user', None) # get user for the scene form to limit the content
+        super (ArtifactForm, self).__init__(*args,**kwargs) # populates the post
+        
+        self.fields['owner'].queryset = Character.objects.filter(user=self.user)
+        self.fields['location'].queryset = Location.objects.filter(user=self.user)
+        
     class Meta:
         model = Artifact
         fields =('name', 'description', 'image', 'owner', 'location')
@@ -156,7 +163,12 @@ class StoryForm(forms.ModelForm):
 
 
 class ChapterForm(forms.ModelForm):
-
+    def __init__(self, *args,**kwargs):
+        self.user = kwargs.pop('user', None) # get user for the scene form to limit the content
+        super (ChapterForm, self).__init__(*args,**kwargs) # populates the post
+        
+        self.fields['story'].queryset = Story.objects.filter(user=self.user)
+    
     class Meta:
         model = Chapter
         fields =('story', 'title', 'weight')
