@@ -104,7 +104,7 @@ div.charBio{float:left; max-width:290px;}
             {% if a.image %}
                 <img class="charPodImage" src="{% thumbnail a.image 100x100 %}" alt="{{a}}" />
             {% else %}
-                <img class="charPodImage" src="{{ MEDIA_URL }}images/icons/nocharacter.png" alt="{{a}}" style="width:100px" />
+                <img class="charPodImage" src="{{ MEDIA_URL }}images/icons/artifact-icon.jpg" alt="{{a}}" style="width:100px" />
             {% endif %}
             <div class="charBio">
                 <p class="character-description"><strong>Description:</strong><br />{{a.description|truncatewords:30}}</p>
@@ -122,7 +122,7 @@ div.charBio{float:left; max-width:290px;}
                 {% if l.image %}
                     <img class="charPodImage" src="{% thumbnail l.image 100x100 %}" alt="{{l}}" />
                 {% else %}
-                    <img class="charPodImage" src="{{ MEDIA_URL }}images/icons/nocharacter.png" alt="{{l}}" style="width:100px" />
+                    <img class="charPodImage" src="{{ MEDIA_URL }}images/icons/location-icon.png" alt="{{l}}" style="width:100px" />
                 {% endif %}
                 <div class="charBio">
                     <p class="character-description"><strong>Description:</strong><br />{{l.description|truncatewords:30}}</p>

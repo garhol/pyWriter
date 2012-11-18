@@ -10,7 +10,7 @@
     {% if location.image %}
         <img  src="{% thumbnail artifact.image 200x200 %}"  alt="{{artifact}}" class="characterImage" />
     {% else %}
-        <img class="charPodImage" src="{{ MEDIA_URL }}images/icons/nocharacter.png" alt="{{artifact}}" style="width:200px" />
+        <img class="charPodImage" src="{{ MEDIA_URL }}images/icons/artifact-icon.jpg" alt="{{artifact}}" style="width:200px" />
     {% endif %}
         </div>
 {% endblock %}
