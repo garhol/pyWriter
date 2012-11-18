@@ -68,6 +68,7 @@ class Character(models.Model):
     middlename = models.CharField(max_length=255, blank=True)
     lastname = models.CharField(max_length=255, blank=True)
     nicknames = models.TextField(null=True, blank=True)
+    major_character = models.BooleanField(default=False)
     description = models.TextField(null=True, blank=True)
     image = models.ImageField(upload_to='characters/%Y/%m/%d', null=True, blank=True)
     bio = models.TextField(null=True, blank=True)
@@ -123,7 +124,7 @@ class CharacterForm(forms.ModelForm):
 
     class Meta:
         model = Character
-        fields =('firstname', 'middlename', 'lastname', 'nicknames', 'description', 'image', 'bio', 'date_of_birth', 'date_of_death')
+        fields =('firstname', 'middlename', 'lastname', 'nicknames', 'major_character', 'description', 'image', 'bio', 'date_of_birth', 'date_of_death')
 
 
 class LocationForm(forms.ModelForm):
