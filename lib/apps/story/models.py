@@ -15,6 +15,7 @@ class Story(models.Model):
     user = models.ForeignKey(User)
     title = models.CharField(max_length=256)
     author = models.CharField(max_length=128)
+    synopsis = models.TextField(blank=True)
     genre = models.ForeignKey(Genre, null=True, blank=True)
     fiction = models.BooleanField(default=True)
 
@@ -159,7 +160,7 @@ class StoryForm(forms.ModelForm):
 
     class Meta:
         model = Story
-        fields =('title', 'author', 'genre', 'fiction')
+        fields =('title', 'author', 'synopsis', 'genre', 'fiction')
 
 
 class ChapterForm(forms.ModelForm):
