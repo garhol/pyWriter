@@ -1,42 +1,7 @@
-{% extends "base-templates/base.html" %}
-
+{% extends "story/base_edit_page.html" %}
+{% load thumbnail %}
 
 {% block "rh" %}
     {{block.super}}
 
 {% endblock %}
-
-{% block "main" %}
-<style type="text/css">
-p label{float:left; width:100%}
-p.input{float:left; width:100%}
-p select{float:left;}
-#id_content{ width:100%; height:400px;}
-span.helptext{font-size:0.8em; float:left;}
-.formRow{clear:left; padding:10px;}
-.formRow label {width:120px; float:left;}
-select{min-width:200px;}
-ul.messages li.success{color:green;}
-ul.messages li.error{color:red;}
-span.required:after { content: "*"; }
-
-</style>
-
-<form enctype="multipart/form-data" action="" method="post">
-	{% csrf_token %}
-     {% for field in form %}
-        <div class="formRow">
-            {{ field.errors }}
-             <label for="{{ field.auto_id }}">
-                {% if field.field.required %}<span class="required">{{ field.label }}</span>
-                {% else %}{{ field.label }}{% endif %}
-            </label>
-            {{ field }}
-            {{ field.help_text }}
-        </div>
-    {% endfor %}
-    
-	
-	<input type="submit" value="Submit" />
-</form>
-{% endblock "main" %}
