@@ -188,7 +188,7 @@ def scene(request, scene=None):
         if form.is_valid(): # save it and tell them that all is well
             newscene = form.save()
             messages.success(request, 'Scene details updated.')             
-            return HttpResponseRedirect(reverse('edit_Scene', args=(newscene.pk,)))
+            return HttpResponseRedirect(reverse('edit_scene', args=(newscene.pk,)))
         else: # bung an error
             messages.error(request, 'There was an error - Look out below.')
             return render_to_response(template, context, context_instance=RequestContext(request))
