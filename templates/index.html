@@ -16,6 +16,7 @@ img.charPodImage{display:block; margin-left:0.5em; float:left;}
 div.charPod p.character-description{float:left; padding-top:0px; clear:left;}
 div.charPod{width:400px;}
 div.charBio{float:left; max-width:290px;}
+h4 a.majorCharTitle{background:url({{ MEDIA_URL }}images/icons/star-icon.png) no-repeat top right;}
 </style>
 <link href="{{ MEDIA_URL }}css/tabcontent.css" rel="stylesheet" type="text/css" />
 <script src="{{ MEDIA_URL }}js/tabcontent.js" type="text/javascript"></script>
@@ -95,7 +96,7 @@ div.charBio{float:left; max-width:290px;}
         {% for ch in characters %}
             {% if ch.firstname != "Narrator" %}
             <div class="charPod">
-                <h4><a href="/character/{{ch.pk}}">{{ch}}</a></h4>
+                <h4><a {% if ch.major_character %}class="majorCharTitle" title="major character"{% endif %} href="/character/{{ch.pk}}">{{ch}}</a></h4>
             
                 {% if ch.image %}
                 <img class="charPodImage" src="{% thumbnail ch.image 100x100 %}" alt="{{ch}}" />
