@@ -68,6 +68,9 @@ div.charBio{float:left; max-width:290px;}
                 <p class="character-description"><strong>Artifacts:</strong><br / >
                 {% for arti in sc.artifacts.all %}{{ arti }}{% if not forloop.last %}, {% endif %}{% endfor %}                
                 </p>
+                <p class="character-description"><strong>Status:</strong><br / >
+                    {{ sc.get_status_display }}
+                </p>
             </div>
             <p style="clear:left"><a href="/scene/{{sc.pk}}">&gt; View</a></p>
         </div>

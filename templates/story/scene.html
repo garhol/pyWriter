@@ -53,6 +53,7 @@ span.helptext{font-size:0.8em; float:left;}
 select{min-width:200px;}
 ul.messages li.success{color:green;}
 ul.messages li.error{color:red;}
+span.required:after { content: "*"; }
 
 .ac-container{
     width: 200px;
@@ -143,7 +144,11 @@ ul.messages li.error{color:red;}
      {% for field in form %}
         <div class="formRow">
             {{ field.errors }}
-            {{ field.label_tag }}{{ field }}
+             <label for="{{ field.auto_id }}">
+                {% if field.field.required %}<span class="required">{{ field.label }}</span>
+                {% else %}{{ field.label }}{% endif %}
+            </label>
+            {{ field }}
             {{ field.help_text }}
         </div>
     {% endfor %}
