@@ -22,11 +22,9 @@
 
 
 {% block "main" %}
-
-
 <form enctype="multipart/form-data" action="" method="post">
 	{% csrf_token %}
-     {% for field in form %}
+     {% for field in user_form %}
         <div class="formRow">
             {{ field.errors }}
              <label for="{{ field.auto_id }}">

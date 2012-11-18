@@ -35,6 +35,7 @@ urlpatterns += patterns('',
 urlpatterns += patterns('',
    url(r'^login/$', 'pyWriter.lib.apps.login.views.login_view', name="login_view"),
    url(r'^logout/$', 'pyWriter.lib.apps.login.views.logout_view'),
+   url(r'^signup/$', 'pyWriter.lib.apps.login.views.create_user_view', name="signup"),
 )
 
 urlpatterns += patterns('',
