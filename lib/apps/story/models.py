@@ -66,7 +66,12 @@ class Scene(models.Model):
     location = models.ManyToManyField('Location', null=True, blank=True)
     artifacts = models.ManyToManyField('Artifact', null=True, blank=True)
     content = models.TextField(null=True, blank=True)
-
+    word_target = models.IntegerField(blank=True, default=1000)
+    word_count = models.IntegerField(blank=True, null=True) 
+    
+    def get_percentage_complete(self):
+        return int((float(self.word_count) / float(self.word_target))*100)
+        
     def __unicode__(self):
         return self.name
        
@@ -127,7 +132,7 @@ class SceneForm(forms.ModelForm):
 
     class Meta:
         model = Scene
-        fields =('name', 'status', 'importance', 'perspective', 'chapter', 'description', 'characters', 'location', 'artifacts', 'content')
+        fields =('name', 'word_target', 'status', 'importance', 'perspective', 'chapter', 'description', 'characters', 'location', 'artifacts', 'content')
 
 
 class CharacterForm(forms.ModelForm):
@@ -178,6 +183,11 @@ from django.db.models.signals import pre_save
 from django.dispatch import receiver
 
 
+@receiver(pre_save, sender=Scene)
+def create_wordcount(instance, **kwargs):
+    words = instance.content.split()
+    instance.word_count = len(words)
+    
 @receiver(pre_save, sender=Scene)
 def create_narrator(instance, **kwargs):
     if not instance.pk:

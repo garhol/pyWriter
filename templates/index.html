@@ -86,6 +86,8 @@ h4 a.majorCharTitle{background:url({{ MEDIA_URL }}images/icons/star-icon.png) no
                 <p class="character-description"><strong>Status:</strong><br / >
                     {{ sc.get_status_display }}
                 </p>
+                <p class="character-description"><strong>{{ sc.get_percentage_complete }}% complete</strong><br / >
+                Scene contains {{sc.word_count}} word{% ifnotequal sc.word_count 1 %}s{% endifnotequal %} with a target of {{sc.word_target}}</p>
             </div>
             <p style="clear:left"><a href="/scene/{{sc.pk}}" class="button medium green">View</a></p>
         </div>
