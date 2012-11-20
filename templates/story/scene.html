@@ -1,128 +1,158 @@
-{% extends "story/base_edit_page.html" %}
+{% extends "base-templates/base_wide.html" %}
 {% load thumbnail %}
 
 {% block "css" %}
     {{block.super}}
-    <style type="text/css">
-      .ac-container{
-            width: 200px;
-            margin: 10px auto 30px auto;
-        }
-
-        .ac-container label{
-            font-family: 'BebasNeueRegular', 'Arial Narrow', Arial, sans-serif;
-            padding: 5px 20px;
-            position: relative;
-            z-index: 20;
-            display: block;
-            height: 30px;
-            cursor: pointer;
-            color: #777;
-            text-shadow: 1px 1px 1px rgba(255,255,255,0.8);
-            line-height: 33px;
-            font-size: 19px;
-            background: #ffffff;
-            background: -moz-linear-gradient(top, #ffffff 1%, #eaeaea 100%);
-            background: -webkit-gradient(linear, left top, left bottom, color-stop(1%,#ffffff), color-stop(100%,#eaeaea));
-            background: -webkit-linear-gradient(top, #ffffff 1%,#eaeaea 100%);
-            background: -o-linear-gradient(top, #ffffff 1%,#eaeaea 100%);
-            background: -ms-linear-gradient(top, #ffffff 1%,#eaeaea 100%);
-            background: linear-gradient(top, #ffffff 1%,#eaeaea 100%);
-            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#eaeaea',GradientType=0 );
-            box-shadow: 
-                0px 0px 0px 1px rgba(155,155,155,0.3), 
-                1px 0px 0px 0px rgba(255,255,255,0.9) inset, 
-                0px 2px 2px rgba(0,0,0,0.1);
-        }
-
-        .ac-container label:hover{
-            background: #fff;
-        }
-
-        .ac-container input:checked + label, .ac-container input:checked + label:hover{
-            background: #c6e1ec;
-            color: #3d7489;
-            text-shadow: 0px 1px 1px rgba(255,255,255, 0.6);
-            box-shadow: 
-                0px 0px 0px 1px rgba(155,155,155,0.3), 
-                0px 2px 2px rgba(0,0,0,0.1);
-        }
-
-        .ac-container input{
-            display: none;
-        }
-
-        .ac-container article{
-            background: rgba(255, 255, 255, 1);
-            margin-top: -1px;
-            overflow: hidden;
-            height: 0px;
-            position: relative;
-            z-index: 10;
-            transition: 
-                height 0.3s ease-in-out, 
-                box-shadow 0.6s linear;
-        }
-        .ac-container input:checked ~ article{
-            transition: 
-                height 0.5s ease-in-out, 
-                box-shadow 0.1s linear;
-            box-shadow: 0px 0px 0px 1px rgba(155,155,155,0.3);
-        }
-
-        .ac-container article p{
-            font-style: italic;
-            color: #777;
-            padding: 0.5em;
-        }
-
-        .ac-container input:checked ~ article.ac-small{
-            height: 140px;
-        }
-        .ac-container input:checked ~ article.ac-medium{
-            height: 180px;
-        }
-        .ac-container input:checked ~ article.ac-large{
-            height: 230px;
-        }
-    </style>  
+    <link href="{{ MEDIA_URL }}css/tabcontent.css" rel="stylesheet" type="text/css" />
 {% endblock %}
 
-
-{% block "rh" %}
+{% block "javascript" %}
     {{block.super}}
-    <h3>{{scene.name}}</h3>
+<script src="{{ MEDIA_URL }}js/tabcontent.js" type="text/javascript"></script>
+{% endblock %}
 
-    <section class="ac-container">
-        <div>
-            <input id="ac-1" name="accordion-1" type="radio" checked />
-            <label for="ac-1">Characters ({{characters.count}})</label>
-            <article class="ac-small">
-                {% for c in characters %}
-                    <p><a href="/character/{{c.pk}}">{{ c }}</a></p>
-                {% endfor %}
-            </article>
-        </div>
-        <div>
-            <input id="ac-2" name="accordion-1" type="radio" />
-            <label for="ac-2">Artifacts ({{artifacts.count}})</label>
-            <article class="ac-small">
-                {% for a in artifacts %}
-                    <p><a href="/artifact/{{a.pk}}">{{ a }}</a></p>
-                {% endfor %}
-            </article>
-        </div>
-        <div>
-            <input id="ac-3" name="accordion-1" type="radio" />
-            <label for="ac-3">Locations ({{locations.count}})</label>
-            <article class="ac-small">
-                {% for l in locations %}
-                    <p><a href="/location/{{l.pk}}">{{ l }}</a></p>
-                {% endfor %}
-            </article>
-        </div>
+{% block "main" %}
 
-    </section>
+<ul class="tabs">
+    <li><a href="#" rel="contenttab">Content</a></li>
+    <li><a href="#" rel="basictab">Basic/Required Settings</a></li>
+    <li><a href="#" rel="advancedtab">Advanced Settings</a></li>    
+</ul>
+<form enctype="multipart/form-data" action="" method="post">
+    {% csrf_token %}
+    <div class="tabcontents clearfix">
+    
+        <div id="contenttab" class="tabcontent">
+            {{ form.content }}
+        </div>
+        <div id="basictab" class="tabcontent">
+            <div class="formRow">
+                    {{ form.name.errors }}
+                 <label for="{{ form.name.auto_id }}">
+                    {% if form.name.field.required %}<span class="required">{{ form.name.label }}</span>
+                    {% else %}{{ form.name.label }}{% endif %}
+                 </label>
+                 {{ form.name }}
+                 <p class="helpText">{{ form.name.help_text }} </p>
+            </div>
+            <div class="formRow">
+                    {{ form.status.errors }}
+                 <label for="{{ form.status.auto_id }}">
+                    {% if form.status.field.required %}<span class="required">{{ form.status.label }}</span>
+                    {% else %}{{ form.status.label }}{% endif %}
+                 </label>
+                 {{ form.status }}
+                 <p class="helpText">{{ form.status.help_text }} </p>
+             </div>
+             <div class="formRow">
+                    {{ form.importance.errors }}
+                 <label for="{{ form.importance.auto_id }}">
+                    {% if form.importance.field.required %}<span class="required">{{ form.importance.label }}</span>
+                    {% else %}{{ form.importance.label }}{% endif %}
+                 </label>
+                 {{ form.importance }}
+                 <p class="helpText">{{ form.importance.help_text }} </p>
+             </div>
+             <div class="formRow">
+                    {{ form.description.errors }}
+                 <label for="{{ form.description.auto_id }}">
+                    {% if form.description.field.required %}<span class="required">{{ form.description.label }}</span>
+                    {% else %}{{ form.description.label }}{% endif %}
+                 </label>
+                 {{ form.description }}
+                 <p class="helpText">{{ form.description.help_text }} </p>
+             </div>
+            
+        </div>
+        <div id="advancedtab" class="tabcontent">
+            <div class="formRow">
+                    {{ form.word_target.errors }}
+                 <label for="{{ form.word_target.auto_id }}">
+                    {% if form.word_target.field.required %}<span class="required">{{ form.word_target.label }}</span>
+                    {% else %}{{ form.word_target.label }}{% endif %}
+                 </label>
+                 {{ form.word_target }}
+                 <p class="helpText">{{ form.word_target.help_text }} </p>
+             </div>
+             <div class="formRow">
+                    {{ form.perspective.errors }}
+                 <label for="{{ form.perspective.auto_id }}">
+                    {% if form.perspective.field.required %}<span class="required">{{ form.perspective.label }}</span>
+                    {% else %}{{ form.perspective.label }}{% endif %}
+                 </label>
+                 {{ form.perspective }}
+                 <p class="helpText">{{ form.perspective.help_text }} </p>
+             </div>
+             <div class="formRow">
+                    {{ form.chapter.errors }}
+                 <label for="{{ form.chapter.auto_id }}">
+                    {% if form.chapter.field.required %}<span class="required">{{ form.chapter.label }}</span>
+                    {% else %}{{ form.chapter.label }}{% endif %}
+                 </label>
+                 {{ form.chapter }}
+                 <p class="helpText">{{ form.chapter.help_text }} </p>
+             </div>
+             <div class="formRow">
+                    {{ form.characters.errors }}
+                 <label for="{{ form.characters.auto_id }}">
+                    {% if form.characters.field.required %}<span class="required">{{ form.characters.label }}</span>
+                    {% else %}{{ form.characters.label }}{% endif %}
+                 </label>
+                 {{ form.characters }}
+                 <p class="helpText">{{ form.characters.help_text }} </p>
+             </div>
+             <div class="formRow">
+                    {{ form.location.errors }}
+                 <label for="{{ form.location.auto_id }}">
+                    {% if form.location.field.required %}<span class="required">{{ form.location.label }}</span>
+                    {% else %}{{ form.location.label }}{% endif %}
+                 </label>
+                 {{ form.location }}
+                 <p class="helpText">{{ form.location.help_text }} </p>
+             </div>
+             <div class="formRow">
+                    {{ form.artifacts.errors }}
+                 <label for="{{ form.artifacts.auto_id }}">
+                    {% if form.artifacts.field.required %}<span class="required">{{ form.artifacts.label }}</span>
+                    {% else %}{{ form.artifacts.label }}{% endif %}
+                 </label>
+                 {{ form.artifacts }}
+                 <p class="helpText">{{ form.artifacts.help_text }} </p>
+             </div>
+            
+            
+        </div>
     
     </div>
-{% endblock %}
+    <input type="submit" value="Submit" />
+</form>
+
+{% if characters %}
+<div class="buttons" style="float:left; width:30%; margin-top:1em;">
+    <p>Characters</p>
+    {% for c in characters %}
+        <a class="button green medium" href="/character/{{c.pk}}">{{ c }}</a>
+    {% endfor %}
+</div>
+{% endif %}
+
+{% if artifacts %}
+<div class="buttons" style="float:left; width:30%; margin-top:1em;">
+    <p>Artifacts</p>
+    {% for a in artifacts %}
+        <a class="button green medium" href="/artifact/{{a.pk}}">{{ a }}</a>
+    {% endfor %}
+</div>
+{% endif %}
+
+{% if locations %}
+<div class="buttons" style="float:left; width:30%; margin-top:1em;">
+    <p>Locations</p>
+    {% for l in locations %}
+        <a class="button green medium" href="/location/{{l.pk}}">{{ l }}</a>
+    {% endfor %}
+</div>
+{% endif %}
+
+{% endblock "main" %}	
+
