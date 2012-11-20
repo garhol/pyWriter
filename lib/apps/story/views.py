@@ -8,24 +8,31 @@ from django.contrib import messages
 
 from .models import Story, Chapter, Scene, Character, Artifact, Location, SceneForm, CharacterForm, ArtifactForm, LocationForm, StoryForm, ChapterForm
 
+
 @login_required
 def index(request):
-    context ={}   
-    template = 'index.html'    
+    context = {}
+    template = 'index.html'
     context['title'] = "logged in"
     context['user'] = request.user
-    context['stories'] = Story.objects.filter(user=request.user).order_by('title');
-    context['chapters'] = Chapter.objects.filter(user=request.user).order_by('title');
-    context['scenes'] = Scene.objects.filter(user=request.user).order_by('importance', 'name');
-    context['characters'] = Character.objects.filter(user=request.user).order_by('-major_character', 'firstname');
-    context['artifacts'] = Artifact.objects.filter(user=request.user).order_by('name');
-    context['locations'] = Location.objects.filter(user=request.user).order_by('name');
+    context['stories'] = Story.objects.filter(
+        user=request.user).order_by('title')
+    context['chapters'] = Chapter.objects.filter(
+        user=request.user).order_by('title')
+    context['scenes'] = Scene.objects.filter(
+        user=request.user).order_by('importance', 'name')
+    context['characters'] = Character.objects.filter(
+        user=request.user).order_by('-major_character', 'firstname')
+    context['artifacts'] = Artifact.objects.filter(
+        user=request.user).order_by('name')
+    context['locations'] = Location.objects.filter(
+        user=request.user).order_by('name')
     return render_to_response(template, context, context_instance=RequestContext(request))
 
 
 @login_required
 def story(request, story=None):
-    context ={}
+    context = {}
     template = 'story/story.html'
     if story:
         st = get_object_or_404(Story, pk=story, user=request.user)
@@ -33,28 +40,29 @@ def story(request, story=None):
         context['form'] = StoryForm(instance=st)
     else:
         context['form'] = StoryForm()
-        
+
     if request.method == 'POST':
         if story:
             form = StoryForm(request.POST, request.FILES, instance=st)
         else:
-            story = Story(user_id = request.user.pk)
+            story = Story(user_id=request.user.pk)
             form = StoryForm(request.POST, request.FILES, instance=story)
-        if form.is_valid(): # save it and tell them that all is well
+        if form.is_valid():  # save it and tell them that all is well
             newstory = form.save()
-            messages.success(request, 'Story details updated.')              
+            messages.success(request, 'Story details updated.')
             return HttpResponseRedirect(reverse('edit_story', args=(newstory.pk,)))
             #return render_to_response(template, context, context_instance=RequestContext(request))
-        else: # bung an error
+        else:  # bung an error
             messages.error(request, 'There was an error - Look out below.')
-            
+
             return render_to_response(template, context, context_instance=RequestContext(request))
-    else: # not in post, show them the location
+    else:  # not in post, show them the location
         return render_to_response(template, context, context_instance=RequestContext(request))
+
 
 @login_required
 def chapter(request, chapter=None):
-    context ={}
+    context = {}
     template = 'story/chapter.html'
     if chapter:
         ch = get_object_or_404(Chapter, pk=chapter, user=request.user)
@@ -62,56 +70,60 @@ def chapter(request, chapter=None):
         context['form'] = ChapterForm(instance=ch, user=request.user)
     else:
         context['form'] = ChapterForm(user=request.user)
-        
+
     if request.method == 'POST':
         if chapter:
-            form = ChapterForm(request.POST, request.FILES, instance=ch, user=request.user)
+            form = ChapterForm(
+                request.POST, request.FILES, instance=ch, user=request.user)
         else:
-            chapter = Chapter(user_id = request.user.pk)
-            form = ChapterForm(request.POST, request.FILES, instance=chapter, user=request.user)
-        if form.is_valid(): # save it and tell them that all is well
+            chapter = Chapter(user_id=request.user.pk)
+            form = ChapterForm(request.POST, request.FILES,
+                               instance=chapter, user=request.user)
+        if form.is_valid():  # save it and tell them that all is well
             newchapter = form.save()
-            messages.success(request, 'Chapter details updated.')              
+            messages.success(request, 'Chapter details updated.')
             return HttpResponseRedirect(reverse('edit_chapter', args=(newchapter.pk,)))
             #return render_to_response(template, context, context_instance=RequestContext(request))
-        else: # bung an error
+        else:  # bung an error
             messages.error(request, 'There was an error - Look out below.')
-            
+
             return render_to_response(template, context, context_instance=RequestContext(request))
-    else: # not in post, show them the location
+    else:  # not in post, show them the location
         return render_to_response(template, context, context_instance=RequestContext(request))
 
-        
+
 @login_required
 def character(request, character=None):
-    context ={}
+    context = {}
     template = 'story/character.html'
     if character:
         ch = get_object_or_404(Character, pk=character, user=request.user)
         context['character'] = ch
-        context['form'] = CharacterForm(instance=ch)              
+        context['form'] = CharacterForm(instance=ch)
     else:
         context['form'] = CharacterForm()
-    
+
     if request.method == 'POST':
         if character:
-            form = CharacterForm(request.POST, request.FILES, instance = ch)
+            form = CharacterForm(request.POST, request.FILES, instance=ch)
         else:
-            character = Character(user_id = request.user.pk)
-            form = CharacterForm(request.POST, request.FILES, instance = character)
-        if form.is_valid(): # save it and tell them that all is well
+            character = Character(user_id=request.user.pk)
+            form = CharacterForm(
+                request.POST, request.FILES, instance=character)
+        if form.is_valid():  # save it and tell them that all is well
             newcharacter = form.save()
-            messages.success(request, 'Character details updated.')             
+            messages.success(request, 'Character details updated.')
             return HttpResponseRedirect(reverse('edit_character', args=(newcharacter.pk,)))
-        else: # bung an error
+        else:  # bung an error
             messages.error(request, 'There was an error - Look out below.')
             return render_to_response(template, context, context_instance=RequestContext(request))
-    else: # not in post, show them the scene
+    else:  # not in post, show them the scene
         return render_to_response(template, context, context_instance=RequestContext(request))
+
 
 @login_required
 def location(request, location=None):
-    context ={}
+    context = {}
     template = 'story/location.html'
     if location:
         lo = get_object_or_404(Location, pk=location, user=request.user)
@@ -119,78 +131,87 @@ def location(request, location=None):
         context['form'] = LocationForm(instance=lo)
     else:
         context['form'] = LocationForm()
-        
+
     if request.method == 'POST':
         if location:
             form = LocationForm(request.POST, request.FILES, instance=lo)
         else:
-            location = Location(user_id = request.user.pk)
+            location = Location(user_id=request.user.pk)
             form = LocationForm(request.POST, request.FILES, instance=location)
-        if form.is_valid(): # save it and tell them that all is well
+        if form.is_valid():  # save it and tell them that all is well
             newlocation = form.save()
-            messages.success(request, 'Location details updated.')             
+            messages.success(request, 'Location details updated.')
             return HttpResponseRedirect(reverse('edit_location', args=(newlocation.pk,)))
-        else: # bung an error
+        else:  # bung an error
             messages.error(request, 'There was an error - Look out below.')
-            
+
             return render_to_response(template, context, context_instance=RequestContext(request))
-    else: # not in post, show them the location
+    else:  # not in post, show them the location
         return render_to_response(template, context, context_instance=RequestContext(request))
- 
+
+
 @login_required
 def artifact(request, artifact=None):
-    context ={}
+    context = {}
     template = 'story/artifact.html'
     if (artifact):
         ar = get_object_or_404(Artifact, pk=artifact, user=request.user)
-        context['artifact'] = ar       
+        context['artifact'] = ar
         context['form'] = ArtifactForm(instance=ar, user=request.user)
     else:
         context['form'] = ArtifactForm(user=request.user)
-    
+
     if request.method == 'POST':
         if (artifact):
-            form = ArtifactForm(request.POST, request.FILES, instance=ar, user=request.user)
+            form = ArtifactForm(
+                request.POST, request.FILES, instance=ar, user=request.user)
         else:
-            artifact = Artifact(user_id = request.user.pk)
-            form = ArtifactForm(request.POST, request.FILES, instance=artifact, user=request.user)
-        if form.is_valid(): # save it and tell them that all is well
+            artifact = Artifact(user_id=request.user.pk)
+            form = ArtifactForm(request.POST, request.FILES,
+                                instance=artifact, user=request.user)
+        if form.is_valid():  # save it and tell them that all is well
             newartifact = form.save()
-            messages.success(request, 'Artifact details updated.')             
+            messages.success(request, 'Artifact details updated.')
             return HttpResponseRedirect(reverse('edit_artifact', args=(newartifact.pk,)))
-        else: # bung an error
+        else:  # bung an error
             messages.error(request, 'There was an error - Look out below.')
             return render_to_response(template, context, context_instance=RequestContext(request))
-    else: # not in post, show them the artifact
+    else:  # not in post, show them the artifact
         return render_to_response(template, context, context_instance=RequestContext(request))
-            
-@login_required                  
+
+
+@login_required
 def scene(request, scene=None):
-    context ={}
+    context = {}
     template = 'story/scene.html'
     if(scene):
         sc = get_object_or_404(Scene, pk=scene, user=request.user)
         context['scene'] = sc
         context['user'] = request.user
-        context['characters'] = Character.objects.filter(scene=sc, user=request.user)
-        context['locations'] = Location.objects.filter(scene=sc, user=request.user)
-        context['artifacts'] = Artifact.objects.filter(scene=sc, user=request.user)
+        context['characters'] = Character.objects.filter(
+            scene=sc, user=request.user)
+        context['locations'] = Location.objects.filter(
+            scene=sc, user=request.user)
+        context['artifacts'] = Artifact.objects.filter(
+            scene=sc, user=request.user)
         context['form'] = SceneForm(instance=sc, user=request.user)
     else:
         context['form'] = SceneForm(user=request.user)
-        
+
     if request.method == 'POST':
         if (scene):
-            form = SceneForm(request.POST, request.FILES, instance=sc, user=request.user)
+            form = SceneForm(
+                request.POST, request.FILES, instance=sc, user=request.user)
         else:
-            scene = Scene(user_id = request.user.pk)
-            form = SceneForm(request.POST, request.FILES, instance=scene, user=request.user)
-        if form.is_valid(): # save it and tell them that all is well
+            scene = Scene(user_id=request.user.pk)
+            form = SceneForm(request.POST, request.FILES,
+                             instance=scene, user=request.user)
+        if form.is_valid():  # save it and tell them that all is well
             newscene = form.save()
-            messages.success(request, 'Scene details updated.')             
+            messages.success(request, 'Scene details updated.')
             return HttpResponseRedirect(reverse('edit_scene', args=(newscene.pk,)))
-        else: # bung an error
+        else:  # bung an error
             messages.error(request, 'There was an error - Look out below.')
             return render_to_response(template, context, context_instance=RequestContext(request))
-    else: # not in post, show them the scene
+    else:  # not in post, show them the scene
         return render_to_response(template, context, context_instance=RequestContext(request))
