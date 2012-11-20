@@ -1,0 +1,26 @@
+<!doctype html>
+<head>
+  <title>{% block "title" %}pyWriter{% endblock %}</title>
+  <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/screen.css" />
+  {% block "css" %}
+  <style type="text/css">
+      h1, h2, h3, h4 {font-family:georgia}
+    .preview{width: 300px; padding: 10px; margin: 4px 7px;}
+    .previewName{margin:0; font-size:1.4em; min-width:160px;}
+    .previewAlias{font-size: 0.9em;font-style: italic;min-width:160px;}
+    .previewThumb{float:left; margin-right: 1em; }
+    .noPreview{width:120px}
+    .previewParticulars{margin-top:0.4em; float:left}
+    html, body {border:none; margin:0; padding:0; overflow-y:hidden; overflow-x:hidden;}
+  </style>
+  {% endblock %}
+</head>
+
+<body>
+    <div class="preview clearfix">
+    {% block "content" %}
+    
+    {% endblock %}
+    </div>
+</body>
+</html>

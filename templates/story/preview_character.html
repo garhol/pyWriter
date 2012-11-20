@@ -1,0 +1,19 @@
+{% extends "base-templates/preview.html" %}
+{% load thumbnail %}
+
+{% block "content" %}
+    {% if character.image %}
+        <img class="previewThumb" src="{% thumbnail character.image 120x120 %}"  alt="{{character}}" />
+    {% else %}
+        <img class="previewThumb noPreview" src="{{ MEDIA_URL }}images/icons/nocharacter.png" alt="{{character}}" />
+    {% endif %}
+    <h3 class="previewName">{% if character.firstname %}{{character.firstname}}{% endif %}{% if character.middlename %} {{character.middlename}}{% endif %}{% if character.lastname %} {{character.lastname}}{% endif %}</h3>
+    {% if character.nicknames %}
+    <h4 class="previewAlias">aka {{character.nicknames}}</h4>{% endif %}
+    <div class="previewParticulars">
+        {% if character.date_of_birth %}<p><strong>Born:</strong> {{character.date_of_birth}}</p>{% endif %}
+        {% if character.date_of_death %}<p><strong>Died:</strong> {{character.date_of_death}}</p>{% endif %}
+        {% if character.description %}<p><strong>Desc:</strong> {{character.description}}</p>{% endif %}
+        {% if character.bio %}<p><strong>Bio:</strong> {{character.bio}}</p>{% endif %}
+    </div>
+{% endblock %}

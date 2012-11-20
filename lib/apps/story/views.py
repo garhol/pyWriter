@@ -122,6 +122,18 @@ def character(request, character=None):
 
 
 @login_required
+def preview_character(request, character):
+    context = {}
+    template = 'story/preview_character.html'
+    if character:
+        ch = get_object_or_404(Character, pk=character, user=request.user)
+        context['character'] = ch
+    else:
+        context['error'] = "Character matching query does not exist"
+    return render_to_response(template, context, context_instance=RequestContext(request))
+
+
+@login_required
 def location(request, location=None):
     context = {}
     template = 'story/location.html'
