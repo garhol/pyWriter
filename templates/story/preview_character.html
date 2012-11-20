@@ -10,10 +10,11 @@
     <h3 class="previewName">{% if character.firstname %}{{character.firstname}}{% endif %}{% if character.middlename %} {{character.middlename}}{% endif %}{% if character.lastname %} {{character.lastname}}{% endif %}</h3>
     {% if character.nicknames %}
     <h4 class="previewAlias">aka {{character.nicknames}}</h4>{% endif %}
-    <div class="previewParticulars">
         {% if character.date_of_birth %}<p><strong>Born:</strong> {{character.date_of_birth}}</p>{% endif %}
         {% if character.date_of_death %}<p><strong>Died:</strong> {{character.date_of_death}}</p>{% endif %}
+    <div class="previewParticulars">
         {% if character.description %}<p><strong>Desc:</strong> {{character.description}}</p>{% endif %}
         {% if character.bio %}<p><strong>Bio:</strong> {{character.bio}}</p>{% endif %}
     </div>
+    <p style="clear:left; margin-top:10px; float:left;"><a href="/character/{{ch.pk}}" class="button medium red">Edit</a></p>
 {% endblock %}
