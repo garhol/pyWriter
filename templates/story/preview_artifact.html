@@ -7,10 +7,10 @@
     {% else %}
         <img class="previewThumb noPreview" src="{{ MEDIA_URL }}images/icons/artifact-icon.jpg" alt="{{artifact}}" />
     {% endif %}
-     <h3 class="previewName">{% if artifact.name %}{{artifact.name}}{% endif %}</h3>
-    <div class="previewParticulars">
+     <h3 class="previewName" style="margin-bottom:0.5em;">{% if artifact.name %}{{artifact.name}}{% endif %}</h3>
         {% if artifact.owner %}<p><strong>Owner:</strong> {{artifact.owner}}</p>{% endif %}
         {% if artifact.location %}<p><strong>Location:</strong> {{artifact.location}}</p>{% endif %}
+    <div class="previewParticulars">
         {% if artifact.description %}<p><strong>Desc:</strong> {{artifact.description}}</p>{% endif %}
     </div>
     <p style="clear:left; margin-top:10px; float:left;"><a href="/artifact/{{artifact.pk}}"  target="_parent" class="button medium red">Edit</a></p>
