@@ -72,7 +72,7 @@ urlpatterns += patterns('',
                         url(r'^character/(?P<character>\d+)/$',
                             'pyWriter.lib.apps.story.views.character', name="edit_character"),
                         url(r'^character/preview/(?P<character>\d+)/$',
-                            'pyWriter.lib.apps.story.views.preview_character', name="view_character"),
+                            'pyWriter.lib.apps.story.views.preview_character', name="preview_character"),
                         )
 urlpatterns += patterns('',
                         url(
@@ -80,14 +80,18 @@ urlpatterns += patterns('',
                         name="add_location"),
                         url(r'^location/(?P<location>\d+)/$',
                             'pyWriter.lib.apps.story.views.location', name="edit_location"),
+                        url(r'^location/preview/(?P<location>\d+)/$',
+                            'pyWriter.lib.apps.story.views.preview_location', name="preview_location"),
                         )
 urlpatterns += patterns('',
                        url(
                            r'^artifact/add/$', 'pyWriter.lib.apps.story.views.artifact',
-        name="add_artifact"),
-        url(r'^artifact/(?P<artifact>\d+)/$',
-            'pyWriter.lib.apps.story.views.artifact', name="edit_artifact"),
-)
+                           name="add_artifact"),
+                           url(r'^artifact/(?P<artifact>\d+)/$',
+                               'pyWriter.lib.apps.story.views.artifact', name="edit_artifact"),
+                           url(r'^artifact/preview/(?P<artifact>\d+)/$',
+                               'pyWriter.lib.apps.story.views.preview_artifact', name="preview_artifact"),
+                        )
 
 
 if settings.DEBUG:

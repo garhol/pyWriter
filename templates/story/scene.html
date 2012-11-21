@@ -150,7 +150,7 @@ $(document).ready(function() {
 <div class="buttons" style="float:left; width:30%; margin-top:1em;">
     <p>Characters</p>
     {% for c in characters %}
-        <a class="button green medium various" data-fancybox-type="iframe" href="/character/preview/{{c.pk}}">{{ c }}</a>
+        <a class="button green medium various" style="margin-top:10px;" data-fancybox-type="iframe" href="/character/preview/{{c.pk}}">{{ c }}</a>
     {% endfor %}
 </div>
 {% endif %}
@@ -159,7 +159,7 @@ $(document).ready(function() {
 <div class="buttons" style="float:left; width:30%; margin-top:1em;">
     <p>Artifacts</p>
     {% for a in artifacts %}
-        <a class="button green medium" href="/artifact/{{a.pk}}">{{ a }}</a>
+        <a class="button green medium various" style="margin-top:10px;" data-fancybox-type="iframe" href="/artifact/preview/{{a.pk}}">{{ a }}</a>
     {% endfor %}
 </div>
 {% endif %}
@@ -168,7 +168,7 @@ $(document).ready(function() {
 <div class="buttons" style="float:left; width:30%; margin-top:1em;">
     <p>Locations</p>
     {% for l in locations %}
-        <a class="button green medium" href="/location/{{l.pk}}">{{ l }}</a>
+        <a class="button green medium various" style="margin-top:10px;" data-fancybox-type="iframe" href="/location/preview/{{l.pk}}">{{ l }}</a>
     {% endfor %}
 </div>
 {% endif %}

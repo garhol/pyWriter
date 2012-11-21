@@ -16,5 +16,5 @@
         {% if character.description %}<p><strong>Desc:</strong> {{character.description}}</p>{% endif %}
         {% if character.bio %}<p><strong>Bio:</strong> {{character.bio}}</p>{% endif %}
     </div>
-    <p style="clear:left; margin-top:10px; float:left;"><a href="/character/{{ch.pk}}" class="button medium red">Edit</a></p>
+    <p style="clear:left; margin-top:10px; float:left;"><a href="/character/{{character.pk}}" target="_parent" class="button medium red">Edit</a></p>
 {% endblock %}

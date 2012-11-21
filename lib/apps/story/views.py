@@ -163,6 +163,18 @@ def location(request, location=None):
 
 
 @login_required
+def preview_location(request, location=None):
+    context = {}
+    template = 'story/preview_location.html'
+    if location:
+        lo = get_object_or_404(Location, pk=location, user=request.user)
+        context['location'] = lo
+    else:
+        context['error'] = "Location matching query does not exist"
+    return render_to_response(template, context, context_instance=RequestContext(request))
+
+
+@login_required
 def artifact(request, artifact=None):
     context = {}
     template = 'story/artifact.html'
@@ -191,6 +203,17 @@ def artifact(request, artifact=None):
     else:  # not in post, show them the artifact
         return render_to_response(template, context, context_instance=RequestContext(request))
 
+
+@login_required
+def preview_artifact(request, artifact=None):
+    context = {}
+    template = 'story/preview_artifact.html'
+    if (artifact):
+        ar = get_object_or_404(Artifact, pk=artifact, user=request.user)
+        context['artifact'] = ar
+    else:
+        context['error'] = "Artifact matching query does not exist"
+    return render_to_response(template, context, context_instance=RequestContext(request))
 
 @login_required
 def scene(request, scene=None):
