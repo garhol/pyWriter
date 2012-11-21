@@ -4,6 +4,22 @@ from tinymce.widgets import TinyMCE
 from django.contrib.auth.models import User
 from django import forms
 
+import math
+
+MOTIVATION_LIST = [
+    'Time to start writing',
+    'You\'ve barely started!',
+    'Time to get writing?',
+    'You\'re getting somewhere now',
+    'Nearly halfway there!',
+    'The midway point',
+    'It\'s all downhill from here',
+    'Three quarters of the way there',
+    'Almost at the finish',
+    'Last push and you\'ll be done',
+    'You\'ve done it!'
+    ];
+
 
 class Genre(models.Model):
     name = models.CharField(max_length=256)
@@ -13,7 +29,7 @@ class Genre(models.Model):
         return self.name
 
 
-class Story(models.Model):
+class Story(models.Model): 
     user = models.ForeignKey(User)
     title = models.CharField(max_length=256)
     author = models.CharField(max_length=128)
@@ -21,6 +37,48 @@ class Story(models.Model):
     genre = models.ForeignKey(Genre, null=True, blank=True)
     fiction = models.BooleanField(default=True)
 
+    @property
+    def get_chapters(self):
+        chapters = Chapter.objects.all().filter(story=self).order_by('title')          
+        return chapters
+        
+    @property
+    def get_scenes(self):
+        chapters = self.get_chapters
+        scenes = []
+        for chap in chapters:
+            scenes += Scene.objects.filter(chapter=chap)
+        return scenes
+
+    @property
+    def get_stats(self):
+        stats = {}
+        scenes = []
+        wc = 0
+        wt = 0
+        scenes = self.get_scenes
+        for s in scenes:
+           wc = wc+s.word_count
+           wt = wt+s.word_target
+        stats['wordcount'] = wc
+        stats['wordtarget'] = wt
+        try:
+            stats['percentage'] = int((float(wc) / float(wt)) * 100)
+        except:
+            stats['percentage'] = 0
+        
+        return stats
+    
+    @property
+    def get_motivation(self):
+        stats = self.get_stats
+        percentage = stats['percentage']
+        motivation = int(math.floor(int(percentage) * 0.1))
+        
+        if motivation >= 10:
+            motivation = 10
+        return MOTIVATION_LIST[motivation]
+    
     def __unicode__(self):
         return self.title
 
@@ -75,6 +133,7 @@ class Scene(models.Model):
     word_target = models.IntegerField(blank=True, default=1000)
     word_count = models.IntegerField(blank=True, null=True)
 
+    @property
     def get_percentage_complete(self):
         return int((float(self.word_count) / float(self.word_target)) * 100)
 

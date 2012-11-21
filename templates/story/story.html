@@ -1,8 +1,39 @@
 {% extends "story/base_edit_page.html" %}
 {% load thumbnail %}
 
+{% block "css" %}
+    {{ block.super }}
+    <style type="text/css">
+        .motivation{color: #DDD; font-style: italic; font-size: 0.9em;}
+    </style>
+{% endblock %}
+
 {% block "rh" %}
     {{block.super}}
+
+{% if story.get_chapters %}
+    <h3>Chapters in this story</h3>
+    <p>
+    {% for c in story.get_chapters %}
+        {{ c }}
+        <br />
+    {% endfor %}
+    </p>
+{% endif %}
+{% if story.get_scenes %}
+    <h3>Scenes in this story</h3>
+    <p>
+    {% for s in story.get_scenes %}
+        {{ s }}
+        <br />
+    {% endfor %}
+    </p>
+{% endif %}
+
+<h3>Stats:</h3>
+<p>You have written {{ story.get_stats.wordcount }} out of {{ story.get_stats.wordtarget }} words.</p>
+<p>{{ story.get_stats.percentage }}% complete - <span class="motivation">{{story.get_motivation}}</span></p>
+
 {% if stats %}
 <h3>Scenes:</h3>
 {% for s in stats.scenes %}
