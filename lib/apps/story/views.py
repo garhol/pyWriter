@@ -32,7 +32,28 @@ def index(request):
 
 @login_required
 def story(request, story=None):
+        
     context = {}
+    stats = {}
+    
+    if story:
+       wc = 0
+       wt = 0
+       scenes = []
+       mystory = get_object_or_404(Story, pk=story, user=request.user)
+       chapters = Chapter.objects.filter(user=request.user, story=mystory).order_by('title')
+       for chap in chapters:
+           scenes += Scene.objects.filter(user=request.user, chapter=chap)
+       stats['scenes'] = scenes
+       for s in scenes:
+           wc = wc+s.word_count
+           wt = wt+s.word_target
+       stats['wordcount'] = wc
+       stats['wordtarget'] = wt
+       stats['percentage'] = int((float(wc) / float(wt)) * 100)
+
+    context['stats'] = stats
+
     template = 'story/story.html'
     if story:
         st = get_object_or_404(Story, pk=story, user=request.user)

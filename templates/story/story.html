@@ -3,5 +3,14 @@
 
 {% block "rh" %}
     {{block.super}}
-
+{% if stats %}
+<h3>Scenes:</h3>
+{% for s in stats.scenes %}
+    <p>{{s}}: {{s.word_count}}/{{s.word_target}}words</p>
+    
+{% endfor %}
+<h4>Total:</h4>
+<p>{{stats.wordcount}} words completed.<br />Target words = {{stats.wordtarget}}</p>
+<h2>{{stats.percentage}}%</h2>
+{% endif %}
 {% endblock %}
