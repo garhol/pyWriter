@@ -119,6 +119,7 @@ h4 a.majorCharTitle{background:url({{ MEDIA_URL }}images/icons/star-icon.png) no
                     <img class="charPodImage" src="{{ MEDIA_URL }}images/icons/nocharacter.png" alt="{{ch}}" style="width:100px" />
                 {% endif %}
                 <div class="charBio">
+                    {% if ch.role %}<p class="character-description"><strong>{{ ch.role }}</strong></p>{% endif %}
                     {% if ch.date_of_birth %}<p class="character-description"><strong>Born:</strong><br / >{{ch.date_of_birth}}</p>{% endif %}
                     {% if ch.date_of_death %}<p class="character-description"><strong>Died:</strong><br / >{{ch.date_of_death}}</p>{% endif %}
                     {% if ch.description %}<p class="character-description"><strong>Description:</strong><br />{{ch.description|truncatewords:30}}</p>{% endif %}

@@ -34,7 +34,7 @@ class CharacterForm(forms.ModelForm):
 
     class Meta:
         model = Character
-        fields = ('firstname', 'middlename', 'lastname', 'nicknames', 'major_character', 'description', 'image', 'bio', 'date_of_birth', 'date_of_death')
+        fields = ('firstname', 'middlename', 'lastname', 'nicknames', 'role', 'major_character', 'description', 'image', 'bio', 'date_of_birth', 'date_of_death')
 
 
 class LocationForm(forms.ModelForm):

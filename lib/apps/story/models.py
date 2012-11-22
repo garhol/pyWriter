@@ -151,6 +151,8 @@ class Character(models.Model):
     lastname = models.CharField(max_length=255, blank=True)
     nicknames = models.TextField(null=True, blank=True)
     major_character = models.BooleanField(default=False)
+    role = models.CharField(max_length=255, null=True, blank=True, 
+        help_text="The role this character might play. Is he lover, father, killer, chauffeur, detective, soldier, wizard?")
     description = models.TextField(null=True, blank=True)
     image = models.ImageField(
         upload_to='characters/%Y/%m/%d', null=True, blank=True)
