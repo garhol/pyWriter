@@ -60,6 +60,13 @@ h4 a.majorCharTitle{background:url({{ MEDIA_URL }}images/icons/star-icon.png) no
                 <p class="character-description"><strong>Story:</strong><br / >
                 {{c.story}}
                 </p>
+                {% if c.get_scenes %}
+                <p class="character-description"><strong>Contains scenes:</strong><br / >
+                {% for s in c.get_scenes %}
+                    {{s}}<br />
+                {% endfor %}
+                </p>
+                {% endif %}
             </div>
             <p style="clear:left"><a href="/chapter/{{c.pk}}" class="button medium green">View</a></p>
         </div>

@@ -4,29 +4,100 @@
 {% block "css" %}
     {{block.super}}
     <link href="{{ MEDIA_URL }}css/tabcontent.css" rel="stylesheet" type="text/css" />
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.1/jquery.fancybox.css" type="text/css" media="screen" />
+    <style type="text/css">
+      #popup
+      {
+        width: auto; 
+        height:auto;
+        background: #1D1D1D;
+        color: #ECECEC;
+        font-family: tahoma;
+        font-size: 0.9em;
+        position: absolute;
+        top: 20px;
+        left: 100px;
+        display: none;
+        border:1px solid #ECECEC;
+        border-radius:3px;
+        z-index:1;
+      }
+      #handle
+      {
+        display:block;
+        width: auto;
+        padding: 5px;
+        background: #538018;
+        color: white;
+        font-weight: bold;
+       }
+       #handle:hover{cursor:pointer}
+       .closeme{float:right;}
 
+      .no-select
+      {
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -o-user-select: none;
+        user-select: none;
+      }
+    </style>
 {% endblock %}
 
 {% block "javascript" %}
     {{block.super}}
 <script src="{{ MEDIA_URL }}js/tabcontent.js" type="text/javascript"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.1/jquery.fancybox.pack.js" type="text/javascript"></script>
 <script type="text/javascript">
-$(document).ready(function() {
-	$(".various").fancybox({
-		maxWidth	: 600,
-		maxHeight	: 600,
-		fitToView	: false,
-		width		: '340',
-		height		: 'auto',
-		autoSize	: true,
-		closeClick	: false,
-		openEffect	: 'none',
-		closeEffect	: 'none',
-        scrolling   : 'no'
-	});
-});
+    (function($)
+    {
+      $.fn.popup = function(params) 
+      {   
+        var popupElm = this;
+        $('#handle').mousedown(function(emd){
+            
+          var offset = popupElm.offset();
+          var mxOff = emd.pageX - offset.left;
+          var myOff = emd.pageY - offset.top;
+
+          $("body").mousemove(function(emm){
+             
+            var x = emm.pageX - mxOff;
+            var y = emm.pageY - myOff;
+              
+            popupElm.css({
+              'left': x,
+              'top': y
+            });
+          });
+        })
+        .mouseup(function(e){
+            $('body').unbind('mousemove');
+        });
+
+        popupElm.detach();
+        $('body').append(popupElm);
+        popupElm.show();
+      };
+    })(jQuery);
+</script>
+
+<script type="text/javascript">
+    
+    
+    $(document).ready(function(){
+         $('#popupClose').click(
+          function(e)
+          {
+            e.preventDefault();
+            $(this).parents('#popup').hide();            
+        })
+    });
+      
+    $('.various').click(function(e){
+        e.preventDefault();
+        $('#popupContent').load($(this).attr('href'));
+        $('#popup').popup();
+    });
 </script>
 {% endblock %}
 
@@ -146,11 +217,20 @@ $(document).ready(function() {
     <input type="submit" value="Submit" />
 </form>
 
+      <div id="popup">
+        <span id="handle">Drag me <span class="closeme">
+            <a id="popupClose" href="" style="color: #fff; margin:0.4em;">close [x]</a>
+            </span></span>    
+        <div id="popupContent">
+            beep
+        </div>
+      </div>
+
 {% if characters %}
 <div class="buttons" style="float:left; width:30%; margin-top:1em;">
     <p>Characters</p>
     {% for c in characters %}
-        <a class="button green medium various" style="margin-top:10px;" data-fancybox-type="iframe" href="/character/preview/{{c.pk}}">{{ c }}</a>
+        <a class="button green medium various" style="margin-top:10px;" href="/character/preview/{{c.pk}}">{{ c }}</a>
     {% endfor %}
 </div>
 {% endif %}
@@ -159,7 +239,7 @@ $(document).ready(function() {
 <div class="buttons" style="float:left; width:30%; margin-top:1em;">
     <p>Artifacts</p>
     {% for a in artifacts %}
-        <a class="button green medium various" style="margin-top:10px;" data-fancybox-type="iframe" href="/artifact/preview/{{a.pk}}">{{ a }}</a>
+        <a class="button green medium various" style="margin-top:10px;" href="/artifact/preview/{{a.pk}}">{{ a }}</a>
     {% endfor %}
 </div>
 {% endif %}
@@ -168,7 +248,7 @@ $(document).ready(function() {
 <div class="buttons" style="float:left; width:30%; margin-top:1em;">
     <p>Locations</p>
     {% for l in locations %}
-        <a class="button green medium various" style="margin-top:10px;" data-fancybox-type="iframe" href="/location/preview/{{l.pk}}">{{ l }}</a>
+        <a class="button green medium various" style="margin-top:10px;" href="/location/preview/{{l.pk}}">{{ l }}</a>
     {% endfor %}
 </div>
 {% endif %}
