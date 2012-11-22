@@ -89,6 +89,11 @@ class Chapter(models.Model):
     title = models.CharField(max_length=256)
     weight = models.IntegerField(default=1)
 
+    @property
+    def get_scenes(self):
+        scenes = Scene.objects.filter(chapter=self)
+        return scenes
+        
     def __unicode__(self):
         return self.title
 
