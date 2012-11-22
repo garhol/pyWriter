@@ -8,3 +8,6 @@ DATABASES = {
         'PASSWORD': 'password',                  # Not used with sqlite3.
     }
 }
+
+MEDIA_ROOT = '/home/john/python_projects/pyWriter/library-rename'
+MEDIA_URL = 'http://127.0.0.1:8000/library/'
