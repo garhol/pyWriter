@@ -1,56 +1,116 @@
-<!doctype html>
+<!DOCTYPE html>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
 <head>
-  <title>pyWriter</title>
-  <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/screen.css" />
-  {{ form.media }}
-  {% block "css" %}
-  <style type="text/css">
-        ul.messages{float:left; width:100%; margin-bottom:1em; font-size:1.3em; font-weight: bold;}
-        ul.messages li.success{color:green;}
-        ul.messages li.error{color:red;}
-        ul.errorlist{ color:red;}
-    </style>
-  {% endblock %}
+
+	<!-- Basic Page Needs
+  ================================================== -->
+	<meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+	<title>{% block page_title %}pywriter{% endblock %}</title>
+	<meta name="description" content="{% block meta_desc %}description{% endblock %}">
+	<meta name="author" content="{% block meta_content %}contnet{% endblock %}">
+    <!-- Mobile Specific Metas
+  ================================================== -->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<!-- CSS
+  ================================================== -->
+	<link rel="stylesheet" href="{{ MEDIA_URL }}css/base.css">
+	<link rel="stylesheet" href="{{ MEDIA_URL }}css/skeleton.css">
+	<link rel="stylesheet" href="{{ MEDIA_URL }}css/layout.css">
+    {{ form.media }}
+    {% block "css" %}
+            <link rel="stylesheet" href="//code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css" />
+            <style type="text/css">
+                ul.messages{float:left; width:100%; margin-bottom:1em; font-size:1.3em; font-weight: bold;}
+                ul.messages li.success{color:green;}
+                ul.messages li.error{color:red;}
+                ul.errorlist{ color:red;}
+                ul.nav li{float:left; margin-right:1em;}
+            </style>
+    {% endblock %}
+	<!--[if lt IE 9]>
+		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+
+	<!-- Favicons
+	================================================== -->
+	<link rel="shortcut icon" href="images/favicon.ico">
+	<link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+	<link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+
 </head>
 
-<body>
-	<div id="container">
-        <div id="header">
-            <h1><a href="/"><img src="{{MEDIA_URL}}images/logo.png" /></a></h1>
-            <div class="login">
-            {% block "login" %}
-            {% if user.username %}
-                <p>{{ user.username }} - <a class="button red medium" href="/logout/">logout</a></p>
-            {% endif %}
-            {% endblock %}
+
+	<body lang="en">
+
+		<!-- Demo code begins -->
+
+<div class="container">
+		<header>
+			<div class="sixteen columns">
+				<div id="logo" class="twelve columns alpha">
+                    <h1><a href="/">pywriter</a></h1>
+                </div>
+                <div class="login four columns omega">
+                {% block "login" %}
+                {% if user.username %}
+                    <p>{{ user.username }} - <a class="button red medium" href="/logout/">logout</a></p>
+                {% endif %}
+                {% endblock %}
+                </div>
+                
+                {% if messages %}
+                <div id="messages">
+                    <ul class="messages">
+                        {% for message in messages %}
+                            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% endif %}
+        
+			</div>
+            <div class="sixteen columns">
+                <ul class="nav">
+                    <li><a href="/">home</a></li>
+                    <li><a href="/story/list/">stories</a></li>
+                    <li><a href="/chapter/list/">chapters</a></li>
+                    <li><a href="/scene/list/">scenes</a></li>
+                    <li><a href="/character/list/">characters</a></li>
+                    <li><a href="/artifact/list/">artifacts</a></li>
+                    <li><a href="/location/list/">locations</a></li>
+                </ul>
             </div>
-        </div>
-        
-        {% if messages %}
-        <div id="messages">
-            <ul class="messages">
-                {% for message in messages %}
-                    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-                {% endfor %}
-            </ul>
-        </div>
-        {% endif %}
-        
-        <div id="content">
-            {% block "main" %}
-            <p>main</p>
-            {% endblock "main" %}
-        </div>
-        <div id="rightpanel">
-            {% block "rh" %}
-            {% endblock "rh" %}
-        </div>
-        <div id="footer">
+		</header>
+
+		<article class="two-thirds column">
+			<section>
+				 {% block "main" %}
+                <p>main</p>
+                {% endblock "main" %}
+			</section>
+        </article>
+        <article class="one-third column">
+			<section>
+				 {% block "rh" %}
+                {% endblock "rh" %}
+			</section>
+		</article>
+        <footer>
+			<div class="sixteen columns">
                 <p class="right">pyWriter {% now "Y" %}</p>
-        </div>
-	</div>
+            </div>
+        </footer>
+</div>
+
     {% block "javascript" %}
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js" type="text/javascript"></script>
+        <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"></script>
         <script>
             $('document').ready(function(){
                 $('.messages').delay(3000).fadeOut(500, function() {
@@ -59,6 +119,7 @@
             });
         </script>
     {% endblock %}
-</body>
-</html>
 
+	</body>
+
+</html>

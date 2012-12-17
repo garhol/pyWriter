@@ -1,0 +1,74 @@
+{% extends "base-templates/base.html" %}
+{% load thumbnail %}
+
+
+{% block "css" %}
+    {{block.super}}
+<style type="text/css">
+#sortable li, .addPod{width: 280px; height:150px; margin: 1em; float: left; background:rgba(0, 0, 0, 0.2)}
+.chapterPod a {text-align:center; text-decoration:none;}
+.chapterPod p.story_title{font-size:1.2em;}
+.chapterPod p{margin:0.5em 0 0 0 ;}
+.chapterPod p.story_syn{text-align:left;margin:0.4em;}
+.header{padding:1em; font-weight:bold; background:#f3d26c;}
+</style>
+{% endblock %}
+
+{% block "javascript" %}
+    {{block.super}}
+    <script>
+        var sorted = ""
+    $(function() {
+        $( "#sortable" ).sortable();
+        $( "#sortable" ).disableSelection();
+    });
+    $( "#sortable" ).sortable({
+        stop: function( event, ui ) {
+            sorted = $( "#sortable" ).sortable( "serialize", { key: "sort" } );
+            $( ".output" ).html(sorted)
+        }
+    });
+    </script>
+{% endblock %}
+
+{% block "main" %}
+<p>Drag and drop to sort chapters.<span class="output"></span></p>
+
+<div class="addPod">
+    <a href="/chapter/add/" class="clearfix">
+        <p class="chapter_title">add a chapter</p>
+    </a>
+</div>
+<ul id="sortable">
+    {% for c in chapters %}
+    <li id="chapter_{{c.pk}}">
+    <div class="chapterPod">
+        <a href="/chapter/{{c.pk}}">
+        <h4>{{c}}</h4>
+        <div class="charBio">
+            <p class="character-description"><strong>Weight:</strong> {{c.weight}} </p>
+            <p class="character-description"><strong>Story:</strong> {{c.story}}</p>
+            {% if c.get_scenes %}
+            <p class="character-description"><strong>Contains {{c.get_scenes.count}} scenes:</strong>
+            {% for s in c.get_scenes %}
+                {{s}} {% if not forloop.last %}, {% endif %}
+            {% endfor %}
+            </p>
+            {% endif %}
+        </div>
+        </a>
+    </div>
+    </li>
+    {% endfor %}
+</ul>
+{% endblock %}
+
+{% block "rh" %}
+{% for e in feed|slice:":4" %}
+<img src="{{e.media_thumbnail.0.url}}" width="{{e.media_thumbnail.0.width}}" height="{{e.media_thumbnail.0.height}}" style="float:left; margin:0.2em; clear:left;" />
+<p style="float:left; width:260px;">
+    <span style="font-size:0.8em;">{{e.authors.0.name}}</span><br />
+    <a href="{{e.links.0.url}}" target="_blank">{{e.title}}</a>
+</p>
+{% endfor %}
+{% endblock %}

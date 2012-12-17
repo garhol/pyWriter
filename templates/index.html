@@ -1,4 +1,4 @@
-{% extends "base-templates/base_wide.html" %}
+{% extends "base-templates/base.html" %}
 {% load thumbnail %}
 
 
@@ -25,7 +25,7 @@ h4 a.majorCharTitle{background:url({{ MEDIA_URL }}images/icons/star-icon.png) no
 
 {% block "javascript" %}
     {{block.super}}
-<script src="{{ MEDIA_URL }}js/tabcontent.js" type="text/javascript"></script>
+    <script src="{{ MEDIA_URL }}js/tabcontent.js" type="text/javascript"></script>
 {% endblock %}
 
 {% block "main" %}
@@ -166,5 +166,14 @@ h4 a.majorCharTitle{background:url({{ MEDIA_URL }}images/icons/star-icon.png) no
         {% endfor %}
     </div>       
 </div>
+{% endblock %}
 
+{% block "rh" %}
+{% for e in feed|slice:":4" %}
+<img src="{{e.media_thumbnail.0.url}}" width="{{e.media_thumbnail.0.width}}" height="{{e.media_thumbnail.0.height}}" style="float:left; margin:0.2em; clear:left;" />
+<p style="float:left; width:260px;">
+    <span style="font-size:0.8em;">{{e.authors.0.name}}</span><br />
+    <a href="{{e.links.0.url}}" target="_blank">{{e.title}}</a>
+</p>
+{% endfor %}
 {% endblock %}

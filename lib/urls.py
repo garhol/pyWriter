@@ -46,6 +46,9 @@ urlpatterns += patterns('',
 
 urlpatterns += patterns('',
                         url(
+                        r'^scene/list/$', 'pyWriter.lib.apps.story.views.scenelist',
+                        name="list_scene"),
+                        url(
                         r'^scene/add/$', 'pyWriter.lib.apps.story.views.scene',
                         name="add_scene"),
                         url(r'^scene/(?P<scene>\d+)/$',
@@ -53,12 +56,19 @@ urlpatterns += patterns('',
                         )
 urlpatterns += patterns('',
                         url(
+                        r'^story/list/$', 'pyWriter.lib.apps.story.views.storylist',
+                        name="list_stories"),
+                        url(
                         r'^story/add/$', 'pyWriter.lib.apps.story.views.story',
                         name="add_story"),
                         url(r'^story/(?P<story>\d+)/$',
                             'pyWriter.lib.apps.story.views.story', name="edit_story"),
                         )
 urlpatterns += patterns('',
+                        url(
+                        r'^chapter/list/$', 'pyWriter.lib.apps.story.views.chapterlist',
+                        name="list_chapters"),
+                        
                         url(
                         r'^chapter/add/$', 'pyWriter.lib.apps.story.views.chapter',
                         name="add_chapter"),

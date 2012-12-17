@@ -6,7 +6,7 @@ from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 
-from .models import Story, Chapter, Scene, Character, Artifact, Location 
+from .models import Story, Chapter, Scene, Character, Artifact, Location, Getfeed 
 from .forms import SceneForm, CharacterForm, ArtifactForm, LocationForm, StoryForm, ChapterForm
 
 
@@ -28,12 +28,21 @@ def index(request):
         user=request.user).order_by('name')
     context['locations'] = Location.objects.filter(
         user=request.user).order_by('name')
+    context['feed'] = Getfeed()
     return render_to_response(template, context, context_instance=RequestContext(request))
 
 
 @login_required
+def storylist(request):
+    context = {}
+    context['stories'] = Story.objects.filter(
+        user=request.user).order_by('title')
+    template = 'listings/list_story.html'
+    return render_to_response(template, context, context_instance=RequestContext(request))
+    
+    
+@login_required
 def story(request, story=None):
-        
     context = {}
     template = 'story/story.html'
     if story:
@@ -61,6 +70,13 @@ def story(request, story=None):
     else:  # not in post, show them the location
         return render_to_response(template, context, context_instance=RequestContext(request))
 
+@login_required
+def chapterlist(request):
+    context = {}
+    context['chapters'] = Chapter.objects.filter(
+        user=request.user).order_by('title')
+    template = 'listings/list_chapter.html'
+    return render_to_response(template, context, context_instance=RequestContext(request))
 
 @login_required
 def chapter(request, chapter=None):
@@ -217,6 +233,14 @@ def preview_artifact(request, artifact=None):
         context['error'] = "Artifact matching query does not exist"
     return render_to_response(template, context, context_instance=RequestContext(request))
 
+@login_required
+def scenelist(request):
+    context = {}
+    context['scenes'] = Scene.objects.filter(
+        user=request.user).order_by('importance', 'name')
+    template = 'listings/list_scene.html'
+    return render_to_response(template, context, context_instance=RequestContext(request))
+    
 @login_required
 def scene(request, scene=None):
     context = {}

@@ -225,9 +225,10 @@
             beep
         </div>
       </div>
-
+{% endblock "main" %}	
+{% block "rh" %}
 {% if characters %}
-<div class="buttons" style="float:left; width:30%; margin-top:1em;">
+<div class="buttons" style="float:left; margin-top:1em;">
     <p>Characters</p>
     {% for c in characters %}
         <a class="button green medium various" style="margin-top:10px;" href="/character/preview/{{c.pk}}">{{ c }}</a>
@@ -236,7 +237,7 @@
 {% endif %}
 
 {% if artifacts %}
-<div class="buttons" style="float:left; width:30%; margin-top:1em;">
+<div class="buttons" style="float:left;margin-top:1em;">
     <p>Artifacts</p>
     {% for a in artifacts %}
         <a class="button green medium various" style="margin-top:10px;" href="/artifact/preview/{{a.pk}}">{{ a }}</a>
@@ -245,13 +246,12 @@
 {% endif %}
 
 {% if locations %}
-<div class="buttons" style="float:left; width:30%; margin-top:1em;">
+<div class="buttons" style="float:left; margin-top:1em;">
     <p>Locations</p>
     {% for l in locations %}
         <a class="button green medium various" style="margin-top:10px;" href="/location/preview/{{l.pk}}">{{ l }}</a>
     {% endfor %}
 </div>
 {% endif %}
-
-{% endblock "main" %}	
+{% endblock "rh" %}
 

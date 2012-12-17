@@ -22,6 +22,7 @@ em {font-style: italic;}
 #container {width: 100%; max-width: 960px; margin: 0 auto;}
 .flex-container {max-width:480px; margin:0 auto 75px;}
 
+#fancybox-content{overflow-y: auto}
 
 /*[1] Basic styles -----------------------------------*/
 body {background: #1d1d1d; color:#ECECEC; font-family:tahoma; font-size:0.9em;}
@@ -63,6 +64,7 @@ float:left;
 #rightpanel{
 width:30%;
 float:left;
+margin-left:2em;
 }
 
 .characterImage{

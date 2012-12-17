@@ -187,7 +187,11 @@ class Location(models.Model):
     def __unicode__(self):
         return self.name
 
-
+import feedparser
+def Getfeed():
+    d = feedparser.parse('https://github.com/garhol/pyWriter/commits/master.atom')
+    return d.entries;
+    
 
 
 from django.db.models.signals import pre_save
