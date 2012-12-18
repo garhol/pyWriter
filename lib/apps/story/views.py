@@ -1,7 +1,7 @@
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
 from django.conf import settings
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
@@ -74,9 +74,29 @@ def story(request, story=None):
 def chapterlist(request):
     context = {}
     context['chapters'] = Chapter.objects.filter(
-        user=request.user).order_by('title')
+        user=request.user).order_by('weight')
     template = 'listings/list_chapter.html'
     return render_to_response(template, context, context_instance=RequestContext(request))
+
+@login_required
+def chaptersort(request):
+    if request.is_ajax():
+        if request.method == 'GET':
+            message = "GET['out']"
+        elif request.method == 'POST':
+               
+            sorting = request.POST.getlist('chapter[]')
+            chapter_list = Chapter.objects.filter(pk__in=sorting)
+            count = 1
+            for s in sorting:
+                for chap in chapter_list:
+                    if chap.pk == int(s):
+                        chap.weight = count
+                        chap.save()
+                count+=1
+            message = "Updated"
+    return HttpResponse(message)
+
 
 @login_required
 def chapter(request, chapter=None):
@@ -237,10 +257,29 @@ def preview_artifact(request, artifact=None):
 def scenelist(request):
     context = {}
     context['scenes'] = Scene.objects.filter(
-        user=request.user).order_by('importance', 'name')
+        user=request.user).order_by('order')
     template = 'listings/list_scene.html'
     return render_to_response(template, context, context_instance=RequestContext(request))
-    
+
+@login_required
+def scenesort(request):
+    if request.is_ajax():
+        if request.method == 'GET':
+            message = "GET['out']"
+        elif request.method == 'POST':
+               
+            sorting = request.POST.getlist('scene[]')
+            scene_list = Scene.objects.filter(pk__in=sorting)
+            count = 1
+            for s in sorting:
+                for sce in scene_list:
+                    if sce.pk == int(s):
+                        sce.order = count
+                        sce.save()
+                count+=1
+            message = "Updated"
+    return HttpResponse(message)
+        
 @login_required
 def scene(request, scene=None):
     context = {}

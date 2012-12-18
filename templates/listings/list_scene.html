@@ -17,15 +17,23 @@
 {% block "javascript" %}
     {{block.super}}
     <script>
-        var sorted = ""
+   
+    var sorted = ""
     $(function() {
         $( "#sortable" ).sortable();
         $( "#sortable" ).disableSelection();
     });
     $( "#sortable" ).sortable({
         stop: function( event, ui ) {
-            sorted = $( "#sortable" ).sortable( "serialize", { key: "sort" } );
-            $( ".output" ).html(sorted)
+            var sorted = $('#sortable').sortable('serialize');
+            $.ajax({
+                type: "POST",
+                data: sorted + '&csrfmiddlewaretoken={{ csrf_token }}&active=true',
+                url: "/sortscenes/",
+                success:function(data) {
+                    $( ".output" ).html(data)
+                }
+            });           
         }
     });
     </script>
@@ -52,7 +60,8 @@
             <p><strong>Characters:</strong> {% for char in sc.characters.all %}{{ char }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
             <p><strong>Artifacts:</strong> {% for arti in sc.artifacts.all %}{{ arti }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
             <p><strong>Status:</strong>{{ sc.get_status_display }}</p>
-            <p>{{ sc.get_percentage_complete }}%</p>      
+            <p>{{ sc.get_percentage_complete }}%</p>   
+            {{ sc.order }}   
         </div>
         </a>
     </div>

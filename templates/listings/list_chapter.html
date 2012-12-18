@@ -17,15 +17,23 @@
 {% block "javascript" %}
     {{block.super}}
     <script>
-        var sorted = ""
+   
+    var sorted = ""
     $(function() {
         $( "#sortable" ).sortable();
         $( "#sortable" ).disableSelection();
     });
     $( "#sortable" ).sortable({
         stop: function( event, ui ) {
-            sorted = $( "#sortable" ).sortable( "serialize", { key: "sort" } );
-            $( ".output" ).html(sorted)
+            var sorted = $('#sortable').sortable('serialize');
+            $.ajax({
+                type: "POST",
+                data: sorted + '&csrfmiddlewaretoken={{ csrf_token }}&active=true',
+                url: "/sortchapters/",
+                success:function(data) {
+                    $( ".output" ).html(data)
+                }
+            });           
         }
     });
     </script>
@@ -41,12 +49,13 @@
 </div>
 <ul id="sortable">
     {% for c in chapters %}
-    <li id="chapter_{{c.pk}}">
+    <li id="chapter-{{c.pk}}">
     <div class="chapterPod">
         <a href="/chapter/{{c.pk}}">
         <h4>{{c}}</h4>
+        
         <div class="charBio">
-            <p class="character-description"><strong>Weight:</strong> {{c.weight}} </p>
+            {{ c.weight }}
             <p class="character-description"><strong>Story:</strong> {{c.story}}</p>
             {% if c.get_scenes %}
             <p class="character-description"><strong>Contains {{c.get_scenes.count}} scenes:</strong>

@@ -135,6 +135,7 @@ class Scene(models.Model):
     content = models.TextField(null=True, blank=True)
     word_target = models.IntegerField(blank=True, default=1000)
     word_count = models.IntegerField(blank=True, null=True)
+    order = models.IntegerField(default=1)
 
     @property
     def get_percentage_complete(self):
