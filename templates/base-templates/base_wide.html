@@ -41,6 +41,7 @@
         select{min-width:200px;}
         span.required:after { content: "*"; }
         p.helpText{clear:left; margin-top:1em; font-style:italic; font-size:0.9em;}
+        ul.nav li{float:left; margin-right:1em;}
     </style>
   {% endblock %}
 <!--[if lt IE 9]>
@@ -85,6 +86,19 @@
                 {% endif %}
         
 			</div>
+            {% block "nav" %}
+            <div class="sixteen columns">
+                <ul class="nav">
+                    <li><a href="/">home</a></li>
+                    <li><a href="/story/list/">stories</a></li>
+                    <li><a href="/chapter/list/">chapters</a></li>
+                    <li><a href="/scene/list/">scenes</a></li>
+                    <li><a href="/character/list/">characters</a></li>
+                    <li><a href="/artifact/list/">artifacts</a></li>
+                    <li><a href="/location/list/">locations</a></li>
+                </ul>
+            </div>
+            {% endblock "nav" %}
 		</header>
 
 		<article class="twelve columns">

@@ -129,7 +129,14 @@ def chapter(request, chapter=None):
     else:  # not in post, show them the location
         return render_to_response(template, context, context_instance=RequestContext(request))
 
-
+@login_required
+def characterlist(request):
+    context = {}
+    context['characters'] = Character.objects.filter(
+        user=request.user).order_by('-major_character')
+    template = 'listings/list_character.html'
+    return render_to_response(template, context, context_instance=RequestContext(request))
+    
 @login_required
 def character(request, character=None):
     context = {}

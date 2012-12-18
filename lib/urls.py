@@ -82,6 +82,9 @@ urlpatterns += patterns('',
                         )
 urlpatterns += patterns('',
                         url(
+                        r'^character/list/$', 'pyWriter.lib.apps.story.views.characterlist',
+                        name="list_characters"),
+                        url(
                         r'^character/add/$', 'pyWriter.lib.apps.story.views.character',
                         name="add_character"),
                         url(r'^character/(?P<character>\d+)/$',

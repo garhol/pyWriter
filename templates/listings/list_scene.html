@@ -11,6 +11,7 @@
 .scenePod p{margin:0.5em 0 0 0 ;}
 .scenePod p.story_syn{text-align:left;margin:0.4em;}
 .header{padding:1em; font-weight:bold; background:#f3d26c;}
+.majorScene{background:url({{ MEDIA_URL }}images/icons/star-icon.png) no-repeat top right;}
 </style>
 {% endblock %}
 
@@ -51,8 +52,8 @@
     {% for sc in scenes %}
     <li id="scene_{{sc.pk}}">
     <div class="scenePod">
-        <a {% ifequal sc.importance 'MP' %}class="majorCharTitle" title="Main plot"{% else %}title="Subplot"{% endifequal %} href="/scene/{{sc.pk}}">
-        <h4>{{sc}}</h4>
+        <a  href="/scene/{{sc.pk}}">
+        <h4 {% ifequal sc.importance 'MP' %}class="majorScene" title="Main plot"{% else %}title="Subplot"{% endifequal %}>{{sc}}</h4>
         <div class="charBio">
             <p><strong>Description:</strong> {{sc.description|striptags}}</p>
             <p><strong>Location:</strong>  {% for loc in sc.location.all %}{{ loc }}{% endfor %}</p>
