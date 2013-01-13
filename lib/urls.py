@@ -94,6 +94,9 @@ urlpatterns += patterns('',
                         )
 urlpatterns += patterns('',
                         url(
+                        r'^location/list/$', 'pyWriter.lib.apps.story.views.locationlist',
+                        name="list_locations"),
+                        url(
                         r'^location/add/$', 'pyWriter.lib.apps.story.views.location',
                         name="add_location"),
                         url(r'^location/(?P<location>\d+)/$',
@@ -102,6 +105,9 @@ urlpatterns += patterns('',
                             'pyWriter.lib.apps.story.views.preview_location', name="preview_location"),
                         )
 urlpatterns += patterns('',
+                        url(
+                        r'^artifact/list/$', 'pyWriter.lib.apps.story.views.artifactlist',
+                        name="list_artifacts"),
                        url(
                            r'^artifact/add/$', 'pyWriter.lib.apps.story.views.artifact',
                            name="add_artifact"),

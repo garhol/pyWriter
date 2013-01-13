@@ -20,152 +20,15 @@ div.charBio{float:left; max-width:290px;}
 h4 a.majorCharTitle{background:url({{ MEDIA_URL }}images/icons/star-icon.png) no-repeat top right;}
 .addLink{width: 100%; text-align: right;}
 </style>
-<link href="{{ MEDIA_URL }}css/tabcontent.css" rel="stylesheet" type="text/css" />
 {% endblock %}
 
 {% block "javascript" %}
     {{block.super}}
-    <script src="{{ MEDIA_URL }}js/tabcontent.js" type="text/javascript"></script>
+    
 {% endblock %}
 
 {% block "main" %}
-<ul class="tabs">
-    <li><a href="#" rel="storytab">Stories</a></li>
-    <li><a href="#" rel="chaptertab">Chapters</a></li>
-    <li><a href="#" rel="scenetab">Scenes</a></li>
-    <li><a href="#" rel="charactertab">Characters</a></li>
-    <li><a href="#" rel="artifacttab">Artifacts</a></li>
-    <li><a href="#" rel="locationtab">Locations</a></li>
-</ul>
-
-<div class="tabcontents clearfix">
-    <div id="storytab" class="tabcontent">
-        <p class="addLink"><a href="/story/add/" class="button medium green">add a story</a></p>
-        {% for s in stories %}
-        <div class="storyPod" style="width: 104px; padding: 1em; float: left; ">
-        <p class="story_title"><a href="/story/{{s.pk}}" style="padding-top:110px;display:block">{{s}}</a></p>
-        </div>
-        {% endfor %}
-    </div>
-    
-    <div id="chaptertab" class="tabcontent">
-        <p class="addLink"><a href="/chapter/add/" class="button medium green">add a chapter</a></p>
-        <p>{% for c in chapters %}
-        <div class="charPod">
-            <h4><a href="/chapter/{{c.pk}}">{{c}}</a></h4>
-            <div class="charBio">
-                <p class="character-description"><strong>Weight:</strong><br / >
-                {{c.weight}}
-                </p>
-                <p class="character-description"><strong>Story:</strong><br / >
-                {{c.story}}
-                </p>
-                {% if c.get_scenes %}
-                <p class="character-description"><strong>Contains scenes:</strong><br / >
-                {% for s in c.get_scenes %}
-                    {{s}}<br />
-                {% endfor %}
-                </p>
-                {% endif %}
-            </div>
-            <p style="clear:left"><a href="/chapter/{{c.pk}}" class="button medium green">View</a></p>
-        </div>
-        {% endfor %}</p>
-    </div>       
-
-    <div id="scenetab" class="tabcontent">
-        <p class="addLink"><a href="/scene/add/" class="button medium green">add a scene</a></p>
-        {% for sc in scenes %}
-        <div class="charPod">
-            <h4><a {% ifequal sc.importance 'MP' %}class="majorCharTitle" title="Main plot"{% else %}title="Subplot"{% endifequal %} href="/scene/{{sc.pk}}">{{sc}}</a></h4>
-            
-            <div class="charBio">
-                <p class="character-description"><strong>Description:</strong><br / >
-                {{sc.description|striptags}}
-                </p>
-                <p class="character-description"><strong>Location:</strong><br / >
-                {% for loc in sc.location.all %}{{ loc }}{% endfor %}
-                </p>
-                <p class="character-description"><strong>Viewpoint:</strong><br / >
-                {{sc.perspective}}
-                </p>
-                <p class="character-description"><strong>Characters:</strong><br / >
-                {% for char in sc.characters.all %}{{ char }}{% if not forloop.last %}, {% endif %}{% endfor %}
-                </p>
-                <p class="character-description"><strong>Artifacts:</strong><br / >
-                {% for arti in sc.artifacts.all %}{{ arti }}{% if not forloop.last %}, {% endif %}{% endfor %}                
-                </p>
-                <p class="character-description"><strong>Status:</strong><br / >
-                    {{ sc.get_status_display }}
-                </p>
-                <p class="character-description"><strong>{{ sc.get_percentage_complete }}%</strong><br / >
-                Scene contains {{sc.word_count}} word{% ifnotequal sc.word_count 1 %}s{% endifnotequal %} with a target of {{sc.word_target}}</p>
-            </div>
-            <p style="clear:left"><a href="/scene/{{sc.pk}}" class="button medium green">View</a></p>
-        </div>
-        {% endfor %}
-    </div>
-
-    <div id="charactertab" class="tabcontent">
-        <p class="addLink"><a href="/character/add/" class="button medium green">add a character</a></p>
-        {% for ch in characters %}
-            {% if ch.firstname != "Narrator" %}
-            <div class="charPod">
-                <h4><a {% if ch.major_character %}class="majorCharTitle" title="Major character"{% endif %} href="/character/{{ch.pk}}">{{ch}}</a></h4>
-            
-                {% if ch.image %}
-                <img class="charPodImage" src="{% thumbnail ch.image 100x100 %}" alt="{{ch}}" />
-                {% else %}
-                    <img class="charPodImage" src="{{ MEDIA_URL }}images/icons/nocharacter.png" alt="{{ch}}" style="width:100px" />
-                {% endif %}
-                <div class="charBio">
-                    {% if ch.role %}<p class="character-description"><strong>{{ ch.role }}</strong></p>{% endif %}
-                    {% if ch.date_of_birth %}<p class="character-description"><strong>Born:</strong><br / >{{ch.date_of_birth}}</p>{% endif %}
-                    {% if ch.date_of_death %}<p class="character-description"><strong>Died:</strong><br / >{{ch.date_of_death}}</p>{% endif %}
-                    {% if ch.description %}<p class="character-description"><strong>Description:</strong><br />{{ch.description|truncatewords:30}}</p>{% endif %}
-                </div>
-                <p style="clear:left"><a href="/character/{{ch.pk}}" class="button medium green">View</a></p>
-            </div>
-            {% endif %}
-        {% endfor %}
-    </div>       
-    
-    <div id="artifacttab" class="tabcontent">
-        <p class="addLink"><a href="/artifact/add/" class="button medium green">add an artifact</a></p>
-       {% for a in artifacts %}
-        <div class="charPod">
-            <h4><a href="/artifact/{{a.pk}}">{{ a }}</a></h4>
-            {% if a.image %}
-                <img class="charPodImage" src="{% thumbnail a.image 100x100 %}" alt="{{a}}" />
-            {% else %}
-                <img class="charPodImage" src="{{ MEDIA_URL }}images/icons/artifact-icon.jpg" alt="{{a}}" style="width:100px" />
-            {% endif %}
-            <div class="charBio">
-                <p class="character-description"><strong>Description:</strong><br />{{a.description|truncatewords:30}}</p>
-            </div>
-            <p style="clear:left"><a href="/artifact/{{a.pk}}" class="button medium green">View</a></p>   
-        </div>
-        {% endfor %}
-    </div>       
-    
-    <div id="locationtab" class="tabcontent">
-        <p class="addLink"><a href="/location/add/" class="button medium green">add a location</a></p>
-       {% for l in locations %}
-           <div class="charPod">
-                <h4><a href="/location/{{l.pk}}">{{ l }}</a></h4>
-                {% if l.image %}
-                    <img class="charPodImage" src="{% thumbnail l.image 100x100 %}" alt="{{l}}" />
-                {% else %}
-                    <img class="charPodImage" src="{{ MEDIA_URL }}images/icons/location-icon.png" alt="{{l}}" style="width:100px" />
-                {% endif %}
-                <div class="charBio">
-                    <p class="character-description"><strong>Description:</strong><br />{{l.description|truncatewords:30}}</p>
-                </div>
-                <p style="clear:left"><a href="/location/{{l.pk}}" class="button medium green">View</a></p>
-            </div>
-        {% endfor %}
-    </div>       
-</div>
+<p>Things will go here</p>
 {% endblock %}
 
 {% block "rh" %}

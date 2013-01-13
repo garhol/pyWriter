@@ -4,7 +4,7 @@
 {% block "rh" %}
     {{block.super}}
     <h3>{% if artifact.name %}{{artifact.name}}{% endif %}</h3>
-    {% if location.image %}
+    {% if artifact.image %}
         <img  src="{% thumbnail artifact.image 200x200 %}"  alt="{{artifact}}" class="characterImage" />
     {% else %}
         <img class="charPodImage" src="{{ MEDIA_URL }}images/icons/artifact-icon.jpg" alt="{{artifact}}" style="width:200px" />

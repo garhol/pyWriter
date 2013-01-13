@@ -179,6 +179,14 @@ def preview_character(request, character):
 
 
 @login_required
+def locationlist(request):
+    context = {}
+    context['locations'] = Location.objects.filter(
+        user=request.user).order_by('name')
+    template = 'listings/list_location.html'
+    return render_to_response(template, context, context_instance=RequestContext(request))
+
+@login_required
 def location(request, location=None):
     context = {}
     template = 'story/location.html'
@@ -218,6 +226,13 @@ def preview_location(request, location=None):
         context['error'] = "Location matching query does not exist"
     return render_to_response(template, context, context_instance=RequestContext(request))
 
+@login_required
+def artifactlist(request):
+    context = {}
+    context['artifacts'] = Artifact.objects.filter(
+        user=request.user).order_by('name')
+    template = 'listings/list_artifact.html'
+    return render_to_response(template, context, context_instance=RequestContext(request))
 
 @login_required
 def artifact(request, artifact=None):

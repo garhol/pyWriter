@@ -1,0 +1,53 @@
+{% extends "base-templates/base.html" %}
+{% load thumbnail %}
+
+
+{% block "css" %}
+    {{block.super}}
+<style type="text/css">
+.charPod, .addPod{width:280px; min-height:150px; margin: 1em; float: left; background:rgba(0, 0, 0, 0.2)}
+.charPod a {text-align:center; text-decoration:none;}
+.charPod p.character_title{font-size:1.2em;}
+.charPod p{margin:0.5em 0 0 0 ;}
+.charPod p.story_syn{text-align:left;margin:0.4em;}
+.header{padding:1em; font-weight:bold; background:#f3d26c;}
+.majorChar{background:url({{ MEDIA_URL }}images/icons/star-icon.png) no-repeat top right;}
+.charPodImage {float:left; margin:10px;}
+</style>
+{% endblock %}
+
+{% block "javascript" %}
+    {{block.super}}
+{% endblock %}
+
+{% block "main" %}
+<div class="addPod">
+    <a href="/artifact/add/" class="clearfix">
+        <p class="character_title">add a artifact</p>
+    </a>
+</div>
+
+    {% for a in artifacts %}
+    <div class="charPod" >
+        <a href="/artifact/{{a.pk}}">
+            {% if a.image %}
+                <img class="charPodImage" src="{% thumbnail a.image 100x100 %}" alt="{{a}}" />
+            {% else %}
+                <img class="charPodImage" src="{{ MEDIA_URL }}images/icons/artifact-icon.jpg" alt="{{a}}" style="width:100px" />
+            {% endif %}
+        <div>
+            <h4>{{ a.name }}</h4>
+            {% if a.description %}<p>{{a.description}}</p>{% endif %}
+            {% if a.owner %}<p>Owner: {{ a.owner }}</p>{% endif %}
+            {% if a.location %}<p>Location: {{ a.location }}</p>{% endif %}
+            
+        </div>
+        </a>
+    </div>
+    {% endfor %}
+
+{% endblock %}
+
+
+        
+
