@@ -39,7 +39,15 @@ def storylist(request):
         user=request.user).order_by('title')
     template = 'listings/list_story.html'
     return render_to_response(template, context, context_instance=RequestContext(request))
-    
+
+@login_required
+def print_story(request, story=None):
+    context = {}
+    if story:
+        st = get_object_or_404(Story, pk=story, user=request.user)
+        context['story'] = st
+    template = 'story/print_story.html'
+    return render_to_response(template, context, context_instance=RequestContext(request))    
     
 @login_required
 def story(request, story=None):

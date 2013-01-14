@@ -66,6 +66,8 @@ urlpatterns += patterns('',
                         name="add_story"),
                         url(r'^story/(?P<story>\d+)/$',
                             'pyWriter.lib.apps.story.views.story', name="edit_story"),
+                        url(r'^story/print/(?P<story>\d+)/$',
+                            'pyWriter.lib.apps.story.views.print_story', name="print_story"),
                         )
 urlpatterns += patterns('',
                         url(

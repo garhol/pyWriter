@@ -1,0 +1,89 @@
+{% extends "base-templates/base.html" %}
+{% load thumbnail %}
+
+{% block "css" %}
+    {{ block.super }}
+    <style type="text/css">
+        .motivation{color: #DDD; font-style: italic; font-size: 0.9em;}
+        .printversion h1, .printversion h2, .printversion h3, .printversion h4, .printversion h5{text-align:center}
+    </style>
+{% endblock %}
+
+{% block "main" %}
+    <div class="printversion">
+        <h1>{{story.title}}</h1>
+        <h2>{{story.author}}</h2>
+        <hr />
+        {% if story.get_chapters %}
+            <h4>Index:</h4>
+            <ul>
+            {% for c in story.get_chapters %}
+                
+                {% if c.get_scenes %}
+                    <li>{{c}}</li>
+                    <ul>
+                    {% for sc in c.get_scenes %}
+                        <li>{{ sc }}</li>
+                    {% endfor %}
+                    </ul>
+                {% endif %}
+            {% endfor %}
+            </ul>
+        {% endif %}
+        <hr />
+        {% if story.get_chapters %}
+            {% for c in story.get_chapters %}
+                {% if c.get_scenes %}
+                    <h4>{{c}}</h4>
+                    <hr />
+                    {% for sc in c.get_scenes %}
+                        <h5>{{sc}}</h5>
+                        <p>{{ sc.content|safe}}</p>
+                        <hr />
+                    {% endfor %}
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+    </div>
+
+{% endblock %}
+
+
+{% block "rh" %}
+    {{block.super}}
+
+{% if story.get_chapters %}
+    <h3>Chapters in this story</h3>
+    <p>
+    {% for c in story.get_chapters %}
+        {{ c }}
+        <br />
+    {% endfor %}
+    </p>
+{% endif %}
+{% if story.get_scenes %}
+    <h3>Scenes in this story</h3>
+    <p>
+    {% for s in story.get_scenes %}
+        {{ s }}
+        <br />
+    {% endfor %}
+    </p>
+{% endif %}
+
+<h3>Stats:</h3>
+<p>You have written {{ story.get_stats.wordcount }} out of {{ story.get_stats.wordtarget }} words.</p>
+<p>{{ story.get_stats.percentage }}% complete - <span class="motivation">{{story.get_motivation}}</span></p>
+
+{% if stats %}
+<h3>Scenes:</h3>
+{% for s in stats.scenes %}
+    <p>{{s}}: {{s.word_count}}/{{s.word_target}}words</p>
+    
+{% endfor %}
+<h4>Total:</h4>
+<p>{{stats.wordcount}} words completed.<br />Target words = {{stats.wordtarget}}</p>
+<h2>{{stats.percentage}}%</h2>
+{% endif %}
+<a href="/story/print/{{story.pk}}">Print this story</a>
+{% endblock %}
