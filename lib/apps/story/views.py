@@ -9,6 +9,7 @@ from django.contrib import messages
 from .models import Story, Chapter, Scene, Character, Artifact, Location, Getfeed 
 from .forms import SceneForm, CharacterForm, ArtifactForm, LocationForm, StoryForm, ChapterForm
 
+import os.path
 
 @login_required
 def index(request):
@@ -45,10 +46,16 @@ def print_story(request, story=None):
     context = {}
     if story:
         st = get_object_or_404(Story, pk=story, user=request.user)
+        
+        ebookpath = os.path.join(settings.STATIC_ROOT, "library", "epub", str(st.pk))
+        filename  = "%s.epub" % st.title
+        zippath = os.path.join(ebookpath, filename)
+        if os.path.exists(zippath):
+            context['printversion'] = "epub"
         context['story'] = st
     template = 'story/print_story.html'
     return render_to_response(template, context, context_instance=RequestContext(request))    
-    
+
 @login_required
 def story(request, story=None):
     context = {}

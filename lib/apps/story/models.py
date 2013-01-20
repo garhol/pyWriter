@@ -37,7 +37,7 @@ class Story(models.Model):
 
     @property
     def get_chapters(self):
-        chapters = Chapter.objects.all().filter(story=self).order_by('title')          
+        chapters = Chapter.objects.all().filter(story=self).order_by('weight')          
         return chapters
         
     @property
@@ -45,7 +45,7 @@ class Story(models.Model):
         chapters = self.get_chapters
         scenes = []
         for chap in chapters:
-            scenes += Scene.objects.filter(chapter=chap)
+            scenes += Scene.objects.filter(chapter=chap).order_by('order')
         return scenes
 
     @property
@@ -89,7 +89,7 @@ class Chapter(models.Model):
 
     @property
     def get_scenes(self):
-        scenes = Scene.objects.filter(chapter=self)
+        scenes = Scene.objects.filter(chapter=self).order_by('order')
         return scenes
         
     def __unicode__(self):

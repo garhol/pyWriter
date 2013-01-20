@@ -68,6 +68,8 @@ urlpatterns += patterns('',
                             'pyWriter.lib.apps.story.views.story', name="edit_story"),
                         url(r'^story/print/(?P<story>\d+)/$',
                             'pyWriter.lib.apps.story.views.print_story', name="print_story"),
+                        url(r'^story/print/epub/(?P<story>\d+)/$',
+                            'pyWriter.lib.apps.epub.views.print_epub', name="print_epub"),
                         )
 urlpatterns += patterns('',
                         url(

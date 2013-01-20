@@ -13,6 +13,8 @@
 {% endblock %}
 
 {% block "main" %}
+<p style="color:#ff0000">Please preview and then <a href="/story/print/epub/{{story.pk}}">create ebook</a></p>
+
     <div class="printversion">
         <h1>{{story.title}}</h1>
         <h2>{{story.author}}</h2>
@@ -89,4 +91,7 @@
 <h2>{{stats.percentage}}%</h2>
 {% endif %}
 <a href="/story/print/{{story.pk}}">Print this story</a>
+{% if printversion %}
+<a href="/library/epub/{{story.pk}}/{{story.title}}.epub">Download epub</a>
+{% endif %}
 {% endblock %}

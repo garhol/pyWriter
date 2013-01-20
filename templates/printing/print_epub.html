@@ -1,12 +1,22 @@
-{% extends "story/base_edit_page.html" %}
+{% extends "base-templates/base.html" %}
 {% load thumbnail %}
 
 {% block "css" %}
     {{ block.super }}
     <style type="text/css">
         .motivation{color: #DDD; font-style: italic; font-size: 0.9em;}
+        .printversion h1, .printversion h2, .printversion h3, .printversion h4, .printversion h5{text-align:center}
+        .printversion h1 {margin-top:2em; margin-bottom:0.5em;}
+        .printversion h2 {margin-top:0.5em; margin-bottom:2em;}
+        
     </style>
 {% endblock %}
+
+{% block "main" %}
+<h1>ebook created</h1>
+<p><a href="/library/epub/{{story.pk}}/{{story.title}}.epub">Download epub</a></p>
+{% endblock %}
+
 
 {% block "rh" %}
     {{block.super}}
@@ -44,5 +54,5 @@
 <p>{{stats.wordcount}} words completed.<br />Target words = {{stats.wordtarget}}</p>
 <h2>{{stats.percentage}}%</h2>
 {% endif %}
-<a href="/story/print/{{story.pk}}">Preview(Print) this story</a>
+<a href="/story/print/{{story.pk}}">Print this story</a>
 {% endblock %}
