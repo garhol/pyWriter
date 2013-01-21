@@ -28,7 +28,14 @@ h4 a.majorCharTitle{background:url({{ MEDIA_URL }}images/icons/star-icon.png) no
 {% endblock %}
 
 {% block "main" %}
-<p>Things will go here</p>
+{% if published_books %}
+<h1>Recent ebooks published</h1>
+    <ul>
+        {% for s in published_books %}
+            <li><a href="/library/epub/{{s.0}}/{{s.1}}" />{{s.3}}</a> by {{s.2}}</li>
+        {% endfor %}
+    </ul>
+{% endif %}
 {% endblock %}
 
 {% block "rh" %}

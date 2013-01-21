@@ -75,8 +75,7 @@ def print_epub(request, story=None):
             html_files = [mycover,]
         else:
             html_files = []
-        # The filenames of the HTML are listed in html_files
-        #html_files = ['foo.html', 'bar.html']
+
         html_files.append(myfile)
 
         counter = 0
@@ -148,9 +147,11 @@ def print_epub(request, story=None):
         manifest = ""
         spine = ""
 
+        # todo TOC
         #mytoc = os.path.join(ebookpath, "toc.ncx")
         #tocmanifest  = '<item id="ncx" href="%s" media-type="application/x-dtbncx+xml"/>' % (mytoc,)
         #manifest += tocmanifest
+        
 
         if st.cover:
             manifest += '<item id="cover-image" href="cover.jpg" media-type="image/jpeg"/>'

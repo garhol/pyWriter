@@ -19,6 +19,19 @@ def index(request):
     context['user'] = request.user
     context['stories'] = Story.objects.filter(
         user=request.user).order_by('title')
+    published_books = []
+    for st in Story.objects.all():
+        ebookpath = os.path.join(settings.STATIC_ROOT, "library", "epub", str(st.pk))
+        filename  = "%s.epub" % st.title
+        zippath = os.path.join(ebookpath, filename)
+        if os.path.exists(zippath):
+            book = []
+            book.append(st.pk)
+            book.append(filename)
+            book.append(st.author)
+            book.append(st.title)
+            published_books.append(book)
+    context['published_books'] = published_books          
     context['chapters'] = Chapter.objects.filter(
         user=request.user).order_by('title')
     context['scenes'] = Scene.objects.filter(
@@ -46,7 +59,7 @@ def print_story(request, story=None):
     context = {}
     if story:
         st = get_object_or_404(Story, pk=story, user=request.user)
-        
+
         ebookpath = os.path.join(settings.STATIC_ROOT, "library", "epub", str(st.pk))
         filename  = "%s.epub" % st.title
         zippath = os.path.join(ebookpath, filename)
