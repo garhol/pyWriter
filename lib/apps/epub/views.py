@@ -71,10 +71,8 @@ def print_epub(request, story=None):
                         </html>' % (st.title)
             f.write(content)
             f.close()   
-            
-            html_files = [mycover,]
-        else:
-            html_files = []
+
+        html_files = []
 
         html_files.append(myfile)
 
@@ -142,31 +140,93 @@ def print_epub(request, story=None):
           <spine toc=\"ncx\">
             %(spine)s
           </spine>
+          %(guide)s
         </package>'''
 
         manifest = ""
         spine = ""
+        navmapcontent = ""
 
-        # todo TOC
-        #mytoc = os.path.join(ebookpath, "toc.ncx")
-        #tocmanifest  = '<item id="ncx" href="%s" media-type="application/x-dtbncx+xml"/>' % (mytoc,)
-        #manifest += tocmanifest
+        toccontent = '''<?xml version='1.0' encoding='utf-8'?>
+        <!DOCTYPE ncx PUBLIC "-//NISO//DTD ncx 2005-1//EN"
+                         "http://www.daisy.org/z3986/2005/ncx-2005-1.dtd">
+        <ncx xmlns="http://www.daisy.org/z3986/2005/ncx/" version="2005-1">
+          <head>
+            <meta name="dtb:uid"
+        content="%(uniquething)s"/>
+            <meta name="dtb:depth" content="1"/>
+            <meta name="dtb:totalPageCount" content="0"/>
+            <meta name="dtb:maxPageNumber" content="0"/>
+          </head>
+          <docTitle>
+            <text>%(toctitle)s</text>
+          </docTitle>
+          <navMap>
+          %(navmap)s
+          </navMap>
+        </ncx>
+        '''
+        
+       
         
 
         if st.cover:
+            manifest += '<item id="cover" href="cover.html"  media-type="application/xhtml+xml" />'
             manifest += '<item id="cover-image" href="cover.jpg" media-type="image/jpeg"/>'
             spine += '<itemref idref="cover" linear="no"/>'
             epub.write(coverimagepath, 'OEBPS/cover.jpg')
-            
+            mycoverpath = os.path.join(ebookpath, "cover.html")
+            epub.write(mycoverpath, 'OEBPS/cover.html')
+            guide = '''
+                <guide> 
+                    <reference type="cover" title="Cover Image" href="cover.html" /> 
+                </guide>
+              '''
+            navmapcontent += '''
+            <navPoint id="navpoint-1" playOrder="1">
+              <navLabel>
+                <text>Book cover</text>
+              </navLabel>
+              <content src="cover.html"/>
+            </navPoint>
+            '''
+  
         # Write each HTML file to the ebook, collect information for the index
         for i, html in enumerate(html_files):
             basename = os.path.basename(html)
             manifest += '<item id="file_%s" href="%s" media-type="application/xhtml+xml"/>' % (
                           i+1, basename)
             spine += '<itemref idref="file_%s" />' % (i+1)
+            navmapcontent += '''
+            <navPoint id="navpoint-%s" playOrder="%s">
+              <navLabel>
+                <text>%s</text>
+              </navLabel>
+              <content src="%s"/>
+            </navPoint>
+            ''' % (i+2, i+2, i+2, basename)
+            
             epub.write(html, 'OEBPS/'+basename)
 
         uniquestring = "%s%s" % (st.title, st.author)
+        
+         # todo TOC
+        mytoc = os.path.join(ebookpath, "toc.ncx")
+        f = file(mytoc, "w")
+        f.write(toccontent % {
+          'toctitle': st.title,
+          'navmap': navmapcontent,
+          'uniquething' : uniquestring,
+        })
+        f.close()
+        epub.write(mytoc, 'OEBPS/toc.ncx')
+        #f = file(mytoc, "r")
+        #s = f.read()
+        #assert 0, s
+        
+        tocmanifest = '<item id="ncx" href="toc.ncx" media-type="application/x-dtbncx+xml"/>'
+        manifest += tocmanifest
+        
         # Finally, write the index
         epub.writestr('OEBPS/Content.opf', index_tpl % {
           'uniqueid': uniquestring,
@@ -174,6 +234,7 @@ def print_epub(request, story=None):
           'author': st.author,
           'manifest': manifest,
           'spine': spine,
+          'guide' : guide,
         })
         
             
