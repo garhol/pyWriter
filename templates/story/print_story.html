@@ -57,6 +57,10 @@
 {% block "rh" %}
     {{block.super}}
 
+{% if story.cover %}
+        <img  src="{% thumbnail story.cover 200x200 %}"  alt="{{story}}" class="characterImage" />
+{% endif %}
+        
 {% if story.get_chapters %}
     <h3>Chapters in this story</h3>
     <p>

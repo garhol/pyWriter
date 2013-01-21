@@ -27,11 +27,10 @@
                 <p class="story_title">add a story</p>
             </a>
         </div>
-        {% for s in stories %}
-        <div class="storyPod">
+        {% for s in stories %}     
+        <div class="storyPod" {% if s.cover %}style="background:url({% thumbnail s.cover 260x260 %}) rgba(0, 0, 0, 0.2) no-repeat center 2.5em; border:1px solid #777; width:278px;" {% endif %} title="{{s.synopsis}}">
             <a href="/story/{{s.pk}}">
                 <p class="story_title">{{s}}</p>
-                <p class="story_syn">{{s.synopsis}}</p>
             </a>
         </div>
         {% endfor %}

@@ -36,8 +36,9 @@ def print_epub(request, story=None):
         </head>\
         <body> \
         <h1>%s</h1> \
+        <h3>%s</h3> \
         </body>\
-        </html>" % (st.title, st.title)
+        </html>" % (st.title, st.title, st.author)
         f.write(content)
         f.close()      
                    
@@ -48,9 +49,35 @@ def print_epub(request, story=None):
         # The first file must be named "mimetype"
         epub.writestr("mimetype", "application/epub+zip")
 
+
+        if st.cover:
+            mycover = os.path.join(ebookpath, "cover.html")
+            coverimage = os.path.abspath(st.cover.path)
+            coverimagepath = os.path.join(ebookpath, "cover.jpg")
+            shutil.copy(coverimage, coverimagepath)
+            
+            f = file(mycover, "w")
+            content = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd"> \
+                        <html xmlns="http://www.w3.org/1999/xhtml"> \
+                        <head> \
+                        <title>Cover</title> \
+                        <style type="text/css"> img { max-width: 100%%; } </style> \
+                        </head> \
+                        <body> \
+                        <div id="cover-image"> \
+                        <img src="cover.jpg" alt="%s"/> \
+                        </div> \
+                        </body> \
+                        </html>' % (st.title)
+            f.write(content)
+            f.close()   
+            
+            html_files = [mycover,]
+        else:
+            html_files = []
         # The filenames of the HTML are listed in html_files
         #html_files = ['foo.html', 'bar.html']
-        html_files = [myfile,]
+        html_files.append(myfile)
 
         counter = 0
         if st.get_chapters:
@@ -108,6 +135,7 @@ def print_epub(request, story=None):
             <dc:creator>%(author)s</dc:creator>
             <dc:identifier id="bookid">urn:isbn:%(uniqueid)s</dc:identifier>
             <dc:language>en-GB</dc:language>
+            <meta name="cover" content="cover-image"/>
           </metadata>
           <manifest>
             %(manifest)s
@@ -120,7 +148,15 @@ def print_epub(request, story=None):
         manifest = ""
         spine = ""
 
+        #mytoc = os.path.join(ebookpath, "toc.ncx")
+        #tocmanifest  = '<item id="ncx" href="%s" media-type="application/x-dtbncx+xml"/>' % (mytoc,)
+        #manifest += tocmanifest
 
+        if st.cover:
+            manifest += '<item id="cover-image" href="cover.jpg" media-type="image/jpeg"/>'
+            spine += '<itemref idref="cover" linear="no"/>'
+            epub.write(coverimagepath, 'OEBPS/cover.jpg')
+            
         # Write each HTML file to the ebook, collect information for the index
         for i, html in enumerate(html_files):
             basename = os.path.basename(html)

@@ -34,6 +34,8 @@ class Story(models.Model):
     synopsis = models.TextField(blank=True)
     genre = models.ForeignKey(Genre, null=True, blank=True)
     fiction = models.BooleanField(default=True)
+    cover = models.ImageField(
+        upload_to='covers/%Y/%m/%d', null=True, blank=True)
 
     @property
     def get_chapters(self):
