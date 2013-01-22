@@ -20,7 +20,7 @@ def index(request):
     context['stories'] = Story.objects.filter(
         user=request.user).order_by('title')
     published_books = []
-    for st in Story.objects.all():
+    for st in Story.objects.filter(public_access=True):
         ebookpath = os.path.join(settings.STATIC_ROOT, "library", "epub", str(st.pk))
         filename  = "%s.epub" % st.title
         zippath = os.path.join(ebookpath, filename)
@@ -30,6 +30,7 @@ def index(request):
             book.append(filename)
             book.append(st.author)
             book.append(st.title)
+            book.append(st.cover)
             published_books.append(book)
     context['published_books'] = published_books          
     context['chapters'] = Chapter.objects.filter(

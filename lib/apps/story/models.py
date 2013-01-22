@@ -36,7 +36,8 @@ class Story(models.Model):
     fiction = models.BooleanField(default=True)
     cover = models.ImageField(
         upload_to='covers/%Y/%m/%d', null=True, blank=True)
-
+    registered_access = models.BooleanField(default=False, help_text="When published make this story available to registered users")
+    public_access = models.BooleanField(default=False, help_text="When published, make this story available to the public (Overrides registered user access)")
     @property
     def get_chapters(self):
         chapters = Chapter.objects.all().filter(story=self).order_by('weight')          

@@ -5,8 +5,6 @@
 {% block "css" %}
     {{block.super}}
 <style type="text/css">
-.storyPod{background-position:0px 0px; background:url({{ MEDIA_URL }}images/icons/story-icon.png) no-repeat;}
-.storyPod:hover{background-position:-128px 0px;}
 .header{padding:1em; font-weight:bold; background:#f3d26c;}
 .scenePod h4, .charPod h4{background: #4F7178; color:#fff; margin:0px 0px 10px 0px; border-radius:0.5em 0.5em 0 0 }
 div.scenePod h4 a, div.charPod h4 a{color: white; display: block; padding: 0.5em;}
@@ -19,6 +17,8 @@ div.charPod{width:400px;}
 div.charBio{float:left; max-width:290px;}
 h4 a.majorCharTitle{background:url({{ MEDIA_URL }}images/icons/star-icon.png) no-repeat top right;}
 .addLink{width: 100%; text-align: right;}
+.publishedPod{background:rgba(0, 0, 0, 0.2); border: 1px solid #777; min-width:150px; min-height: 295px; float: left; padding: 0.5em; margin-right: 1em;}
+.publishedPod p{margin-bottom:0px}
 </style>
 {% endblock %}
 
@@ -28,14 +28,21 @@ h4 a.majorCharTitle{background:url({{ MEDIA_URL }}images/icons/star-icon.png) no
 {% endblock %}
 
 {% block "main" %}
+<div class="recent_pubs">
+<p><strong>Recent ebooks published</strong></p>
 {% if published_books %}
-<h1>Recent ebooks published</h1>
-    <ul>
         {% for s in published_books %}
-            <li><a href="/library/epub/{{s.0}}/{{s.1}}" />{{s.3}}</a> by {{s.2}}</li>
+            <div class="publishedPod">
+                {% if s.4 %}<img src="{% thumbnail s.4 260x260 %}" alt="{{s.3}}" />{% endif %}
+                <p class="story_title"><strong>{{s.3}}</strong><br />{{s.2}} <br />
+                <a href="/library/epub/{{s.0}}/{{s.1}}">Download epub</a>
+                </p>
+            </div>
         {% endfor %}
-    </ul>
+{% else %}
+    <ul><li>No books are available at present</li></ul>
 {% endif %}
+</div>
 {% endblock %}
 
 {% block "rh" %}

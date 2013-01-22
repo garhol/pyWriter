@@ -65,7 +65,7 @@ class StoryForm(forms.ModelForm):
 
     class Meta:
         model = Story
-        fields = ('title', 'author', 'synopsis', 'genre', 'fiction', 'cover')
+        fields = ('title', 'author', 'synopsis', 'genre', 'fiction', 'cover', 'registered_access', 'public_access')
 
 
 class ChapterForm(forms.ModelForm):
