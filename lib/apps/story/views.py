@@ -11,14 +11,10 @@ from .forms import SceneForm, CharacterForm, ArtifactForm, LocationForm, StoryFo
 
 import os.path
 
-@login_required
+#@login_required
 def index(request):
     context = {}
     template = 'index.html'
-    context['title'] = "logged in"
-    context['user'] = request.user
-    context['stories'] = Story.objects.filter(
-        user=request.user).order_by('title')
     published_books = []
     for st in Story.objects.filter(public_access=True):
         ebookpath = os.path.join(settings.STATIC_ROOT, "library", "epub", str(st.pk))
@@ -33,16 +29,26 @@ def index(request):
             book.append(st.cover)
             published_books.append(book)
     context['published_books'] = published_books          
-    context['chapters'] = Chapter.objects.filter(
-        user=request.user).order_by('title')
-    context['scenes'] = Scene.objects.filter(
-        user=request.user).order_by('importance', 'name')
-    context['characters'] = Character.objects.filter(
-        user=request.user).order_by('-major_character', 'firstname')
-    context['artifacts'] = Artifact.objects.filter(
-        user=request.user).order_by('name')
-    context['locations'] = Location.objects.filter(
-        user=request.user).order_by('name')
+    
+    if request.user.is_authenticated():
+        context['title'] = "logged in"
+        context['user'] = request.user
+        context['stories'] = Story.objects.filter(
+            user=request.user).order_by('title')
+        context['chapters'] = Chapter.objects.filter(
+            user=request.user).order_by('title')
+        context['scenes'] = Scene.objects.filter(
+            user=request.user).order_by('importance', 'name')
+        context['characters'] = Character.objects.filter(
+            user=request.user).order_by('-major_character', 'firstname')
+        context['artifacts'] = Artifact.objects.filter(
+            user=request.user).order_by('name')
+        context['locations'] = Location.objects.filter(
+            user=request.user).order_by('name')
+        context['loggedin'] = True
+    else:
+        context['loggedin'] = False
+        
     context['feed'] = Getfeed()
     return render_to_response(template, context, context_instance=RequestContext(request))
 

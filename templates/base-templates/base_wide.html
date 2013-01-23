@@ -42,6 +42,7 @@
         span.required:after { content: "*"; }
         p.helpText{clear:left; margin-top:1em; font-style:italic; font-size:0.9em;}
         ul.nav li{float:left; margin-right:1em;}
+        footer{margin-top:2em; display:inline-block;}
     </style>
   {% endblock %}
 <!--[if lt IE 9]>
@@ -69,8 +70,10 @@
                 </div>
                 <div class="login four columns omega">
                 {% block "login" %}
-                {% if user.username %}
-                    <p>{{ user.username }} - <a class="button red medium" href="/logout/">logout</a></p>
+                {% if user.is_authenticated %}
+                    <p>{{ user.username }} - <a class="button" href="/logout/">logout</a></p>
+                {% else %}
+                    <p><a href="/login/?next={{request.path}}">login</a></p>
                 {% endif %}
                 {% endblock %}
                 </div>
