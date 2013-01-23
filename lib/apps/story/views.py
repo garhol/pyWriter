@@ -26,7 +26,11 @@ def index(request):
             book.append(filename)
             book.append(st.author)
             book.append(st.title)
-            book.append(st.cover)
+            if st.cover:
+                book.append(st.cover)
+            else:
+                nocover =  "images/icons/no-cover.jpg"
+                book.append (nocover)
             published_books.append(book)
     context['published_books'] = published_books          
     
