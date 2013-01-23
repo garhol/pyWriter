@@ -18,20 +18,12 @@
 
 	<!-- CSS
   ================================================== -->
-	<link rel="stylesheet" href="{{ MEDIA_URL }}css/base.css">
-	<link rel="stylesheet" href="{{ MEDIA_URL }}css/skeleton.css">
-	<link rel="stylesheet" href="{{ MEDIA_URL }}css/layout.css">
+	<link rel="stylesheet" href="{{ MEDIA_URL }}css/bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="{{ MEDIA_URL }}css/bootstrap/css/bootstrap-responsive.css">
+    <link rel="stylesheet" href="{{ MEDIA_URL }}css/screen.css">
     {{ form.media }}
     {% block "css" %}
-            <link rel="stylesheet" href="//code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css" />
-            <style type="text/css">
-                ul.messages{float:left; width:100%; margin-bottom:1em; font-size:1.3em; font-weight: bold;}
-                ul.messages li.success{color:green;}
-                ul.messages li.error{color:red;}
-                ul.errorlist{ color:red;}
-                ul.nav li{float:left; margin-right:1em;}
-                footer{margin-top:2em; display:inline-block;}
-            </style>
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css" />
     {% endblock %}
 	<!--[if lt IE 9]>
 		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -43,7 +35,7 @@
 	<link rel="apple-touch-icon" href="images/apple-touch-icon.png">
 	<link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
 	<link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
-
+    <script src="{{ MEDIA_URL }}js/modernizr-2.6.2.min.js"></script>
 </head>
 
 
@@ -51,80 +43,87 @@
 
 		<!-- Demo code begins -->
 
-<div class="container">
-		<header>
-			<div class="sixteen columns">
-				<div id="logo" class="twelve columns alpha">
-                    <h1><a href="/">agkani - &#x0905;&#x0919;&#x094D;&#x0915;&#x0928;&#x0940;</a></h1>
-                </div>
-                <div class="login four columns omega">
-                {% block "login" %}
-                {% if user.is_authenticated %}
-                    <p>{{ user.username }} - <a class="button" href="/logout/">logout</a></p>
-                {% else %}
-                    <p><a href="/login/?next={{request.path}}">login</a></p>
-                {% endif %}
-                {% endblock %}
-                </div>
+        <div class="container">
+		  <header>
+            <div id='main-nav' class="navbar navbar-fixed-top">
                 
-                {% if messages %}
-                <div id="messages">
-                    <ul class="messages">
-                        {% for message in messages %}
-                            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-                        {% endfor %}
-                    </ul>
-                </div>
-                {% endif %}
-        
-			</div>
-            {% block "nav" %}
-            <div class="sixteen columns">
-                <ul class="nav">
-                    <li><a href="/">home</a></li>
-                    {% if user.is_authenticated %}
-                    <li><a href="/story/list/">stories</a></li>
-                    <li><a href="/chapter/list/">chapters</a></li>
-                    <li><a href="/scene/list/">scenes</a></li>
-                    <li><a href="/character/list/">characters</a></li>
-                    <li><a href="/artifact/list/">artifacts</a></li>
-                    <li><a href="/location/list/">locations</a></li>
-                    {% endif %}
-                </ul>
-            </div>
-            {% endblock "nav" %}
-		</header>
+                    <div class="navbar-inner">
+                        <div class='container'>
+                            <a class="brand" href="/">agkani - &#x0905;&#x0919;&#x094D;&#x0915;&#x0928;&#x0940;</a>
+                            {% block "nav" %}
+                                <ul class="nav">
+                                    <li><a href="/" class='active'>Home</a></li>
+                                    {% if user.is_authenticated %}
+                                        <li class="divider-vertical"></li>
+                                        <li><a href="/story/list/">Stories</a></li>
+                                        <li class="divider-vertical"></li>
+                                        <li><a href="/chapter/list/">Chapters</a></li>
+                                        <li class="divider-vertical"></li>
+                                        <li><a href="/scene/list/">Scenes</a></li>
+                                        <li class="divider-vertical"></li>
+                                        <li><a href="/character/list/">Characters</a></li>
+                                        <li class="divider-vertical"></li>
+                                        <li><a href="/artifact/list/">Artifacts</a></li>
+                                        <li class="divider-vertical"></li>
+                                        <li><a href="/location/list/">Locations</a></li>
+                                    {% endif %}
+                                </ul>
 
-		<article class="two-thirds column">
-			<section>
-				 {% block "main" %}
-                <p>main</p>
-                {% endblock "main" %}
-			</section>
-        </article>
-        <article class="one-third column">
-			<section>
-				 {% block "rh" %}
-                {% endblock "rh" %}
-			</section>
-		</article>
-        <footer>
-			<div class="sixteen columns">
-                <p class="right">agkani {% now "Y" %}</p>
+                                {% endblock "nav" %}
+                            </ul>
+                            <ul class='nav pull-right'>
+                                {% block "login" %}
+                                    {% if user.is_authenticated %}
+                                        <li><a class='btn btn-small' href="/logout/"><i class='icon-remove'></i> [{{ user.username }}]</a></li>
+                                    {% else %}
+                                        <li><a class='btn btn-small' href="/login/?next={{request.path}}"><i class='icon-off'></i> Login</a></li>
+                                    {% endif %}
+                                {% endblock %}
+                            </ul>
+                        </div>
+                    </div>
+                
             </div>
-        </footer>
-</div>
+          </header>
+            {% if messages %}
+    			<div class="row">
+                    <div class='span12'>
+                        <div id="messages" class='alert'>
+                                {% for message in messages %}
+                                    <span{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</span>
+                                {% endfor %}
+                        </div>
+                    </div>
+    			</div>
+            {% endif %}
+
+            <div class='row'>
+        		<article class="span8">
+        			<section>
+        				 {% block "main" %}
+                        <p>main</p>
+                        {% endblock "main" %}
+        			</section>
+                </article>
+                <article class="span4">
+        			<section>
+        				 {% block "rh" %}
+                        {% endblock "rh" %}
+        			</section>
+        		</article>
+            </div>
+            <footer class='row'>
+    			<div class="span12">
+                    <p>agkani {% now "Y" %}</p>
+                </div>
+            </footer>
+        </div>
 
     {% block "javascript" %}
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js" type="text/javascript"></script>
         <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"></script>
-        <script>
-            $('document').ready(function(){
-                $('.messages').delay(3000).fadeOut(500, function() {
-                    
-                });
-            });
-        </script>
+        
+        <script type="text/javascript" src='{{ MEDIA_URL}}js/application.js'></script>
     {% endblock %}
 
 	</body>
