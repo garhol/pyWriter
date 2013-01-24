@@ -60,8 +60,11 @@ def index(request):
 @login_required
 def storylist(request):
     context = {}
+     
+    nocover = "images/icons/no-cover.jpg"
     context['stories'] = Story.objects.filter(
         user=request.user).order_by('title')
+    context['nocover'] = nocover
     template = 'listings/list_story.html'
     return render_to_response(template, context, context_instance=RequestContext(request))
 

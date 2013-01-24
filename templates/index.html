@@ -11,31 +11,39 @@
 {% endblock %}
 
 {% block "main" %}
-<div class="recent_pubs">
-<h2>Recent ebooks published</strong></h2>
-{% if published_books %}
-        {% for s in published_books %}
-            <div class="publishedPod">
-                {% if s.4 %}<img src="{% thumbnail s.4 260x260 %}" alt="{{s.3}}" />{% endif %}
-                <p class="story_title"><strong>{{s.3}}</strong><br />{{s.2}} <br />
-                <a href="/library/epub/{{s.0}}/{{s.1}}">Download epub</a>
-                </p>
-            </div>
-        {% endfor %}
-{% else %}
-    <p>No books are available at present</p>
-{% endif %}
-</div>
-{% endblock %}
 
-{% block "rh" %}
-<aside id="siteupdates">
-<h2>Site Updates</h2>
-{% for e in feed|slice:":4" %}
-    <div class='item clearfix'>
-        <img class='avatar' src="{{e.media_thumbnail.0.url}}"/>
-        <p><span>{{e.authors.0.name}}</span>{{e.title}}</p>
-    </div>
-{% endfor %}
-</aside>
+
+<div class='row'>
+                <section class="span8">
+                    <article class='padded'>
+                        <div class="recent_pubs clearfix">
+                            <h2>Recent Publications</h2>
+                            {% if published_books %}
+                                    {% for s in published_books %}
+                                        <div class="publishedPod">
+                                            {% if s.4 %}<img class='jacket' src="{% thumbnail s.4 147x220 %}" alt="{{s.3}}" />{% endif %}
+                                            <p class="story_title"><strong>{{s.3}}</strong><br />{{s.2}}</p>
+                                            <a class='btn btn-mini' href="/library/epub/{{s.0}}/{{s.1}}"><i class='icon-download'></i> epub</a>
+                                        </div>
+                                    {% endfor %}
+                            {% else %}
+                                <p>No books are available at present</p>
+                            {% endif %}
+                        </div>                        
+                    </article>
+                </section>
+                <section class="span4">
+                    <article class='padded'>
+                        <aside id="siteupdates">
+                        <h2>Site Updates</h2>
+                        {% for e in feed|slice:":4" %}
+                            <div class='item clearfix'>
+                                <img class='avatar' src="{{e.media_thumbnail.0.url}}"/>
+                                <p><span>{{e.authors.0.name}}</span>{{e.title}}</p>
+                            </div>
+                        {% endfor %}
+                        </aside>
+                    </article>
+                </section>
+            </div>
 {% endblock %}

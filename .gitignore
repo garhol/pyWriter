@@ -1,3 +1,5 @@
 *.pyc
 
 /lib/settings/local_settings.py
+/library-rename/covers/
+no-cover.jpg.*

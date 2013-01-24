@@ -47,10 +47,12 @@ section h2 {
   font-family: monospace;
 }
 @media (min-width: 768px) {
-  article {
-    background-color: #efefef;
+  #story_list a.btn-block {
+    padding: 20px 20px;
+    font-size: 160%;
   }
-  article section {
+  section .padded {
+    background-color: #efefef;
     padding: 1em;
     border: 1px solid #ccc;
   }
@@ -60,6 +62,21 @@ section h2 {
   footer {
     text-align: right;
     padding-top: 10px;
+  }
+  .publishedPod {
+    padding: 10px;
+    background-color: white;
+    border: 1px solid #cccccc;
+    float: left;
+    position: relative;
+  }
+  .publishedPod p {
+    margin: 3px 0 0 0;
+  }
+}
+@media (max-width: 979px) {
+  #main-nav.navbar .navbar-inner .container {
+    padding-right: 10px;
   }
 }
 @media (min-width: 979px) {

@@ -32,7 +32,6 @@ section h2 {
 	color:#8b8b8b;
 }
 
-
 #siteupdates {
 
 	div.item {
@@ -60,12 +59,18 @@ section h2 {
 }
 
 @media (min-width: 768px) {
-	article {
 
-		background-color:@pod-color;
+	#story_list {
+		a.btn-block {
+			padding:20px 20px;
+			font-size:160%;
+		}
+	}
 
-
-		section {
+	section {
+		
+		.padded{
+			background-color:@pod-color;
 			padding:1em;
 			border:1px solid #ccc;
 		}
@@ -80,6 +85,30 @@ section h2 {
 		padding-top:10px;
 	}
 
+	.publishedPod {
+
+		padding:10px;
+		background-color:white;
+		border:1px solid @border-color;
+		float:left;
+		position:relative;
+
+		p {
+			margin:3px 0 0 0;
+		}
+
+	}
+
+}
+
+@media (max-width: 979px) {
+	#main-nav.navbar {
+		.navbar-inner {
+			.container {
+				padding-right:10px;
+			}
+		}
+	}
 }
 
 @media (min-width: 979px) {
