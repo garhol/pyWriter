@@ -17,7 +17,7 @@ def index(request):
     template = 'index.html'
     published_books = []
     for st in Story.objects.filter(public_access=True):
-        ebookpath = os.path.join(settings.STATIC_ROOT, "library", "epub", str(st.pk))
+        ebookpath = os.path.join(settings.STATIC_ROOT, "media", "epub", str(st.pk))
         filename  = "%s.epub" % st.title
         zippath = os.path.join(ebookpath, filename)
         if os.path.exists(zippath):
@@ -29,7 +29,7 @@ def index(request):
             if st.cover:
                 book.append(st.cover)
             else:
-                nocover =  "images/icons/no-cover.jpg"
+                nocover =  "covers/no-cover.jpg"
                 book.append (nocover)
             published_books.append(book)
     context['published_books'] = published_books          

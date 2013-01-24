@@ -14,7 +14,7 @@
 
 {% block "main" %}
 <h1>ebook created</h1>
-<p><a href="/library/epub/{{story.pk}}/{{story.title}}.epub">Download epub</a></p>
+<p><a href="{{MEDIA_URL}}epub/{{story.pk}}/{{story.title}}.epub">Download epub</a></p>
 {% endblock %}
 
 

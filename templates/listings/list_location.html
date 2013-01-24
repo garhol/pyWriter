@@ -33,7 +33,7 @@
             {% if l.image %}
                 <img class="charPodImage" src="{% thumbnail l.image 100x100 %}" alt="{{l}}" />
             {% else %}
-                <img class="charPodImage" src="{{ MEDIA_URL }}images/icons/location-icon.png" alt="{{l}}" style="width:100px" />
+                <img class="charPodImage" src="{{ STATIC_URL }}library/images/icons/location-icon.png" alt="{{l}}" style="width:100px" />
             {% endif %}
         <div>
             <h4>{{ l.name }}</h4>

@@ -20,7 +20,7 @@ def print_epub(request, story=None):
         st = get_object_or_404(Story, pk=story, user=request.user)
         context['story'] = st
  
-        ebookpath = os.path.join(settings.STATIC_ROOT, "library", "epub", str(st.pk))
+        ebookpath = os.path.join(settings.STATIC_ROOT, "media", "epub", str(st.pk))
         filename  = "%s.epub" % st.title
         zippath = os.path.join(ebookpath, filename)
         if os.path.exists(ebookpath):

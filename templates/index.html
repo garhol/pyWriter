@@ -15,7 +15,7 @@ img.charPodImage{display:block; margin-left:0.5em; float:left;}
 div.charPod p.character-description{float:left; padding-top:0px; clear:left;}
 div.charPod{width:400px;}
 div.charBio{float:left; max-width:290px;}
-h4 a.majorCharTitle{background:url({{ MEDIA_URL }}images/icons/star-icon.png) no-repeat top right;}
+h4 a.majorCharTitle{background:url({{ STATIC_URL }}library/images/icons/star-icon.png) no-repeat top right;}
 .addLink{width: 100%; text-align: right;}
 .publishedPod{background:rgba(0, 0, 0, 0.2); border: 1px solid #777; min-width:150px; min-height: 295px; float: left; padding: 0.5em; margin-right: 1em;}
 .publishedPod p{margin-bottom:0px}
@@ -34,11 +34,11 @@ box-shadow: 2px 2px 5px #888;}
 <div class="recent_pubs">
 <p><strong>Recent ebooks published</strong></p>
 {% if published_books %}
-        {% for s in published_books %}
+        {% for s in published_books %}     
             <div class="publishedPod">
                 {% if s.4 %}<img src="{% thumbnail s.4 260x260 %}" alt="{{s.3}}" />{% endif %}
                 <p class="story_title"><strong>{{s.3}}</strong><br />{{s.2}} <br />
-                <a href="/library/epub/{{s.0}}/{{s.1}}">Download epub</a>
+                <a href="{{MEDIA_URL}}epub/{{s.0}}/{{s.1}}">Download epub</a>
                 </p>
             </div>
         {% endfor %}

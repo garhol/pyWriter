@@ -7,7 +7,7 @@
     {% if location.image %}
         <img  src="{% thumbnail location.image 200x200 %}"  alt="{{location}}" class="characterImage" />
     {% else %}
-        <img class="charPodImage" src="{{ MEDIA_URL }}images/icons/location-icon.png" alt="{{location}}" style="width:200px" />
+        <img class="charPodImage" src="{{ STATIC_URL }}library/images/icons/location-icon.png" alt="{{location}}" style="width:200px" />
     {% endif %}
         </div>
 {% endblock %}
