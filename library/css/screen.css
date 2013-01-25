@@ -46,14 +46,19 @@ section h2 {
   margin-left: 10px;
   font-family: monospace;
 }
+#story_details_form label {
+  font-weight: bold;
+}
 @media (min-width: 768px) {
   #story_list a.btn-block {
     padding: 20px 20px;
     font-size: 160%;
   }
   section .padded {
+    padding: 1em 1.5em 1.5em 1.5em;
+  }
+  .pod {
     background-color: #efefef;
-    padding: 1em;
     border: 1px solid #ccc;
   }
   .boxshadow article {
@@ -69,6 +74,7 @@ section h2 {
     border: 1px solid #cccccc;
     float: left;
     position: relative;
+    margin-right: 10px;
   }
   .publishedPod p {
     margin: 3px 0 0 0;

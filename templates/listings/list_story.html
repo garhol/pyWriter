@@ -13,12 +13,12 @@
 {% block "main" %}
     <section class='row' id='story_list'>
         <div class='span8'>
-            <div class='padded clearfix'>
+            <div class='padded clearfix pod'>
                 <h2>Your Stories</h2>
                 {% for s in stories %}
 
                 <div class="publishedPod">
-                    <a href='/story/{{ s.id}}'><img class='jacket' src="{% if s.cover %}{% thumbnail s.cover 147x220 %}{% else %}{% thumbnail nocover 260x260 %} {% endif %}" alt="{{s}}" />
+                    <a href='/story/{{ s.id}}'><img class='jacket' src="{% if s.cover %}{% thumbnail s.cover 147x220 %}{% else %}{% thumbnail nocover 147x260 %} {% endif %}" alt="{{s}}" />
                     <p class="story_title"><strong>{{s}}</strong></p></a>
                 </div>
 
@@ -26,20 +26,10 @@
             </div>
         </div>
         <aside class='span4'>
-            <div class='padded'>
+            <div class='padded pod'>
                 <a href='/story/add/' class='btn btn-block btn-success'>Begin New Story</a>
             </div>
         </aside>
     </section>
     
-{% endblock %}
-
-{% block "rh" %}
-{% for e in feed|slice:":4" %}
-<img src="{{e.media_thumbnail.0.url}}" width="{{e.media_thumbnail.0.width}}" height="{{e.media_thumbnail.0.height}}" style="float:left; margin:0.2em; clear:left;" />
-<p style="float:left; width:260px;">
-    <span style="font-size:0.8em;">{{e.authors.0.name}}</span><br />
-    <a href="{{e.links.0.url}}" target="_blank">{{e.title}}</a>
-</p>
-{% endfor %}
 {% endblock %}

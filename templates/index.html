@@ -15,7 +15,7 @@
 
 <div class='row'>
                 <section class="span8">
-                    <article class='padded'>
+                    <article class='padded pod'>
                         <div class="recent_pubs clearfix">
                             <h2>Recent Publications</h2>
                             {% if published_books %}
@@ -33,7 +33,7 @@
                     </article>
                 </section>
                 <section class="span4">
-                    <article class='padded'>
+                    <article class='padded pod'>
                         <aside id="siteupdates">
                         <h2>Site Updates</h2>
                         {% for e in feed|slice:":4" %}
@@ -45,5 +45,5 @@
                         </aside>
                     </article>
                 </section>
-            </div>
+</div>
 {% endblock %}

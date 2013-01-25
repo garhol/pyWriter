@@ -87,12 +87,16 @@ def print_story(request, story=None):
 @login_required
 def story(request, story=None):
     context = {}
-    template = 'story/story.html'
+    
     if story:
+        template = 'story/story.edit.html'
         st = get_object_or_404(Story, pk=story, user=request.user)
+        context["story_action"] = "story_edit"
         context['story'] = st
         context['form'] = StoryForm(instance=st)
     else:
+        template = 'story/story.add.html'
+        context["story_action"] = "story_add"
         context['form'] = StoryForm()
 
     if request.method == 'POST':
