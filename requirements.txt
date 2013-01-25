@@ -2,3 +2,4 @@ Django==1.4
 South==0.7.6
 easy-thumbnails==1.1
 feedparser==5.1.3
+django-widget-tweaks==1.1.2
