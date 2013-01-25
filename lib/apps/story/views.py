@@ -61,7 +61,8 @@ def index(request):
 def storylist(request):
     context = {}
      
-    nocover = "images/icons/no-cover.jpg"
+    nocover = "covers/no-cover.jpg"
+    
     context['stories'] = Story.objects.filter(
         user=request.user).order_by('title')
     context['nocover'] = nocover

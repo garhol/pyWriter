@@ -4,17 +4,6 @@
 
 {% block "css" %}
     {{block.super}}
-<style type="text/css">
-.storyPod {width: 280px; min-height:300px; margin: 1em; float: left; background:rgba(0, 0, 0, 0.2)}
-
-.storyPod a {width:100%; min-height:300px; display:block;}
-.storyPod a {text-align:center; text-decoration:none;}
-.storyPod p.story_title{font-size:1.2em;}
-.storyPod p{margin:0.5em 0 0 0 ;}
-.storyPod p.story_syn{text-align:left;margin:0.4em;}
-.header{padding:1em; font-weight:bold; background:#f3d26c;}
-</style>
-
 {% endblock %}
 
 {% block "javascript" %}
@@ -29,8 +18,8 @@
                 {% for s in stories %}
 
                 <div class="publishedPod">
-                    <img class='jacket' src="{% if s.cover %}{% thumbnail s.cover 147x220 %}{% else %}{% thumbnail nocover 260x260 %} {% endif %}" alt="{{s}}" />
-                        <p class="story_title"><strong>{{s}}</strong></p>
+                    <a href='/story/{{ s.id}}'><img class='jacket' src="{% if s.cover %}{% thumbnail s.cover 147x220 %}{% else %}{% thumbnail nocover 260x260 %} {% endif %}" alt="{{s}}" />
+                    <p class="story_title"><strong>{{s}}</strong></p></a>
                 </div>
 
                 {% endfor %}
