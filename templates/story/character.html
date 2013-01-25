@@ -8,7 +8,7 @@
     {% if character.image %}
         <img  src="{% thumbnail character.image 200x200 %}"  alt="{{character}}" class="characterImage" />
     {% else %}
-        <img class="charPodImage" src="{{ MEDIA_URL }}images/icons/nocharacter.png" alt="{{character}}" style="width:200px" />
+        <img class="charPodImage" src="{{ STATIC_URL }}library/images/icons/nocharacter.png" alt="{{character}}" style="width:200px" />
     {% endif %}
         </div>
 {% endblock %}

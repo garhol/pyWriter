@@ -3,7 +3,7 @@
 
 {% block "css" %}
     {{block.super}}
-    <link href="{{ MEDIA_URL }}css/tabcontent.css" rel="stylesheet" type="text/css" />
+    <link href="{{ STATIC_URL }}library/css/tabcontent.css" rel="stylesheet" type="text/css" />
     <style type="text/css">
       select{clear:left;}
       #popup
@@ -47,7 +47,7 @@
 
 {% block "javascript" %}
     {{block.super}}
-<script src="{{ MEDIA_URL }}js/tabcontent.js" type="text/javascript"></script>
+<script src="{{ STATIC_URL }}library/js/tabcontent.js" type="text/javascript"></script>
 <script type="text/javascript">
     (function($)
     {
@@ -92,6 +92,9 @@
             e.preventDefault();
             $(this).parents('#popup').hide();            
         })
+        
+        $('.timepicker').datepicker();
+        
     });
       
     $('.various').click(function(e){
@@ -210,7 +213,24 @@
                  {{ form.artifacts }}
                  <p class="helpText">{{ form.artifacts.help_text }} </p>
              </div>
-            
+             <div class="formRow">
+                    {{ form.scene_start_time.errors }}
+                 <label for="{{ form.scene_start_time.auto_id }}">
+                    {% if form.scene_start_time.field.required %}<span class="required">{{ form.scene_start_time.label }}</span>
+                    {% else %}{{ form.scene_start_time.label }}{% endif %}
+                 </label>
+                 {{ form.scene_start_time }}
+                 <p class="helpText">{{ form.scene_start_time.help_text }} </p>
+             </div>
+             <div class="formRow">
+                    {{ form.scene_end_time.errors }}
+                 <label for="{{ form.scene_end_time.auto_id }}">
+                    {% if form.scene_end_time.field.required %}<span class="required">{{ form.scene_end_time.label }}</span>
+                    {% else %}{{ form.scene_end_time.label }}{% endif %}
+                 </label>
+                 {{ form.scene_end_time }}
+                 <p class="helpText">{{ form.scene_end_time.help_text }} </p>
+             </div>
             
         </div>
     

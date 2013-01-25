@@ -5,7 +5,7 @@
     {% if artifact.image %}
         <img class="previewThumb" src="{% thumbnail artifact.image 120x120 %}"  alt="{{artifact}}" />
     {% else %}
-        <img class="previewThumb noPreview" src="{{ MEDIA_URL }}images/icons/artifact-icon.jpg" alt="{{artifact}}" />
+        <img class="previewThumb noPreview" src="{{ STATIC_URL }}library/images/icons/artifact-icon.jpg" alt="{{artifact}}" />
     {% endif %}
      <h3 class="previewName" style="margin-bottom:0.5em;">{% if artifact.name %}{{artifact.name}}{% endif %}</h3>
         {% if artifact.owner %}<p><strong>Owner:</strong> {{artifact.owner}}</p>{% endif %}

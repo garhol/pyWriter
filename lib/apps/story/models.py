@@ -139,6 +139,8 @@ class Scene(models.Model):
     word_target = models.IntegerField(blank=True, default=1000)
     word_count = models.IntegerField(blank=True, null=True)
     order = models.IntegerField(default=1)
+    scene_start_time = models.DateTimeField(null=True, blank=True)
+    scene_end_time = models.DateTimeField(null=True, blank=True)
 
     @property
     def get_percentage_complete(self):
@@ -163,7 +165,7 @@ class Character(models.Model):
     bio = models.TextField(null=True, blank=True)
     date_of_birth = models.DateField(null=True, blank=True)
     date_of_death = models.DateField(null=True, blank=True)
-
+    
     def __unicode__(self):
         return "%s %s" % (self.firstname, self.lastname)
 
