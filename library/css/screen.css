@@ -57,6 +57,14 @@ section h2 {
   section .padded {
     padding: 1em 1.5em 1.5em 1.5em;
   }
+  section .padded.first {
+    padding-right: 0;
+    padding-top: 0;
+  }
+  section .padded.last {
+    padding-left: 0;
+    padding-top: 0;
+  }
   .pod {
     background-color: #efefef;
     border: 1px solid #ccc;
@@ -79,6 +87,9 @@ section h2 {
   .publishedPod p {
     margin: 3px 0 0 0;
   }
+}
+header.padded {
+  padding-bottom: 0;
 }
 ul.tabular {
   list-style-type: none;

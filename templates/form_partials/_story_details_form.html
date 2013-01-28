@@ -4,8 +4,28 @@
 <form id='story_details_form' enctype="multipart/form-data" action="" class='form' method="post">
 {% csrf_token %}
     <div class='row'>
+        <div class='span12'>
+            <header class='padded'>
+                <h2>Story Details</h2>
+            </header>
+        </div>
+    </div>
+    <div class='row'>
+       <div class='span3'>
+            <div class='padded first'>
+                <div class="control-group">
+                    <label for="{{ form.cover.html_name }}">Cover Image</label>
+                    
+                    <div class="controls">
+                        {{ form.cover }}    
+                    </div>
+                </div>
+
+                
+            </div>
+       </div> 
        <div class='span4'>
-            <div class='padded'>
+            
                 <div class="control-group">
                     {{ form.title.errors }}
                     <label for="id_title" class="control-label">Title<span class="required">*</span></label>
@@ -29,11 +49,13 @@
                             {{ form.synopsis|attr:"rows:4"|attr:"class:span4" }}
                         </div>
                         <span class="help-block"></span>
-                </div>
-            </div>
-       </div> 
-       <div class='span4'>
-            <div class='padded'>
+                </div>               
+
+            
+        </div>
+
+        <div class='span4'>
+            <div class='padded last'>
                 <div class="control-group">
                     {{ form.genre.errors }}
                     <label for="id_genre" class="control-label">Genre</label>
@@ -48,74 +70,26 @@
                             {{ form.fiction }}
                             Fiction
                 </label>
-
-                <div class="control-group">
-                    <label for="{{ form.cover.html_name }}"></label>
+                <label class="checkbox" for="id_registered_access">
+                    {{ form.registered_access}}
+                    Registered access
+                </label>
+                <span class="help-block">{{ form.registered_access.help_text }}</span>
                     
-                    <div class="controls">
-                        {{ form.cover }}    
-                    </div>
-                </div>
+                <label class="checkbox" for="id_public_access">
+                    {{ form.public_access}}
+                    Public Access
+                </label>
+                <span class="help-block">{{ form.public_access.help_text }}</span>
 
-            </div>
-        </div>
-    </div>
-
-    <div class='row'>
-        
-        <div class='span4'>
-            <div class='padded'>
-
-
-            {% for field in form %}
-                    {% if field.name == "genre" %}
-                                        
-            </div>
-        </div>
-        <div class='span8'>
-            <div class='padded'>
-                    {% endif %}
-                    {{ field.errors }}
-                    {% if field|is_checkbox %}
-                        <label class="checkbox" for="{{ field.auto_id }}">
-                            {{ field }}
-                            {{ field.label }}
-
-                            
-                        </label>
-                        <span class='help-block'>{{ field.help_text }}</span>
-                    {% else %}
-                    <div class='control-group'>
-
-                        
-                        <label for="{{ field.auto_id }}" class='control-label'>{{ field.label }}{% if field.field.required %}<span class="required">*</span>{% endif %}</label>
-                        <div class='controls'>
-
-                            {% if field|is_textarea %}
-
-                                {{ field|attr:"rows:4"|attr:"class:span4" }}
-
-                            {% elif field|is_textinput %}
-
-                                {{ field|attr:"class:span4" }}
-
-                            {% elif field|is_file %}
-                                {{ field|attr:"class:button" }}
-                            {% else %}
-                                {{ field }}
-                            {% endif %}
-                        </div>
-                        <span class="help-block">{{ field.help_text }}</span>
-
-                    </div>
-                    {% endif %}
-            {% endfor %}
-
-            <button type="submit" class="btn btn-primary">Save changes</button>
+                <button type="submit" class="btn btn-primary">Save changes</button>
                         <a href='/story/list/' class="btn">Cancel</a>
-
+                
             </div>
         </div>
+
     </div>
+
+    
     
 </form>
