@@ -6,6 +6,8 @@
 
 {% block "javascript" %}
     {{block.super}}
+    <script type="text/javascript" src='{{ STATIC_URL }}js/jquery-ui-1.10.0/js/jquery-ui-1.10.0.custom.min.js'></script>
+    <script type="text/javascript" src='{{ STATIC_URL}}js/story_edit.js'></script>
 {% endblock %}
 
 {% load story_tags %}
