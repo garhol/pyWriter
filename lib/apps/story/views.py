@@ -5,6 +5,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from .widgets import AgkaniCoverWidget
 
 from .models import Story, Chapter, Scene, Character, Artifact, Location, Getfeed 
 from .forms import SceneForm, CharacterForm, ArtifactForm, LocationForm, StoryForm, ChapterForm
@@ -93,7 +94,8 @@ def story(request, story=None):
         st = get_object_or_404(Story, pk=story, user=request.user)
         context["story_action"] = "story_edit"
         context['story'] = st
-        context['form'] = StoryForm(instance=st)
+        form = StoryForm(instance=st)
+        context['form'] = form
     else:
         template = 'story/story.add.html'
         context["story_action"] = "story_add"
@@ -102,6 +104,7 @@ def story(request, story=None):
     if request.method == 'POST':
         if story:
             form = StoryForm(request.POST, request.FILES, instance=st)
+
         else:
             story = Story(user_id=request.user.pk)
             form = StoryForm(request.POST, request.FILES, instance=story)
