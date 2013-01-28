@@ -3,9 +3,18 @@ from django.template import Library
 
 register = Library()
 
-@register.inclusion_tag("story/_story_details_form.html")
+@register.inclusion_tag("form_partials/_story_details_form.html")
 def story_form(fm):
     return {"form" :fm}
+
+# dummy form for now
+@register.inclusion_tag("form_partials/_story_facets_form.html")
+def story_facets():
+    return {}
+
+@register.inclusion_tag("form_partials/_generic_one_column_form.html")
+def generic_one_column_form(fm):
+    return {"form" : fm}
 
 @register.filter('is_checkbox')
 def is_checkbox(form_field_obj):
