@@ -5,6 +5,16 @@
     {{ block.super }}
 {% endblock %}
 
+{% load story_tags %}
+
+{% block "main" %}
+    {{ block.super }}
+    {% block "story_facets" %}
+        {% story_facets %}
+    {% endblock %}
+
+{% endblock%}
+
 {% block "rh" %}
         {{block.super}}
     {% if story.cover %}

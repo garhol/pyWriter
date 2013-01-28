@@ -37,7 +37,7 @@ section h2 {
 	div.item {
 
 		margin-bottom:10px;
-		border-bottom:1px dotted #ccc;
+		border-bottom:1px dotted @border-color;
 		padding-bottom:10px;
 
 		img.avatar {
@@ -46,7 +46,7 @@ section h2 {
 			height:20%;
 			max-width:50px;
 			max-height:50px;
-			border: 2px solid #65b9da;
+			border: 2px solid @accented-border-color;
 		}
 		p {
 			float:left;
@@ -86,7 +86,7 @@ section h2 {
 		border:1px solid #ccc;
 	}
 
-	.boxshadow article {
+	.boxshadow article.pod {
 		.dropshadow;
 	}
 
@@ -110,6 +110,26 @@ section h2 {
 
 	}
 
+}
+
+
+ul.tabular {
+	list-style-type:none;
+	list-style-position:inside;
+	margin-left:0;
+	li {
+		background-color:#fefefe;
+		padding:10px;
+		margin-bottom:3px;
+
+		span {
+			float:right;
+			margin-left:10px;
+		}
+	}
+	li:hover {
+		background-color:@highlighted-color;
+	}
 }
 
 @media (max-width: 979px) {

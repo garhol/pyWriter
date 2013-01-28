@@ -29,7 +29,7 @@ section h2 {
 }
 #siteupdates div.item {
   margin-bottom: 10px;
-  border-bottom: 1px dotted #ccc;
+  border-bottom: 1px dotted #cccccc;
   padding-bottom: 10px;
 }
 #siteupdates div.item img.avatar {
@@ -61,7 +61,7 @@ section h2 {
     background-color: #efefef;
     border: 1px solid #ccc;
   }
-  .boxshadow article {
+  .boxshadow article.pod {
     -webkit-box-shadow: 2px 2px 4px #cccccc;
   }
   footer {
@@ -79,6 +79,23 @@ section h2 {
   .publishedPod p {
     margin: 3px 0 0 0;
   }
+}
+ul.tabular {
+  list-style-type: none;
+  list-style-position: inside;
+  margin-left: 0;
+}
+ul.tabular li {
+  background-color: #fefefe;
+  padding: 10px;
+  margin-bottom: 3px;
+}
+ul.tabular li span {
+  float: right;
+  margin-left: 10px;
+}
+ul.tabular li:hover {
+  background-color: #feeebd;
 }
 @media (max-width: 979px) {
   #main-nav.navbar .navbar-inner .container {
