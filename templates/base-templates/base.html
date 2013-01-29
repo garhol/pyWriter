@@ -69,24 +69,33 @@
                             <a class="brand" href="/">agkani - &#x0905;&#x0919;&#x094D;&#x0915;&#x0928;&#x0940;</a>
                             {% block "nav" %}
                                 <div class="nav-collapse collapse">
-                                    <ul class="nav">
-                                        <li><a href="/" class='active'>Home</a></li>
-                                        {% if user.is_authenticated %}
-                                            <li class="divider-vertical"></li>
-                                            <li><a href="/story/list/">Stories</a></li>
-                                            <li class="divider-vertical"></li>
-                                            <li><a href="/chapter/list/">Chapters</a></li>
-                                            <li class="divider-vertical"></li>
-                                            <li><a href="/scene/list/">Scenes</a></li>
-                                            <li class="divider-vertical"></li>
-                                            <li><a href="/character/list/">Characters</a></li>
-                                            <li class="divider-vertical"></li>
-                                            <li><a href="/artifact/list/">Artifacts</a></li>
-                                            <li class="divider-vertical"></li>
-                                            <li><a href="/location/list/">Locations</a></li>
-                                        {% endif %}
-                                    </ul>
-                                
+                                    
+                                        
+                                        <ul class="nav">
+                                            <li><a href="/" class='active'>Home</a></li>
+                                            {% if user.is_authenticated %}
+                                                <li class="divider-vertical"></li>
+                                                <li><a href="/story/list/">Stories</a></li>
+
+                                                <li class="divider-vertical"></li>
+                                                <li class='dropdown'>
+                                                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">Facets</a>
+                                                    <ul class='dropdown-menu'>
+                                                        <li><a href="/chapter/list/">Chapters</a></li>
+                                                        
+                                                        <li><a href="/scene/list/">Scenes</a></li>
+                                                        
+                                                        <li><a href="/character/list/">Characters</a></li>
+                                                        
+                                                        <li><a href="/artifact/list/">Artifacts</a></li>
+                                                        
+                                                        <li><a href="/location/list/">Locations</a></li>
+                                                    </ul>
+                                                </li>
+                                                
+                                            {% endif %}
+                                        </ul>
+                                    
                             {% endblock "nav" %}
                                 </div>
                                     

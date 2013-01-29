@@ -3,6 +3,7 @@
 ** Colors
 **
 *******************************************/
+/* MOBILE FIRST */
 body {
   background-color: #dddddd;
 }
@@ -49,7 +50,39 @@ section h2 {
 #story_details_form label {
   font-weight: bold;
 }
+#story_details_form .control-group {
+  margin-top: 0;
+}
+#story_details_form legend {
+  margin-bottom: 10px;
+}
+#story_details_form div.submit {
+  padding-top: 20px;
+}
 @media (min-width: 768px) {
+  input[type='file'] {
+    vertical-align: 10px;
+    line-height: 1.0;
+    margin-top: 10px;
+    max-width: 197px;
+  }
+  .agkani-cover.widget {
+    border: 1px solid #cccccc;
+    background-color: #ffffff;
+    text-align: center;
+    display: table;
+    width: 100%;
+  }
+  .agkani-cover.widget div.cover {
+    display: table-cell;
+    text-align: center;
+    vertical-align: middle;
+    height: 240px;
+  }
+  .agkani-cover.widget div.cover img {
+    max-width: 147px;
+    max-height: 220px;
+  }
   #story_list a.btn-block {
     padding: 20px 20px;
     font-size: 160%;
