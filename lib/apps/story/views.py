@@ -67,6 +67,8 @@ def storylist(request):
     context['stories'] = Story.objects.filter(
         user=request.user).order_by('title')
     context['nocover'] = nocover
+    context['activestory'] = int(request.session.get('active_story'))
+
     template = 'listings/list_story.html'
     return render_to_response(template, context, context_instance=RequestContext(request))
 
@@ -84,6 +86,19 @@ def print_story(request, story=None):
         context['story'] = st
     template = 'story/print_story.html'
     return render_to_response(template, context, context_instance=RequestContext(request))    
+
+@login_required
+def activate_story(request, story=None):
+    context = {}
+    if story:
+        st = get_object_or_404(Story, pk=story, user=request.user)
+        request.session['active_story'] = story
+        messages.success(request, 'Activated story.')
+    context['story'] = st
+    context["story_action"] = "story_activate"
+    template = 'story/story.activate.html'
+    return render_to_response(template, context, context_instance=RequestContext(request))    
+        
 
 @login_required
 def story(request, story=None):
