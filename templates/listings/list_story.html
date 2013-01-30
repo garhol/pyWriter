@@ -4,17 +4,6 @@
 
 {% block "css" %}
     {{block.super}}
-<style type="text/css">
-.storyPod {width: 280px; min-height:300px; margin: 1em; float: left; background:rgba(0, 0, 0, 0.2)}
-
-.storyPod a {width:100%; min-height:300px; display:block;}
-.storyPod a {text-align:center; text-decoration:none;}
-.storyPod p.story_title{font-size:1.2em;}
-.storyPod p{margin:0.5em 0 0 0 ;}
-.storyPod p.story_syn{text-align:left;margin:0.4em;}
-.header{padding:1em; font-weight:bold; background:#f3d26c;}
-</style>
-
 {% endblock %}
 
 {% block "javascript" %}
@@ -22,27 +11,25 @@
 {% endblock %}
 
 {% block "main" %}
-        <div class="storyPod">
-            <a href="/story/add/" class="clearfix">
-                <p class="story_title">add a story</p>
-            </a>
-        </div>
-        {% for s in stories %}     
-        <div class="storyPod" {% if s.cover %}style="background:url({% thumbnail s.cover 260x260 %}) rgba(0, 0, 0, 0.2) no-repeat center 2.5em; border:1px solid #777; width:278px;" {% endif %} title="{{s.synopsis}}">
-            <a href="/story/{{s.pk}}">
-                <p class="story_title">{{s}}</p>
-            </a>
-        </div>
-        {% endfor %}
-    
-{% endblock %}
+    <section class='row' id='story_list'>
+        <div class='span8'>
+            <div class='padded clearfix pod'>
+                <h2>Your Stories</h2>
+                {% for s in stories %}
+                <div class="publishedPod">
+                    <a href='/story/{{ s.id}}'><img class='jacket' src="{% if s.cover %}{% thumbnail s.cover 147x220 %}{% else %}{% thumbnail nocover 147x260 %} {% endif %}" alt="{{s}}" />
+                    <p class="story_title"><strong>{{s}}</strong></p></a>
+                    <p>{% if s.id == activestory %}active{% else %}<a class="btn btn-mini" href="/story/activate/{{s.id}}">activate</a>{% endif %}</p>
+                </div>
 
-{% block "rh" %}
-{% for e in feed|slice:":4" %}
-<img src="{{e.media_thumbnail.0.url}}" width="{{e.media_thumbnail.0.width}}" height="{{e.media_thumbnail.0.height}}" style="float:left; margin:0.2em; clear:left;" />
-<p style="float:left; width:260px;">
-    <span style="font-size:0.8em;">{{e.authors.0.name}}</span><br />
-    <a href="{{e.links.0.url}}" target="_blank">{{e.title}}</a>
-</p>
-{% endfor %}
+                {% endfor %}
+            </div>
+        </div>
+        <aside class='span4'>
+            <div class='padded pod'>
+                <a href='/story/add/' class='btn btn-block btn-success'>Begin New Story</a>
+            </div>
+        </aside>
+    </section>
+    
 {% endblock %}

@@ -5,6 +5,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from .widgets import AgkaniCoverWidget
 
 from .models import Story, Chapter, Scene, Character, Artifact, Location, Getfeed 
 from .forms import SceneForm, CharacterForm, ArtifactForm, LocationForm, StoryForm, ChapterForm
@@ -60,8 +61,14 @@ def index(request):
 @login_required
 def storylist(request):
     context = {}
+     
+    nocover = "covers/no-cover.jpg"
+    
     context['stories'] = Story.objects.filter(
         user=request.user).order_by('title')
+    context['nocover'] = nocover
+    context['activestory'] = int(request.session.get('active_story'))
+
     template = 'listings/list_story.html'
     return render_to_response(template, context, context_instance=RequestContext(request))
 
@@ -81,19 +88,38 @@ def print_story(request, story=None):
     return render_to_response(template, context, context_instance=RequestContext(request))    
 
 @login_required
-def story(request, story=None):
+def activate_story(request, story=None):
     context = {}
-    template = 'story/story.html'
     if story:
         st = get_object_or_404(Story, pk=story, user=request.user)
+        request.session['active_story'] = story
+        messages.success(request, 'Activated story.')
+    context['story'] = st
+    context["story_action"] = "story_activate"
+    template = 'story/story.activate.html'
+    return render_to_response(template, context, context_instance=RequestContext(request))    
+        
+
+@login_required
+def story(request, story=None):
+    context = {}
+    
+    if story:
+        template = 'story/story.edit.html'
+        st = get_object_or_404(Story, pk=story, user=request.user)
+        context["story_action"] = "story_edit"
         context['story'] = st
-        context['form'] = StoryForm(instance=st)
+        form = StoryForm(instance=st)
+        context['form'] = form
     else:
+        template = 'story/story.add.html'
+        context["story_action"] = "story_add"
         context['form'] = StoryForm()
 
     if request.method == 'POST':
         if story:
             form = StoryForm(request.POST, request.FILES, instance=st)
+
         else:
             story = Story(user_id=request.user.pk)
             form = StoryForm(request.POST, request.FILES, instance=story)

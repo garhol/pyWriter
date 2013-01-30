@@ -127,7 +127,7 @@ INSTALLED_APPS = (
     # 'django.contrib.admindocs',
     'south',
     'easy_thumbnails',
-
+    'widget_tweaks',
     #pyWriter apps
     'pyWriter.lib.apps.story',
 

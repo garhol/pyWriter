@@ -1,6 +1,7 @@
 from django import forms
 from tinymce.widgets import TinyMCE
 from .models import Artifact, Chapter, Character, Location, Scene, Story
+from .widgets import AgkaniCoverWidget
 
 
 class SceneForm(forms.ModelForm):
@@ -68,6 +69,7 @@ class StoryForm(forms.ModelForm):
     class Meta:
         model = Story
         fields = ('title', 'author', 'synopsis', 'genre', 'fiction', 'cover', 'registered_access', 'public_access')
+        widgets = {'cover' : AgkaniCoverWidget}
 
 
 class ChapterForm(forms.ModelForm):
