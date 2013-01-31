@@ -3,9 +3,9 @@ from django.template import Library
 
 register = Library()
 
-@register.inclusion_tag("form_partials/_story_details_form.html")
-def story_form(fm):
-    return {"form" :fm}
+@register.inclusion_tag("form_partials/_story_details_form.html", takes_context=True)
+def story_form(context, fm):
+    return {"form" :fm, "s":context['story'],}
 
 # dummy form for now
 @register.inclusion_tag("form_partials/_story_facets_form.html")
