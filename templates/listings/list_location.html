@@ -4,16 +4,6 @@
 
 {% block "css" %}
     {{block.super}}
-<style type="text/css">
-.charPod, .addPod{width:280px; min-height:150px; margin: 1em; float: left; background:rgba(0, 0, 0, 0.2)}
-.charPod a {text-align:center; text-decoration:none;}
-.charPod p.character_title{font-size:1.2em;}
-.charPod p{margin:0.5em 0 0 0 ;}
-.charPod p.story_syn{text-align:left;margin:0.4em;}
-.header{padding:1em; font-weight:bold; background:#f3d26c;}
-.majorChar{background:url({{ MEDIA_URL }}images/icons/star-icon.png) no-repeat top right;}
-.charPodImage {float:left; margin:10px;}
-</style>
 {% endblock %}
 
 {% block "javascript" %}
@@ -21,29 +11,32 @@
 {% endblock %}
 
 {% block "main" %}
-<div class="addPod">
-    <a href="/location/add/" class="clearfix">
-        <p class="character_title">add a location</p>
-    </a>
-</div>
+<section id='location-list'>
+    <article class='row'>
+        <div class='span12 pod'>
+            <div class='padded'>
+                <header id="header">
+                    <h2>Locations<a href="/location/add/" class="pull-right btn btn-success">Add Location</a></h2>
+                </header><!-- /header -->
 
- {% for l in locations %}
-    <div class="charPod" >
-        <a href="/location/{{l.pk}}">
-            {% if l.image %}
-                <img class="charPodImage" src="{% thumbnail l.image 100x100 %}" alt="{{l}}" />
-            {% else %}
-                <img class="charPodImage" src="{{ STATIC_URL }}library/images/icons/location-icon.png" alt="{{l}}" style="width:100px" />
-            {% endif %}
-        <div>
-            <h4>{{ l.name }}</h4>
-            {% if l.description %}<p>{{l.description|truncatewords:30}}</p>{% endif %}           
+                <ul class="sortable tabular">
+
+                    {% for l in locations %}
+                        <li>
+                        {% if l.image %}
+                            <img class="charPodImage" src="{% thumbnail l.image 50x50 %}" alt="{{l}}" />
+                        {% else %}
+                            <img class="charPodImage" src="{{ STATIC_URL }}images/icons/location-icon.png" alt="{{l}}" style="width:50px" />
+                        {% endif %}
+                        <a href="/location/{{l.pk}}">{{ l.name }}</a>
+                        {% if l.description %}<span>{{l.description|truncatewords:30}}</span>{% endif %}           
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
         </div>
-        </a>
-    </div>
-    {% endfor %}
-
-
+    </article>        
+</section>
 {% endblock %}
 
 
