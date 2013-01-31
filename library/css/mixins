@@ -1,0 +1,4 @@
+.full-width {
+  display: block;
+  width: auto;
+}

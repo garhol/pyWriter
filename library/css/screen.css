@@ -3,6 +3,15 @@
 ** Colors
 **
 *******************************************/
+.full-width {
+  width: 100%;
+}
+.full-width-input {
+  padding: 0 12px 0 0;
+}
+.full-width-input input, .full-width-input textarea {
+  width: 100%;
+}
 /* MOBILE FIRST */
 body {
   background-color: #dddddd;
@@ -47,16 +56,16 @@ section h2 {
   margin-left: 10px;
   font-family: monospace;
 }
-#story_details_form label {
+form label {
   font-weight: bold;
 }
-#story_details_form .control-group {
+form .control-group {
   margin-top: 0;
 }
-#story_details_form legend {
+form legend {
   margin-bottom: 10px;
 }
-#story_details_form div.submit {
+form div.submit {
   padding-top: 20px;
 }
 @media (min-width: 768px) {

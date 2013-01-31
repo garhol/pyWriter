@@ -14,7 +14,7 @@
    
     var sorted = ""
     $(function() {
-        $( ".sortable" ).sortable();
+        
         $( ".sortable" ).disableSelection();
     });
     $( ".sortable" ).sortable({
@@ -35,15 +35,18 @@
 
 {% block "main" %}
 
-<section class='row'>
-    <article class='pod' id='chapter-list'>
-        <div class='padded'>
-            <p>Drag and drop to sort chapters.<span class="output"></span></p>
+<section id='chapter-list'>
+    <article class='row'>
+        <div class='span12 pod'>
+            <div class='padded'>
+                <header id="header">
+                    <h2>Chapters <small><span class='output'>Drag and drop to sort chapters</span></small><a href="/chapter/add/" class="pull-right btn btn-success">Add Chapter</a></h2>
+                </header><!-- /header -->
 
                 <ul class="sortable tabular">
                     {% for c in chapters %}
                     <li id="chapter-{{c.pk}}">
-                    <div class="chapterPod">
+                    
                         <a href="/chapter/{{c.pk}}">
                         {{c.title}}
                         </a>
@@ -56,14 +59,11 @@
                             {% endfor %}
                             </span>
                         {% endif %}                   
-                    </div>
+                    
                     </li>
                     {% endfor %}
                 </ul>
-
-                <div class="addPod">
-                    <a class='btn-large btn btn-success' href="/chapter/add/" class="clearfix">Add New Chapter</a>
-                </div>
+            </div>
         </div>
     </article>
         

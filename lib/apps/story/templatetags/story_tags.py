@@ -7,6 +7,10 @@ register = Library()
 def story_form(context, fm):
     return {"form" :fm, "s":context['story'],}
 
+@register.inclusion_tag("form_partials/_scene_form.html")
+def scene_form(fm):
+	return {"form": fm,}
+
 # dummy form for now
 @register.inclusion_tag("form_partials/_story_facets_form.html")
 def story_facets():

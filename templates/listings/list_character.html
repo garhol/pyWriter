@@ -4,67 +4,44 @@
 
 {% block "css" %}
     {{block.super}}
-<style type="text/css">
-.charPod, .addPod{width:280px; min-height:150px; margin: 1em; float: left; background:rgba(0, 0, 0, 0.2)}
-.charPod a {text-align:center; text-decoration:none;}
-.charPod p.character_title{font-size:1.2em;}
-.charPod p{margin:0.5em 0 0 0 ;}
-.charPod p.story_syn{text-align:left;margin:0.4em;}
-.header{padding:1em; font-weight:bold; background:#f3d26c;}
-.majorChar{background:url({{ MEDIA_URL }}images/icons/star-icon.png) no-repeat top right;}
-.charPodImage {float:left; margin:10px;}
-</style>
 {% endblock %}
 
 {% block "javascript" %}
     {{block.super}}
-    <script>
-   
-    var sorted = ""
-    $(function() {
-        $( "#sortable" ).sortable();
-        $( "#sortable" ).disableSelection();
-    });
-    $( "#sortable" ).sortable({
-        stop: function( event, ui ) {
-            var sorted = $('#sortable').sortable('serialize');
-            $.ajax({
-                type: "POST",
-                data: sorted + '&csrfmiddlewaretoken={{ csrf_token }}&active=true',
-                url: "/sortscenes/",
-                success:function(data) {
-                    $( ".output" ).html(data)
-                }
-            });           
-        }
-    });
-    </script>
 {% endblock %}
 
 {% block "main" %}
-<div class="addPod">
-    <a href="/character/add/" class="clearfix">
-        <p class="character_title">add a character</p>
-    </a>
-</div>
 
-    {% for ch in characters %}
-    <div class="charPod" >
-        <a href="/character/{{ch.pk}}">
-            {% if ch.image %}
-                <img class="charPodImage" src="{% thumbnail ch.image 100x100 %}" alt="{{ch}}" />
-            {% else %}
-                <img class="charPodImage" src="{{ STATIC_URL }}library/images/icons/nocharacter.png" alt="{{ch}}" style="width:100px" />
-            {% endif %}
-        <div {% if ch.major_character %}class="majorChar" title="Main character"{% else %}title="Standard character"{% endif %}>
-            <h4>{{ ch.firstname }} {{ ch.middlename }} {{ ch.lastname }}</h4>
-            {% if ch.nicknames %}<h5>{{ ch.nicknames}}</h5>{% endif %}
-            <p>{{ch.date_of_birth}}{% if ch.date_of_death %} - {{ch.date_of_death}}{% endif %}</p>
-            {% if ch.role %}<p>{{ ch.role }}</p>{% endif %}
+<section id='character-list'>
+    <article class='row'>
+        <div class='span12 pod'>
+            <div class='padded'>
+                <header id="header">
+                    <h2>Characters <small><span class='output'>Drag and drop to sort characters</span></small><a href="/character/add/" class="pull-right btn btn-success">Add Character</a></h2>
+                </header><!-- /header -->
+
+                <ul class="sortable tabular">
+                    {% for ch in characters %}
+                    <li id="chapter-{{c.pk}}">
+                        {% if ch.image %}
+                            <img class="charPodImage" src="{% thumbnail ch.image 50x50 %}" alt="{{ch}}" />
+                        {% else %}
+                            <img class="charPodImage" src="{{ STATIC_URL }}images/icons/nocharacter.png" alt="  {{ch}}" style="width:50px" />
+                        {% endif %}
+                        <a href="/character/{{ch.pk}}">
+                        {{ ch.firstname }} {{ ch.middlename }} {{ ch.lastname }} {% if ch.nicknames %}({{ ch.nicknames}}){% endif %}
+                        </a>
+                        <span>{% if ch.date_of_birth %}{{ch.date_of_birth}}{% endif %}{% if ch.date_of_death %} - {{ch.date_of_death}}{% endif %}</span>
+                        {% if ch.role %}<span>Role: {{ ch.role }}</span>{% endif %}              
+                    
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
         </div>
-        </a>
-    </div>
-    {% endfor %}
+    </article>
+        
+</section>
 
 {% endblock %}
 
