@@ -1,0 +1,104 @@
+{% load story_tags %}
+{% load widget_tweaks %}
+
+<form id='story_details_form' enctype="multipart/form-data" action="" class='form' method="post">
+{% csrf_token %}
+    <div class='row'>
+        <div class='span12'>
+            <header class='padded'>
+                <h2>Story Details</h2>
+            </header>
+        </div>
+    </div>
+    <div class='row'>
+       <div class='span3'>
+            <div class='padded first'>
+                <fieldset>
+                    <legend>Jacket</legend>
+                    <div class="control-group">
+
+                        <label for="{{ form.cover.html_name }}">Upload Image</label>
+                        
+                        <div class="controls">
+                            {{ form.cover }}    
+                        </div>
+                    </div>
+                </fieldset>
+                
+            </div>
+       </div> 
+       <div class='span4'>
+            <fieldset>
+                    <legend>Basic Info</legend>
+                <div class="control-group">
+                    {{ form.title.errors }}
+                    <label for="id_title" class="control-label">Title<span class="required">*</span></label>
+                        <div class="controls">                     
+                            {{ form.title|attr:"class:span4" }}
+                        </div>
+                        <span class="help-block"></span>
+                </div>
+                <div class="control-group">
+                    {{ form.author.errors }}
+                    <label for="id_author" class="control-label">Author<span class="required">*</span></label>
+                        <div class="controls">                     
+                            {{ form.author|attr:"class:span4" }}
+                        </div>
+                        <span class="help-block"></span>
+                </div>
+                <div class="control-group">
+                    {{ form.synopsis.errors }}
+                    <label for="id_synopsis" class="control-label">Synopsis<span class="required">*</span></label>
+                        <div class="controls">                     
+                            {{ form.synopsis|attr:"rows:4"|attr:"class:span4" }}
+                        </div>
+                        <span class="help-block"></span>
+                </div>
+                
+            </fieldset> 
+        </div>
+
+        <div class='span5'>
+            <div class='padded last'>
+                <fieldset>
+                    <legend>Classification</legend>
+                    <div class="control-group">
+                        {{ form.genre.errors }}
+                        <label for="id_genre" class="control-label">Genre</label>
+                        <div class="controls">
+                            {{ form.genre }}                            
+                        </div>
+                        <span class="help-block"></span>
+                    </div>
+
+                    {{ form.fiction.errors }}
+                    <label class="checkbox" for="id_fiction">
+                                {{ form.fiction }}
+                                Fiction
+                    </label>
+                </fieldset>
+                <fieldset>
+                    <legend>Access</legend>
+                    <label class="checkbox" for="id_registered_access">
+                        {{ form.registered_access}}
+                        Registered access
+                    </label>
+                    <span class="help-block">{{ form.registered_access.help_text }}</span>
+                        
+                    <label class="checkbox" for="id_public_access">
+                        {{ form.public_access}}
+                        Public Access
+                    </label>
+                    <span class="help-block">{{ form.public_access.help_text }}</span>
+                </fieldset>
+                <div class='submit'>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                    <a href='/story/list/' class="btn">Cancel</a>
+                    <a href="/story/print/{{s.id}}" class="btn">Print preview</a>
+                </div>
+                
+                
+            </div>
+        </div>
+    </div>  <!-- end row -->
+</form>

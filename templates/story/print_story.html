@@ -2,19 +2,20 @@
 {% load thumbnail %}
 
 {% block "css" %}
-    {{ block.super }}
-    <style type="text/css">
-        .motivation{color: #DDD; font-style: italic; font-size: 0.9em;}
-        .printversion h1, .printversion h2, .printversion h3, .printversion h4, .printversion h5{text-align:center}
-        .printversion h1 {margin-top:2em; margin-bottom:0.5em;}
-        .printversion h2 {margin-top:0.5em; margin-bottom:2em;}
-        
-    </style>
+    {{block.super}}   
 {% endblock %}
 
-{% block "main" %}
-<p style="color:#ff0000">Please preview and then <a href="/story/print/epub/{{story.pk}}">create ebook</a></p>
+{% block "javascript" %}
+    {{block.super}}
+    <script type="text/javascript" src='{{ STATIC_URL }}js/jquery-ui-1.10.0/js/jquery-ui-1.10.0.custom.min.js'></script>
+{% endblock %}
 
+{% load story_tags %}
+
+{% block "main" %}
+<div class="row">
+<section class="span8">
+    <div class='padded'>
     <div class="printversion">
         <h1>{{story.title}}</h1>
         <h2>{{story.author}}</h2>
@@ -23,7 +24,7 @@
             <h4>Index:</h4>
             <ul>
             {% for c in story.get_chapters %}
-                
+
                 {% if c.get_scenes %}
                     <li>{{c}}</li>
                     <ul>
@@ -49,9 +50,19 @@
                 {% endif %}
             {% endfor %}
         {% endif %}
-    </div>
 
-{% endblock %}
+    </div>
+</section>
+<section class="span4">
+<div class="padded pod">
+    <h3>Preview</h3>
+    <p>This is a preview of your current story</p>
+
+    <p>Please check and then <a href="/story/print/epub/{{story.pk}}" class="btn btn-success" >create epub</a></p>
+</div>
+</section>
+</div>
+{% endblock "main" %}
 
 
 {% block "rh" %}

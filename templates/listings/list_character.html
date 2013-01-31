@@ -54,7 +54,7 @@
             {% if ch.image %}
                 <img class="charPodImage" src="{% thumbnail ch.image 100x100 %}" alt="{{ch}}" />
             {% else %}
-                <img class="charPodImage" src="{{ MEDIA_URL }}images/icons/nocharacter.png" alt="{{ch}}" style="width:100px" />
+                <img class="charPodImage" src="{{ STATIC_URL }}library/images/icons/nocharacter.png" alt="{{ch}}" style="width:100px" />
             {% endif %}
         <div {% if ch.major_character %}class="majorChar" title="Main character"{% else %}title="Standard character"{% endif %}>
             <h4>{{ ch.firstname }} {{ ch.middlename }} {{ ch.lastname }}</h4>

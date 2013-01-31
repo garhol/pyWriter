@@ -1,7 +1,11 @@
 {% extends "story/base_edit_page.html" %}
 {% load thumbnail %}
+{% load story_tags %}
 
-{% block "rh" %}
-    {{block.super}}
-
-{% endblock %}
+{% block "main" %}
+	<section class='row'>
+    <div class='span12 pod'>
+            {% generic_one_column_form form %}
+    </div>
+	</section>
+{% endblock "main" %}

@@ -5,7 +5,7 @@
     {% if character.image %}
         <img class="previewThumb" src="{% thumbnail character.image 120x120 %}"  alt="{{character}}" />
     {% else %}
-        <img class="previewThumb noPreview" src="{{ MEDIA_URL }}images/icons/nocharacter.png" alt="{{character}}" />
+        <img class="previewThumb noPreview" src="{{ STATIC_URL }}library/images/icons/nocharacter.png" alt="{{character}}" />
     {% endif %}
     <h3 class="previewName">{% if character.firstname %}{{character.firstname}}{% endif %}{% if character.middlename %} {{character.middlename}}{% endif %}{% if character.lastname %} {{character.lastname}}{% endif %}</h3>
     {% if character.nicknames %}

@@ -51,13 +51,13 @@ USE_TZ = True
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/home/media/media.lawrence.com/media/"
 #MEDIA_ROOT = '/home/garhol/sites/pyWriter/pyWriter/static/'
-MEDIA_ROOT = '/home/garhol/webapps/writerstatic/library/'
+MEDIA_ROOT = '/home/garhol/webapps/writerstatic/media/'
 
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash.
 # Examples: "http://media.lawrence.com/media/", "http://example.com/media/"
-MEDIA_URL = 'http://agkani.com/library/'
+MEDIA_URL = 'http://agkani.com/static/media/'
 
 # Absolute path to the directory static files should be collected to.
 # Don't put anything in this directory yourself; store your static files
@@ -127,7 +127,7 @@ INSTALLED_APPS = (
     # 'django.contrib.admindocs',
     'south',
     'easy_thumbnails',
-
+    'widget_tweaks',
     #pyWriter apps
     'pyWriter.lib.apps.story',
 

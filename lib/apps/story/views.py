@@ -5,6 +5,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from .widgets import AgkaniCoverWidget
 
 from .models import Story, Chapter, Scene, Character, Artifact, Location, Getfeed 
 from .forms import SceneForm, CharacterForm, ArtifactForm, LocationForm, StoryForm, ChapterForm
@@ -17,7 +18,7 @@ def index(request):
     template = 'index.html'
     published_books = []
     for st in Story.objects.filter(public_access=True):
-        ebookpath = os.path.join(settings.STATIC_ROOT, "library", "epub", str(st.pk))
+        ebookpath = os.path.join(settings.STATIC_ROOT, "media", "epub", str(st.pk))
         filename  = "%s.epub" % st.title
         zippath = os.path.join(ebookpath, filename)
         if os.path.exists(zippath):
@@ -26,7 +27,11 @@ def index(request):
             book.append(filename)
             book.append(st.author)
             book.append(st.title)
-            book.append(st.cover)
+            if st.cover:
+                book.append(st.cover)
+            else:
+                nocover =  "covers/no-cover.jpg"
+                book.append (nocover)
             published_books.append(book)
     context['published_books'] = published_books          
     
@@ -53,11 +58,25 @@ def index(request):
     return render_to_response(template, context, context_instance=RequestContext(request))
 
 
+def get_active_story(request):
+    st = request.session.get('active_story')
+    if st != None:
+	return int(st)
+    else:
+	return None
+
+
 @login_required
 def storylist(request):
     context = {}
+     
+    nocover = "covers/no-cover.jpg"
+    
     context['stories'] = Story.objects.filter(
         user=request.user).order_by('title')
+    context['nocover'] = nocover
+    context['activestory'] = get_active_story(request)
+
     template = 'listings/list_story.html'
     return render_to_response(template, context, context_instance=RequestContext(request))
 
@@ -77,19 +96,38 @@ def print_story(request, story=None):
     return render_to_response(template, context, context_instance=RequestContext(request))    
 
 @login_required
-def story(request, story=None):
+def activate_story(request, story=None):
     context = {}
-    template = 'story/story.html'
     if story:
         st = get_object_or_404(Story, pk=story, user=request.user)
+        request.session['active_story'] = story
+        messages.success(request, 'Activated story.')
+    context['story'] = st
+    context["story_action"] = "story_activate"
+    template = 'story/story.activate.html'
+    return render_to_response(template, context, context_instance=RequestContext(request))    
+        
+
+@login_required
+def story(request, story=None):
+    context = {}
+    
+    if story:
+        template = 'story/story.edit.html'
+        st = get_object_or_404(Story, pk=story, user=request.user)
+        context["story_action"] = "story_edit"
         context['story'] = st
-        context['form'] = StoryForm(instance=st)
+        form = StoryForm(instance=st)
+        context['form'] = form
     else:
+        template = 'story/story.add.html'
+        context["story_action"] = "story_add"
         context['form'] = StoryForm()
 
     if request.method == 'POST':
         if story:
             form = StoryForm(request.POST, request.FILES, instance=st)
+
         else:
             story = Story(user_id=request.user.pk)
             form = StoryForm(request.POST, request.FILES, instance=story)

@@ -20,7 +20,7 @@ def print_epub(request, story=None):
         st = get_object_or_404(Story, pk=story, user=request.user)
         context['story'] = st
  
-        ebookpath = os.path.join(settings.STATIC_ROOT, "library", "epub", str(st.pk))
+        ebookpath = os.path.join(settings.STATIC_ROOT, "media", "epub", str(st.pk))
         filename  = "%s.epub" % st.title
         zippath = os.path.join(ebookpath, filename)
         if os.path.exists(ebookpath):
@@ -51,26 +51,30 @@ def print_epub(request, story=None):
 
 
         if st.cover:
-            mycover = os.path.join(ebookpath, "cover.html")
             coverimage = os.path.abspath(st.cover.path)
-            coverimagepath = os.path.join(ebookpath, "cover.jpg")
-            shutil.copy(coverimage, coverimagepath)
+        else:
+            nocoverpath = os.path.join(settings.STATIC_ROOT, "library/images/icons/no-cover.jpg")           
+            coverimage = os.path.abspath(nocoverpath)
+
+        mycover = os.path.join(ebookpath, "cover.html")           
+        coverimagepath = os.path.join(ebookpath, "cover.jpg")
+        shutil.copy(coverimage, coverimagepath)
             
-            f = file(mycover, "w")
-            content = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd"> \
-                        <html xmlns="http://www.w3.org/1999/xhtml"> \
-                        <head> \
-                        <title>Cover</title> \
-                        <style type="text/css"> img { max-width: 100%%; } </style> \
-                        </head> \
-                        <body> \
-                        <div id="cover-image"> \
-                        <img src="cover.jpg" alt="%s"/> \
-                        </div> \
-                        </body> \
-                        </html>' % (st.title)
-            f.write(content)
-            f.close()   
+        f = file(mycover, "w")
+        content = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd"> \
+                    <html xmlns="http://www.w3.org/1999/xhtml"> \
+                    <head> \
+                    <title>Cover</title> \
+                    <style type="text/css"> img { max-width: 100%%; } </style> \
+                    </head> \
+                    <body> \
+                    <div id="cover-image"> \
+                    <img src="cover.jpg" alt="%s"/> \
+                    </div> \
+                    </body> \
+                    </html>' % (st.title)
+        f.write(content)
+        f.close()   
 
         html_files = []
 
@@ -166,31 +170,27 @@ def print_epub(request, story=None):
           </navMap>
         </ncx>
         '''
-        
-       
-        
+    
+        manifest += '<item id="cover" href="cover.html"  media-type="application/xhtml+xml" />'
+        manifest += '<item id="cover-image" href="cover.jpg" media-type="image/jpeg"/>'
+        spine += '<itemref idref="cover" linear="no"/>'
+        epub.write(coverimagepath, 'OEBPS/cover.jpg')
+        mycoverpath = os.path.join(ebookpath, "cover.html")
+        epub.write(mycoverpath, 'OEBPS/cover.html')
+        guide = '''
+            <guide> 
+                <reference type="cover" title="Cover Image" href="cover.html" /> 
+            </guide>
+          '''
+        navmapcontent += '''
+        <navPoint id="navpoint-1" playOrder="1">
+          <navLabel>
+            <text>Book cover</text>
+          </navLabel>
+          <content src="cover.html"/>
+        </navPoint>
+        '''
 
-        if st.cover:
-            manifest += '<item id="cover" href="cover.html"  media-type="application/xhtml+xml" />'
-            manifest += '<item id="cover-image" href="cover.jpg" media-type="image/jpeg"/>'
-            spine += '<itemref idref="cover" linear="no"/>'
-            epub.write(coverimagepath, 'OEBPS/cover.jpg')
-            mycoverpath = os.path.join(ebookpath, "cover.html")
-            epub.write(mycoverpath, 'OEBPS/cover.html')
-            guide = '''
-                <guide> 
-                    <reference type="cover" title="Cover Image" href="cover.html" /> 
-                </guide>
-              '''
-            navmapcontent += '''
-            <navPoint id="navpoint-1" playOrder="1">
-              <navLabel>
-                <text>Book cover</text>
-              </navLabel>
-              <content src="cover.html"/>
-            </navPoint>
-            '''
-  
         # Write each HTML file to the ebook, collect information for the index
         for i, html in enumerate(html_files):
             basename = os.path.basename(html)

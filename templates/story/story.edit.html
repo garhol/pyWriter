@@ -1,0 +1,57 @@
+{% extends "story/base_edit_page.html" %}
+{% load thumbnail %}
+
+{% block "css" %}
+    {{ block.super }}
+{% endblock %}
+
+{% load story_tags %}
+
+{% block "main" %}
+    {{ block.super }}
+    {% block "story_facets" %}
+        {% story_facets %}
+    {% endblock %}
+
+{% endblock%}
+
+{% block "rh" %}
+        {{block.super}}
+    {% if story.cover %}
+            <img  src="{% thumbnail story.cover 200x200 %}"  alt="{{story}}" class="characterImage" />
+    {% endif %}
+    {% if story.get_chapters %}
+        <h3>Chapters in this story</h3>
+        <p>
+        {% for c in story.get_chapters %}
+            {{ c }}
+            <br />
+        {% endfor %}
+        </p>
+    {% endif %}
+    {% if story.get_scenes %}
+        <h3>Scenes in this story</h3>
+        <p>
+        {% for s in story.get_scenes %}
+            {{ s }}
+            <br />
+        {% endfor %}
+        </p>
+    {% endif %}
+
+    <h3>Stats:</h3>
+    <p>You have written {{ story.get_stats.wordcount }} out of {{ story.get_stats.wordtarget }} words.</p>
+    <p>{{ story.get_stats.percentage }}% complete - <span class="motivation">{{story.get_motivation}}</span></p>
+
+    {% if stats %}
+    <h3>Scenes:</h3>
+    {% for s in stats.scenes %}
+        <p>{{s}}: {{s.word_count}}/{{s.word_target}}words</p>
+        
+    {% endfor %}
+    <h4>Total:</h4>
+    <p>{{stats.wordcount}} words completed.<br />Target words = {{stats.wordtarget}}</p>
+    <h2>{{stats.percentage}}%</h2>
+    {% endif %}
+    <a href="/story/print/{{story.pk}}">Preview(Print) this story</a>
+{% endblock %}

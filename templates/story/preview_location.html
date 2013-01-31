@@ -5,7 +5,7 @@
     {% if location.image %}
         <img class="previewThumb" src="{% thumbnail location.image 120x120 %}"  alt="{{location}}" />
     {% else %}
-        <img class="previewThumb noPreview" src="{{ MEDIA_URL }}images/icons/location-icon.png" alt="{{location}}" />
+        <img class="previewThumb noPreview" src="{{ STATIC_URL }}library/images/icons/location-icon.png" alt="{{location}}" />
     {% endif %}
     <h3 class="previewName">{% if location.name %}{{location.name}}{% endif %}</h3>
     <div class="previewParticulars">
