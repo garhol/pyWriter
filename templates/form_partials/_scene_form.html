@@ -1,0 +1,202 @@
+{% load widget_tweaks %}
+<form enctype="multipart/form-data" class='form' action="" method="post">
+    {% csrf_token %}
+<div class='row'>
+    <div class='span12'>
+        <div class='padded'>
+            <fieldset>
+                <legend>Scene Text</legend>
+            
+                <div class='control-group'> 
+                    <div class='controls'>
+                        <div class='full-width-input'>   
+                            {{ form.content|attr:"rows:10"|attr:"cols:30" }}
+                        </div>
+                    </div>
+                    <span class='help_text'>{{ form.content.help_text}}</span>
+                </div>
+            </fieldset>
+        </div>
+    </div>   
+</div>
+
+<div class='row'>
+        <fieldset class='span5'>
+            <div class='padded first'>
+                <legend>Scene Details</legend>
+                <div class='control-group'> 
+                    <label for="{{ form.name.auto_id }}">
+                        {% if form.name.field.required %}<span class="required">{{ form.name.label }}</span>
+                        {% else %}{{ form.name.label }}{% endif %}
+                    </label>
+                    {{ form.name.errors }}   
+                    <div class='controls'>
+                        {{ form.name }}
+                    </div>
+                    <span class='help_text'>{{ form.name.help_text}}</span>
+                </div>
+
+                <div class='control-group'>      
+                    <label for="{{ form.description.auto_id }}">
+                        {% if form.description.field.required %}<span class="required">{{ form.description.label }}</span>
+                        {% else %}{{ form.description.label }}{% endif %}
+                    </label>
+                    {{ form.description.errors }}
+                    <div class='controls'>
+                        {{ form.description|attr:"class:span5" }}
+                    </div>
+                    <span class='help_text'>{{ form.description.help_text}}</span>
+                </div>
+
+                <div class='control-group'>         
+                    <label for="{{ form.word_target.auto_id }}">
+                        {% if form.word_target.field.required %}<span class="required">{{ form.word_target.label }}</span>
+                        {% else %}{{ form.word_target.label }}{% endif %}
+                     </label>
+                    {{ form.word_target.errors }}
+                    <div class='controls'>
+                        {{ form.word_target|attr:"class:span3" }}
+                    </div>
+                    <span class='help_text'>{{ form.word_target.help_text}}</span>
+                </div>
+
+            </div>
+        </fieldset>
+
+        <fieldset class='span3'>
+            <div>
+                <legend>Context</legend>
+
+                <div class='control-group'> 
+                    <label for="{{ form.status.auto_id }}">
+                        {% if form.status.field.required %}<span class="required">{{ form.status.label }}</span>
+                        {% else %}{{ form.status.label }}{% endif %}
+                    </label>
+                    {{ form.status.errors }}
+                    <div class='controls'>
+                        {{ form.status|attr:"class:span3" }}
+                    </div>
+                    <span class='help_text'>{{ form.status.help_text}}</span>
+                </div>
+
+                <div class='control-group'>    
+                    <label for="{{ form.importance.auto_id }}">
+                        {% if form.importance.field.required %}<span class="required">{{ form.importance.label }}</span>
+                        {% else %}{{ form.importance.label }}{% endif %}
+                    </label>
+                    {{ form.importance.errors }}
+                    <div class='controls'>
+                        {{ form.importance|attr:"class:span3" }}
+                    </div>
+                    <span class='help_text'>{{ form.importance.help_text}}</span>
+                </div>
+
+                <div class='control-group'>            
+                    <label for="{{ form.perspective.auto_id }}">
+                        {% if form.perspective.field.required %}<span class="required">{{ form.perspective.label }}</span>
+                        {% else %}{{ form.perspective.label }}{% endif %}
+                    </label>
+                    {{ form.perspective.errors }}
+                    <div class='controls'>
+                        {{ form.perspective|attr:"class:span3" }}
+                    </div>
+                    <span class='help_text'>{{ form.perspective.help_text}}</span>
+                </div>
+
+                <div class='control-group'>            
+                    <label for="{{ form.chapter.auto_id }}">
+                        {% if form.chapter.field.required %}<span class="required">{{ form.chapter.label }}</span>
+                        {% else %}{{ form.chapter.label }}{% endif %}
+                    </label>
+                    {{ form.chapter.errors }}
+                    <div class='controls'>
+                        {{ form.chapter|attr:"class:span3" }}
+                    </div>
+                    <span class='help_text'>{{ form.chapter.help_text}}</span>
+                </div>
+
+                <div class='control-group'>            
+                    
+                    <label for="{{ form.scene_start_time.auto_id }}">
+                        {% if form.scene_start_time.field.required %}<span class="required">{{ form.scene_start_time.label }}</span>
+                        {% else %}{{ form.scene_start_time.label }}{% endif %}
+                    </label>
+                    {{ form.scene_start_time.errors }}
+                    <div class='controls'>
+                            {{ form.scene_start_time|attr:"class:span3 datetime"|attr:"placeholder:Click to set date" }}
+                    </div>
+                    <span class='help_text'>{{ form.scene_start_time.help_text}}</span>
+                </div>
+
+                <div class='control-group'>            
+                    
+                    <label for="{{ form.scene_start_time.auto_id }}">
+                        {% if form.scene_end_time.field.required %}<span class="required">{{ form.scene_end_time.label }}</span>
+                        {% else %}{{ form.scene_end_time.label }}{% endif %}
+                    </label>
+                    {{ form.scene_end_time.errors }}
+                    <div class='controls'>
+                        {{ form.scene_end_time|attr:"class:span3 datetime"|attr:"placeholder:Click to set date" }}
+                    </div>
+                    <span class='help_text'>{{ form.scene_end_time.help_text}}</span>
+                </div>
+                
+                 
+            </div>
+        </fieldset>
+
+        <fieldset class='span3'>
+            <div class='padded last'>
+                <legend>Facets</legend>
+                
+                <div class='control-group'>            
+                    <label for="{{ form.characters.auto_id }}">
+                        {% if form.characters.field.required %}<span class="required">{{ form.characters.label }}</span>
+                        {% else %}{{ form.characters.label }}{% endif %}
+                    </label>
+                    {{ form.characters.errors }}
+                    <div class='controls'>
+                        {{ form.characters|attr:"class:span3" }}
+                    </div>
+                    <span class='help_text'>{{ form.characters.help_text}}</span>
+                </div>
+
+                <div class='control-group'>            
+                    
+                    <label for="{{ form.location.auto_id }}">
+                        {% if form.location.field.required %}<span class="required">{{ form.location.label }}</span>
+                        {% else %}{{ form.location.label }}{% endif %}
+                    </label>
+                    {{ form.location.errors }}
+                    <div class='controls'>
+                        {{ form.location|attr:"class:span3" }}
+                    </div>
+                    <span class='help_text'>{{ form.location.help_text}}</span>
+                </div>
+
+                <div class='control-group'>            
+                    
+                    {{ form.artifacts.errors }}
+                    <label for="{{ form.artifacts.auto_id }}">
+                        {% if form.artifacts.field.required %}<span class="required">{{ form.artifacts.label }}</span>
+                        {% else %}{{ form.artifacts.label }}{% endif %}
+                    </label>
+                    <div class='controls'>
+                        {{ form.artifacts|attr:"class:span3" }}
+                    </div>
+                    <span class='help_text'>{{ form.artifacts.help_text}}</span>
+                </div>
+
+            </div>
+        </fieldset>
+
+    </div>
+    <div class='row'>
+        <div class='span12'>
+            <div class='padded'>
+                <input type="submit" class='btn btn-success' value="Submit" />
+                <a href='javascript:history.back()' class='btn btn-cancel'>Cancel</a>
+            </div>
+        </div>
+    </div>
+</form>
