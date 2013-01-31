@@ -27,15 +27,3 @@
     </div>
 </section>
 {% endblock %}
-
-{% block "rh" %}
-    {{block.super}}
-    <h3>{% if character.firstname %}{{character.firstname}}{% endif %}{% if character.middlename %} {{character.middlename}}{% endif %}{% if character.lastname %} {{character.lastname}}{% endif %}</h3>
-    {% if character.nicknames %} <h4>aka {{character.nicknames}}</h4>{% endif %}
-    {% if character.image %}
-        <img  src="{% thumbnail character.image 200x200 %}"  alt="{{character}}" class="characterImage" />
-    {% else %}
-        <img class="charPodImage" src="{{ STATIC_URL }}library/images/icons/nocharacter.png" alt="{{character}}" style="width:200px" />
-    {% endif %}
-        </div>
-{% endblock %}
