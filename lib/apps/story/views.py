@@ -58,6 +58,14 @@ def index(request):
     return render_to_response(template, context, context_instance=RequestContext(request))
 
 
+def get_active_story(request):
+    st = request.session.get('active_story')
+    if st != None:
+	return int(st)
+    else:
+	return None
+
+
 @login_required
 def storylist(request):
     context = {}
@@ -67,7 +75,7 @@ def storylist(request):
     context['stories'] = Story.objects.filter(
         user=request.user).order_by('title')
     context['nocover'] = nocover
-    context['activestory'] = int(request.session.get('active_story'))
+    context['activestory'] = get_active_story(request)
 
     template = 'listings/list_story.html'
     return render_to_response(template, context, context_instance=RequestContext(request))
