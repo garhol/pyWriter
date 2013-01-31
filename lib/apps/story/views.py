@@ -121,6 +121,7 @@ def story(request, story=None):
         context['form'] = form
     else:
         template = 'story/story.add.html'
+        context['story'] = StoryForm()
         context["story_action"] = "story_add"
         context['form'] = StoryForm()
 
