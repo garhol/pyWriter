@@ -38,6 +38,7 @@ class Story(models.Model):
         upload_to='covers/%Y/%m/%d', null=True, blank=True)
     registered_access = models.BooleanField(default=False, help_text="When published make this story available to registered users")
     public_access = models.BooleanField(default=False, help_text="When published, make this story available to the public (Overrides registered user access)")
+    
     @property
     def get_chapters(self):
         chapters = Chapter.objects.all().filter(story=self).order_by('weight')          
@@ -50,6 +51,30 @@ class Story(models.Model):
         for chap in chapters:
             scenes += Scene.objects.filter(chapter=chap).order_by('order')
         return scenes
+    
+    @property
+    def get_characters(self):
+        scenes = self.get_scenes
+        chars = []
+        for s in scenes:
+            chars += Character.objects.filter(scene=s)
+        return chars
+    
+    @property
+    def get_locations(self):
+        scenes = self.get_scenes
+        locations = []
+        for s in scenes:
+            locations += Location.objects.filter(scene=s)
+        return locations
+
+    @property
+    def get_artifacts(self):
+        scenes = self.get_scenes
+        artifacts = []
+        for s in scenes:
+            artifacts += Artifact.objects.filter(scene=s)
+        return artifacts
 
     @property
     def get_stats(self):

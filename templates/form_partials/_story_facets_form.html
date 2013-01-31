@@ -6,8 +6,11 @@
 					<h2>Chapters <small>[drag to reorder]</small><a href='#' class='pull-right btn btn-success'>Add Chapter</a></h2>
 				</header>
 				<ul class='sortable tabular'>
-					<li>Dummy Chapter One <span><a href='#'>View 3 Scenes</a></span><span><a href='#'>Add Scene</a></span></li>
-					<li>Dummy Chapter Two <span><a href='#'>View 4 Scenes</a></span><span><a href='#'>Add Scene</a></span></li>
+                    {% if s.get_chapters %}
+                        {% for c in s.get_chapters %}
+                            <li>{{c}} <span><a href='#'>View 3 Scenes</a></span><span><a href='#'>Add Scene</a></span></li>
+                        {% endfor %}
+                    {% endif %}
 				</ul>
 			</div>	
 		</div>
@@ -20,8 +23,11 @@
 					<h2>Characters<a href='#' class='pull-right btn btn-success'>Add Character</a></h2>
 				</header>
 				<ul class='tabular'>
-					<li>Dummy Character <span><a href='#'>View</a></span><span><a href='#'>Edit</a></span></li>
-					<li>Dummy Character <span><a href='#'>View</a></span><span><a href='#'>Edit</a></span></li>
+                    {% if s.get_characters %}
+                        {% for character in s.get_characters %}
+                            <li>{{character}} <span><a href='#'>View</a></span><span><a href='/character/{{character.id}}'>Edit</a></span></li>
+                        {% endfor %}
+                    {% endif %}
 				</ul>
 			</div>	
 		</div>
@@ -33,8 +39,11 @@
 					<h2>Locations<a href='#' class='pull-right btn btn-success'>Add Location</a></h2>
 				</header>
 				<ul class='tabular'>
-					<li>Dummy Location <span><a href='#'>View</a></span><span><a href='#'>Edit</a></span></li>
-					<li>Dummy Location <span><a href='#'>View</a></span><span><a href='#'>Edit</a></span></li>
+                    {% if s.get_locations %}
+                        {% for location in s.get_locations %}
+                            <li>{{location}} <span><a href='#'>View</a></span><span><a href='/location/{{location.id}}'>Edit</a></span></li>
+                        {% endfor %}
+                    {% endif %}
 				</ul>
 			</div>	
 		</div>
@@ -46,8 +55,11 @@
 					<h2>Artifacts<a href='#' class='pull-right btn btn-success'>Add Artifact</a></h2>
 				</header>
 				<ul class='tabular'>
-					<li>Dummy Artifact <span><a href='#'>View</a></span><span><a href='#'>Edit</a></span></li>
-					<li>Dummy Artifact <span><a href='#'>View</a></span><span><a href='#'>Edit</a></span></li>
+                    {% if s.get_artifacts %}
+                        {% for artifact in s.get_artifacts %}
+                            <li>{{artifact}} <span><a href='#'>View</a></span><span><a href='/artifact/{{artifact.id}}'>Edit</a></span></li>
+                        {% endfor %}
+                    {% endif %}
 				</ul>
 			</div>	
 		</div>
