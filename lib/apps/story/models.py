@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
-from django import forms
 
+from django import forms
 import math
 
 MOTIVATION_LIST = [
@@ -45,6 +45,11 @@ class Story(models.Model):
         return chapters
         
     @property
+    def get_chapter_count(self):
+        chapters = Chapter.objects.all().filter(story=self)
+        return len(chapters)
+        
+    @property
     def get_scenes(self):
         chapters = self.get_chapters
         scenes = []
@@ -55,10 +60,11 @@ class Story(models.Model):
     @property
     def get_characters(self):
         scenes = self.get_scenes
-        chars = []
+        charlist = []
         for s in scenes:
-            chars += Character.objects.filter(scene=s)
-        return chars
+            charlist += Character.objects.filter(scene=s)
+        charlist = set(charlist) # converts the charlist to distinct values
+        return charlist
     
     @property
     def get_locations(self):
@@ -66,6 +72,7 @@ class Story(models.Model):
         locations = []
         for s in scenes:
             locations += Location.objects.filter(scene=s)
+        locations = set(locations)
         return locations
 
     @property
@@ -74,6 +81,7 @@ class Story(models.Model):
         artifacts = []
         for s in scenes:
             artifacts += Artifact.objects.filter(scene=s)
+        artifact = set(artifacts)
         return artifacts
 
     @property
@@ -119,6 +127,11 @@ class Chapter(models.Model):
     def get_scenes(self):
         scenes = Scene.objects.filter(chapter=self).order_by('order')
         return scenes
+    
+    @property
+    def get_scene_count(self):
+        scenes = Scene.objects.filter(chapter=self)
+        return len(scenes)
         
     def __unicode__(self):
         return self.title
@@ -170,6 +183,21 @@ class Scene(models.Model):
     @property
     def get_percentage_complete(self):
         return int((float(self.word_count) / float(self.word_target)) * 100)
+
+    @property
+    def get_character_count(self):
+        charlist = Character.objects.filter(scene=self)
+        return len(charlist)
+
+    @property
+    def get_location_count(self):
+        locationlist = Location.objects.filter(scene=self)
+        return len(locationlist)
+
+    @property
+    def get_artifact_count(self):
+        artifactlist = Artifact.objects.filter(scene=self)
+        return len(artifactlist)
 
     def __unicode__(self):
         return self.name

@@ -8,7 +8,7 @@
 				<ul class='sortable tabular'>
                     {% if s.get_chapters %}
                         {% for c in s.get_chapters %}
-                            <li>{{c}} <span><a href='#'>View 3 Scenes</a></span><span><a href='#'>Add Scene</a></span></li>
+                            <li>{{c}} <span>{% if c.get_scene_count > 0 %}<a href='#'>View {{c.get_scene_count}} Scenes</a>{% endif %}</span><span><a href='/scene/add/'>Add Scene</a></span></li>
                         {% endfor %}
                     {% endif %}
 				</ul>

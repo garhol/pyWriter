@@ -149,6 +149,12 @@ def chapterlist(request):
     context = {}
     context['chapters'] = Chapter.objects.filter(
         user=request.user).order_by('weight')
+    if get_active_story(request):
+        mystoryid = int(get_active_story(request))
+        context['story'] = Story.objects.get(pk=mystoryid)
+        print context['story']
+        context['active_chapters'] = Chapter.objects.filter(
+            user=request.user).filter(story=mystoryid).order_by('weight')
     template = 'listings/list_chapter.html'
     return render_to_response(template, context, context_instance=RequestContext(request))
 

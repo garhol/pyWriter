@@ -39,14 +39,41 @@
     <article class='row'>
         <div class='span12 pod'>
             <div class='padded'>
+
+                
+                {% if request.session.active_story %}
+                    <header id="header">
+                        <h2>Chapters in "{{story.title}}" <small><span class='output'>Drag and drop to sort chapters</span></small><a href="/chapter/add/" class="pull-right btn btn-success">Add Chapter</a></h2>
+                    </header>
+                    <ul class="sortable tabular">
+                        {% for c in active_chapters %}
+                        <li id="chapter-{{c.pk}}">
+                            <a href="/chapter/{{c.pk}}">
+                            {{c.title}}
+                            </a>
+                            <span>{{ c.weight }}</span>
+                            <span>Story: {{c.story}} </span>
+                            {% if c.get_scenes %}
+                                <span>Contains {{c.get_scenes.count}} scenes:
+                                {% for s in c.get_scenes %}
+                                    {{s}} {% if not forloop.last %}, {% endif %}
+                                {% endfor %}
+                                </span>
+                            {% endif %}                   
+                        
+                        </li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+
+
                 <header id="header">
-                    <h2>Chapters <small><span class='output'>Drag and drop to sort chapters</span></small><a href="/chapter/add/" class="pull-right btn btn-success">Add Chapter</a></h2>
+                    <h2>Chapters <a href="/chapter/add/" class="pull-right btn btn-success">Add Chapter</a></h2>
                 </header><!-- /header -->
 
-                <ul class="sortable tabular">
+                <ul class="tabular">
                     {% for c in chapters %}
                     <li id="chapter-{{c.pk}}">
-                    
                         <a href="/chapter/{{c.pk}}">
                         {{c.title}}
                         </a>
