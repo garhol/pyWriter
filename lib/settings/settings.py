@@ -139,8 +139,9 @@ INSTALLED_APPS = (
     'widget_tweaks',
     #pyWriter apps
     'pyWriter.lib.apps.story',
-
 )
+
+KINDLEGEN_BINARY = '/home/garhol/bin/kindlegen'
 
 LOGIN_URL = '/login'
 

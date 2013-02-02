@@ -11,8 +11,25 @@ from pyWriter.lib.apps.story.models import Story, Chapter, Scene, Character, Art
 import os
 import shutil
 import zipfile
+import subprocess
+import time
 from django.template import loader, Context
 
+
+def print_mobi(request, story=None):
+    context = {}
+    if story:
+        st = get_object_or_404(Story, pk=story, user=request.user)
+        context['story'] = st
+        ebookpath = os.path.join(settings.STATIC_ROOT, "media", "epub", str(st.pk))
+        filename  = "%s.opf" % st.title
+        zippath = os.path.join(ebookpath, filename)
+        mobiname = "%s.mobi" % st.title
+        if os.path.exists(zippath):
+            subprocess.call([settings.KINDLEGEN_BINARY, zippath, '-c2', '-o', mobiname])
+            
+      
+   
 @login_required
 def print_epub(request, story=None):
     context = {}
@@ -165,6 +182,9 @@ def print_epub(request, story=None):
           <docTitle>
             <text>%(toctitle)s</text>
           </docTitle>
+          <docAuthor>
+              <text>%(tocauthor)s</text>
+          </docAuthor>
           <navMap>
           %(navmap)s
           </navMap>
@@ -215,6 +235,7 @@ def print_epub(request, story=None):
         f = file(mytoc, "w")
         f.write(toccontent % {
           'toctitle': st.title,
+          'tocauthor': st.author,
           'navmap': navmapcontent,
           'uniquething' : uniquestring,
         })
@@ -237,10 +258,27 @@ def print_epub(request, story=None):
           'guide' : guide,
         })
         
-            
+        #write a mobi opf file
+        opfname = "%s.opf" % st.title
+        myfile = os.path.join(ebookpath, opfname)
+        f = file(myfile, "w")
+        f.write("<?xml version='1.0' encoding='utf-8'?>")
+        f.write(index_tpl % {
+          'uniqueid': uniquestring,
+          'title': st.title,
+          'author': st.author,
+          'manifest': manifest,
+          'spine': spine,
+          'guide' : guide,
+        })
+        f.close()  
         
 
     context['booklink'] = zippath
-
+    print_mobi(request, story)
+    mobiname  = "%s.mobi" % st.title
+    mobipath = os.path.join(ebookpath, mobiname)
+    context['mobilink'] = mobipath
+    
     template = 'printing/print_epub.html'
     return render_to_response(template, context, context_instance=RequestContext(request))  

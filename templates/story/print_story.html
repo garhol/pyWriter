@@ -107,6 +107,7 @@
 {% endif %}
 <a href="/story/print/{{story.pk}}">Print this story</a>
 {% if printversion %}
-<a href="/library/epub/{{story.pk}}/{{story.title}}.epub">Download epub</a>
+<a href="/library/epub/{{story.pk}}/{{story.title}}.epub">Download epub (iBook)</a>
+<a href="/library/epub/{{story.pk}}/{{story.title}}.mobi">Download mobi (Kindle)</a>
 {% endif %}
 {% endblock %}
