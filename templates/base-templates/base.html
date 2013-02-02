@@ -55,7 +55,7 @@
                                             {% if user.is_authenticated %}
                                                 <li class='auth'><a class='btn btn-small' class='logout' href="/logout/"><i class='icon-remove'></i> [{{ user.username }}]</a></li>
                                             {% else %}
-                                                <li class='auth'><a class='btn btn-small' class='login' href="/login/?next={{request.path}}"><i class='icon-off'></i> Login</a></li>
+                                                <li class='auth'><a class='btn btn-small' class='login' href="/login/?next={{request.path}}"><i class='icon-off'></i> Login/signup</a></li>
                                             {% endif %}
                                         {% endblock %}
                             </ul>
