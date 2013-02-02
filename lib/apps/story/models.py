@@ -247,11 +247,18 @@ class Location(models.Model):
         return self.name
 
 import feedparser
-def Getfeed():
-    d = feedparser.parse('https://github.com/garhol/pyWriter/commits/master.atom')
+def Getfeed(url):
+    d = feedparser.parse(url)
     return d.entries;
-    
 
+def Getissues():
+    import urllib, json
+    import pprint
+    url = "https://api.github.com/repos/garhol/pywriter/issues"
+    myresponse = urllib.urlopen(url)
+    jsonResponse = json.loads(myresponse.read())
+    return jsonResponse
+    
 
 from django.db.models.signals import pre_save
 from django.dispatch import receiver

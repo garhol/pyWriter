@@ -40,9 +40,22 @@
                         {% for e in feed|slice:":4" %}
                             <div class='item clearfix'>
                                 <img class='avatar' src="{{e.media_thumbnail.0.url}}"/>
-                                <p><span>{{e.authors.0.name}}</span>{{e.title}}</p>
+                                <p><span>{{e.authors.0.name}}: </span>{{e.title}}</p>
                             </div>
                         {% endfor %}
+                        </aside>
+                    </article>
+                    <article class='padded pod' style="margin-top:1em;">
+                        <aside id="siteupdates">
+                        <h2>Open issues</h2>
+                            <div  style="overflow-y:scroll; height:200px;">
+                            {% for e in issues %}
+                                <div class='item clearfix'>
+                                     <img class='avatar' src="{{e.user.avatar_url}}"/>
+                                     <p title="{{e.body}}">{{e.number}}: {{e.title}}<br /><span class="label" style="background-color:#{{e.labels.0.color}}">{{e.labels.0.name}}</span></p>
+                                </div>
+                            {% endfor %}
+                            </div>
                         </aside>
                     </article>
                 </section>

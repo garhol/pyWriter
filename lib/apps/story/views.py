@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .widgets import AgkaniCoverWidget
 
-from .models import Story, Chapter, Scene, Character, Artifact, Location, Getfeed 
+from .models import Story, Chapter, Scene, Character, Artifact, Location, Getfeed, Getissues
 from .forms import SceneForm, CharacterForm, ArtifactForm, LocationForm, StoryForm, ChapterForm
 
 import os.path
@@ -54,7 +54,9 @@ def index(request):
     else:
         context['loggedin'] = False
         
-    context['feed'] = Getfeed()
+    context['feed'] = Getfeed('https://github.com/garhol/pyWriter/commits/master.atom')
+    context['issues'] = Getissues()
+    print context['issues']
     return render_to_response(template, context, context_instance=RequestContext(request))
 
 
