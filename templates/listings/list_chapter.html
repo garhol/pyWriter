@@ -68,7 +68,7 @@
 
 
                 <header id="header">
-                    <h2>Chapters <a href="/chapter/add/" class="pull-right btn btn-success">Add Chapter</a></h2>
+                    <h2>{% if request.session.active_story %}Other {% endif %}Chapters <a href="/chapter/add/" class="pull-right btn btn-success">Add Chapter</a></h2>
                 </header><!-- /header -->
 
                 <ul class="tabular">
