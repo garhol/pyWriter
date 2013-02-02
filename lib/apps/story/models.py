@@ -253,10 +253,12 @@ def Getfeed(url):
 
 def Getissues():
     import urllib, json
-    import pprint
     url = "https://api.github.com/repos/garhol/pywriter/issues"
-    myresponse = urllib.urlopen(url)
-    jsonResponse = json.loads(myresponse.read())
+    try:
+        myresponse = urllib.urlopen(url)
+        jsonResponse = json.loads(myresponse.read())
+    except:
+        jsonResponse = None
     return jsonResponse
     
 
