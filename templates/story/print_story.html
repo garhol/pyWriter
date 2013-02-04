@@ -15,7 +15,7 @@
 {% block "main" %}
 <div class="row">
 <section class="span8">
-    <div class='padded'>
+    <div class='padded pod'>
     <div class="printversion">
         <h1>{{story.title}}</h1>
         <h2>{{story.author}}</h2>
@@ -107,6 +107,7 @@
 {% endif %}
 <a href="/story/print/{{story.pk}}">Print this story</a>
 {% if printversion %}
-<a href="/library/epub/{{story.pk}}/{{story.title}}.epub">Download epub</a>
+<a href="/library/epub/{{story.pk}}/{{story.title}}.epub">Download epub (iBook)</a>
+<a href="/library/epub/{{story.pk}}/{{story.title}}.mobi">Download mobi (Kindle)</a>
 {% endif %}
 {% endblock %}

@@ -1,3 +1,16 @@
 .dropshadow(@x:2px, @y:2px, @dist:4px, @color:#cccccc){
 	-webkit-box-shadow:@x @y @dist @color;
 }
+
+.full-width {
+	width:100%;
+}
+
+.full-width-input {
+	padding:0 12px 0 0;
+
+	input, textarea, select {
+		.full-width;
+	}
+
+}

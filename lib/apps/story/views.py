@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .widgets import AgkaniCoverWidget
 
-from .models import Story, Chapter, Scene, Character, Artifact, Location, Getfeed 
+from .models import Story, Chapter, Scene, Character, Artifact, Location, Getfeed, Getissues
 from .forms import SceneForm, CharacterForm, ArtifactForm, LocationForm, StoryForm, ChapterForm
 
 import os.path
@@ -54,7 +54,9 @@ def index(request):
     else:
         context['loggedin'] = False
         
-    context['feed'] = Getfeed()
+    context['feed'] = Getfeed('https://github.com/garhol/pyWriter/commits/master.atom')
+    context['issues'] = Getissues()
+    print context['issues']
     return render_to_response(template, context, context_instance=RequestContext(request))
 
 
@@ -121,6 +123,7 @@ def story(request, story=None):
         context['form'] = form
     else:
         template = 'story/story.add.html'
+        context['story'] = StoryForm()
         context["story_action"] = "story_add"
         context['form'] = StoryForm()
 
@@ -148,6 +151,17 @@ def chapterlist(request):
     context = {}
     context['chapters'] = Chapter.objects.filter(
         user=request.user).order_by('weight')
+    if get_active_story(request):
+        mystoryid = int(get_active_story(request))
+        context['story'] = Story.objects.get(pk=mystoryid)
+        context['active_chapters'] = Chapter.objects.filter(
+            user=request.user).filter(story=mystoryid).order_by('weight')
+        context['chapters'] = Chapter.objects.filter(
+            user=request.user).order_by('weight').exclude(story=mystoryid)
+    else:
+        context['chapters'] = Chapter.objects.filter(
+        user=request.user).order_by('weight')
+        
     template = 'listings/list_chapter.html'
     return render_to_response(template, context, context_instance=RequestContext(request))
 

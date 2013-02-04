@@ -4,59 +4,60 @@
 
 {% block "css" %}
     {{block.super}}
-<style type="text/css">
-.header{padding:1em; font-weight:bold; background:#f3d26c;}
-.scenePod h4, .charPod h4{background: #4F7178; color:#fff; margin:0px 0px 10px 0px; border-radius:0.5em 0.5em 0 0 }
-div.scenePod h4 a, div.charPod h4 a{color: white; display: block; padding: 0.5em;}
-div.scenePod h4 a:hover, div.charPod h4 a:hover{text-decoration:none;}
-div.scenePod p, div.charPod p{padding:0.5em;}
-div.scenePod, div.charPod {width:200px; float:left; margin:1em; border-radius:0.5em; border:1px solid #ccc;}
-img.charPodImage{display:block; margin-left:0.5em; float:left;}
-div.charPod p.character-description{float:left; padding-top:0px; clear:left;}
-div.charPod{width:400px;}
-div.charBio{float:left; max-width:290px;}
-h4 a.majorCharTitle{background:url({{ MEDIA_URL }}images/icons/star-icon.png) no-repeat top right;}
-.addLink{width: 100%; text-align: right;}
-.publishedPod{background:rgba(0, 0, 0, 0.2); border: 1px solid #777; min-width:150px; min-height: 295px; float: left; padding: 0.5em; margin-right: 1em;}
-.publishedPod p{margin-bottom:0px}
-.publishedPod > img {-moz-box-shadow: 2px 2px 5px #888;
--webkit-box-shadow: 2px 2px 5px #888;
-box-shadow: 2px 2px 5px #888;}
-</style>
 {% endblock %}
 
 {% block "javascript" %}
     {{block.super}}
-    
 {% endblock %}
 
 {% block "main" %}
-<div class="recent_pubs">
-<p><strong>Recent ebooks published</strong></p>
-{% if published_books %}
-        {% for s in published_books %}
-            <div class="publishedPod">
-                {% if s.4 %}<img src="{% thumbnail s.4 260x260 %}" alt="{{s.3}}" />{% endif %}
-                <p class="story_title"><strong>{{s.3}}</strong><br />{{s.2}} <br />
-                <a href="/library/epub/{{s.0}}/{{s.1}}">Download epub</a>
-                </p>
-            </div>
-        {% endfor %}
-{% else %}
-    <ul><li>No books are available at present</li></ul>
-{% endif %}
-</div>
-{% endblock %}
 
-{% block "rh" %}
-<div class="feedme" style="float:right; width:200px;">
-<h4>site updates</h4>
-{% for e in feed|slice:":4" %}
-    <img src="{{e.media_thumbnail.0.url}}" width="{{e.media_thumbnail.0.width}}" height="{{e.media_thumbnail.0.height}}" style="float:left; margin:0.2em; clear:left;" />
-    <p style="float:left;font-size:0.8em; width:160px;">
-    <span style="font-size:0.8em;">{{e.authors.0.name}}</span>
-    {{e.title}}
-    </p>
-{% endfor %}
+
+<div class='row'>
+                <section class="span8">
+                    <article class='padded pod'>
+                        <div class="recent_pubs clearfix">
+                            <h2>Recent Publications</h2>
+                            {% if published_books %}
+                                    {% for s in published_books %}
+                                        <div class="publishedPod">
+                                            {% if s.4 %}<img class='jacket' src="{% thumbnail s.4 147x220 %}" alt="{{s.3}}" />{% endif %}
+                                            <p class="story_title"><strong>{{s.3}}</strong><br />{{s.2}}</p>
+                                            <a class='btn btn-mini' href="/library/epub/{{s.0}}/{{s.1}}"><i class='icon-download'></i> epub</a>
+                                            <a class='btn btn-mini' href="/library/epub/{{s.0}}/{{s.3}}.mobi"><i class='icon-download'></i> mobi</a>
+                                        </div>
+                                    {% endfor %}
+                            {% else %}
+                                <p>No books are available at present</p>
+                            {% endif %}
+                        </div>                        
+                    </article>
+                </section>
+                <section class="span4">
+                    <article class='padded pod'>
+                        <aside id="siteupdates">
+                        <h2>Site Updates</h2>
+                        {% for e in feed|slice:":4" %}
+                            <div class='item clearfix'>
+                                <img class='avatar' src="{{e.media_thumbnail.0.url}}"/>
+                                <p><span>{{e.authors.0.name}}: </span>{{e.title}}</p>
+                            </div>
+                        {% endfor %}
+                        </aside>
+                    </article>
+                    <article class='padded pod' style="margin-top:1em;">
+                        <aside id="siteupdates">
+                        <h2>Open issues</h2>
+                            <div  style="overflow-y:scroll; height:200px;">
+                            {% for e in issues %}
+                                <div class='item clearfix'>
+                                     <img class='avatar' src="{{e.user.avatar_url}}"/>
+                                     <p title="{{e.body}}">{{e.number}}: {{e.title}}<br /><span class="label" style="background-color:#{{e.labels.0.color}}">{{e.labels.0.name}}</span></p>
+                                </div>
+                            {% endfor %}
+                            </div>
+                        </aside>
+                    </article>
+                </section>
 </div>
 {% endblock %}

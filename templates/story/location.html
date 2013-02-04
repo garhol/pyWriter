@@ -1,13 +1,22 @@
-{% extends "story/base_edit_page.html" %}
+{% extends "base-templates/base.html" %}
 {% load thumbnail %}
+{% load story_tags %}
 
-{% block "rh" %}
+{% block "css" %}
     {{block.super}}
-    <h3>{% if location.name %}{{location.name}}{% endif %}</h3>
-    {% if location.image %}
-        <img  src="{% thumbnail location.image 200x200 %}"  alt="{{location}}" class="characterImage" />
-    {% else %}
-        <img class="charPodImage" src="{{ STATIC_URL }}library/images/icons/location-icon.png" alt="{{location}}" style="width:200px" />
-    {% endif %}
-        </div>
+    <link rel="stylesheet" href="{{ STATIC_URL }}js/jquery-ui-1.10.0/css/smoothness/jquery-ui-1.10.0.custom.min.css">
+{% endblock %}
+
+{% block "javascript" %}
+    {{block.super}}
+    <script type="text/javascript" src='{{ STATIC_URL }}js/jquery-ui-1.10.0/js/jquery-ui-1.10.0.custom.min.js'></script>
+{% endblock %}
+
+{% block "main" %}
+	{{ block.super }}
+	<section class='row' id='{{ location_action }}'>
+    <div class='span12 pod'>
+            {% generic_one_column_form form %}
+    </div>
+</section>
 {% endblock %}

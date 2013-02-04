@@ -94,6 +94,15 @@ TEMPLATE_LOADERS = (
 #     'django.template.loaders.eggs.Loader',
 )
 
+TEMPLATE_CONTEXT_PROCESSORS = ("django.contrib.auth.context_processors.auth",
+"django.core.context_processors.debug",
+"django.core.context_processors.i18n",
+"django.core.context_processors.media",
+"django.core.context_processors.static",
+"django.core.context_processors.tz",
+"django.core.context_processors.request",
+"django.contrib.messages.context_processors.messages")
+
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -130,8 +139,9 @@ INSTALLED_APPS = (
     'widget_tweaks',
     #pyWriter apps
     'pyWriter.lib.apps.story',
-
 )
+
+KINDLEGEN_BINARY = '/home/garhol/bin/kindlegen'
 
 LOGIN_URL = '/login'
 
