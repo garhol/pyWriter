@@ -16,12 +16,18 @@
             <div class='padded clearfix pod'>
                 <h2>Your Stories</h2>
                 {% for s in stories %}
-                <div class="publishedPod">
-                    <a href='/story/{{ s.id}}'><img class='jacket' src="{% if s.cover %}{% thumbnail s.cover 147x220 %}{% else %}{% thumbnail nocover 147x260 %} {% endif %}" alt="{{s}}" />
-                    <p class="story_title"><strong>{{s}}</strong></p></a>
+                <div class='story-wrapper'>
+                    <div class="publishedPod">
+                        <div class='content'>
+                            <a class='jacket' href='/story/{{ s.id}}'><img class='jacket' src="{% if s.cover %}{% thumbnail s.cover 147x220 %}{% else %}{% thumbnail nocover 147x260 %} {% endif %}" alt="{{s}}" />
+                            </a>
+                            
+                        </div>
+
+                    </div>
+                    <p class="story_title"><strong>{{s}}</strong></p>
                     <p>{% if s.id == activestory %}active{% else %}<a class="btn btn-mini" href="/story/activate/{{s.id}}">activate</a>{% endif %}</p>
                 </div>
-
                 {% endfor %}
             </div>
         </div>

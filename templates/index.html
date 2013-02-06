@@ -15,17 +15,26 @@
 
 <div class='row'>
                 <section class="span8">
+                    <article id='intro'>
+                        {% if user.is_authenticated %}
+                            <p><span>Welcome to Agkani</span>. We're here to help you write that novel you've been putting off for years. Just press the <span class='write'>Write!</span> button to get started.</p>
+                        {% else %}
+                            <p><span>Welcome to Agkani</span>. We're here to help you write that novel you've been putting off for years. <a href='/login/'>Register</a> to get started.</p>
+                        {% endif %}
+                    </article>
                     <article class='padded pod'>
                         <div class="recent_pubs clearfix">
                             <h2>Recent Publications</h2>
                             {% if published_books %}
                                     {% for s in published_books %}
+                                    <div class='story-wrapper'>
                                         <div class="publishedPod">
                                             {% if s.4 %}<img class='jacket' src="{% thumbnail s.4 147x220 %}" alt="{{s.3}}" />{% endif %}
                                             <p class="story_title"><strong>{{s.3}}</strong><br />{{s.2}}</p>
                                             <a class='btn btn-mini' href="/library/epub/{{s.0}}/{{s.1}}"><i class='icon-download'></i> epub</a>
                                             <a class='btn btn-mini' href="/library/epub/{{s.0}}/{{s.3}}.mobi"><i class='icon-download'></i> mobi</a>
                                         </div>
+                                    </div>
                                     {% endfor %}
                             {% else %}
                                 <p>No books are available at present</p>
@@ -34,6 +43,9 @@
                     </article>
                 </section>
                 <section class="span4">
+                    <article>
+                        <a href='/scene/add' id='write-button' class='btn btn-block btn-success'>Write!</a>
+                    </article>
                     <article class='padded pod'>
                         <aside id="siteupdates">
                         <h2>Site Updates</h2>
