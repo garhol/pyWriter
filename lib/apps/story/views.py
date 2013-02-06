@@ -56,7 +56,6 @@ def index(request):
         
     context['feed'] = Getfeed('https://github.com/garhol/pyWriter/commits/master.atom')
     context['issues'] = Getissues()
-    print context['issues']
     return render_to_response(template, context, context_instance=RequestContext(request))
 
 
