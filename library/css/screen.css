@@ -85,6 +85,9 @@ form legend {
 form div.submit {
   padding-top: 20px;
 }
+form span.required:after {
+  content:" *"; 
+}
 @media (min-width: 768px) {
   input[type='file'] {
     vertical-align: 10px;
