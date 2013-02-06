@@ -121,6 +121,7 @@ def story(request, story=None):
         form = StoryForm(instance=st)
         context['form'] = form
     else:
+        st = Story(user=request.user)
         template = 'story/story.add.html'
         context['story'] = StoryForm()
         context["story_action"] = "story_add"
@@ -139,6 +140,7 @@ def story(request, story=None):
             return HttpResponseRedirect(reverse('edit_story', args=(newstory.pk,)))
             #return render_to_response(template, context, context_instance=RequestContext(request))
         else:  # bung an error
+            context['form'] = StoryForm(request.POST, request.FILES, instance=st)
             messages.error(request, 'There was an error - Look out below.')
 
             return render_to_response(template, context, context_instance=RequestContext(request))
@@ -214,6 +216,8 @@ def chapter(request, chapter=None):
             return HttpResponseRedirect(reverse('edit_chapter', args=(newchapter.pk,)))
             #return render_to_response(template, context, context_instance=RequestContext(request))
         else:  # bung an error
+            context['form'] = ChapterForm(
+                request.POST, request.FILES, instance=ch, user=request.user)
             messages.error(request, 'There was an error - Look out below.')
 
             return render_to_response(template, context, context_instance=RequestContext(request))
@@ -237,6 +241,7 @@ def character(request, character=None):
         context['character'] = ch
         context['form'] = CharacterForm(instance=ch)
     else:
+        ch = Character(user=request.user)
         context['form'] = CharacterForm()
 
     if request.method == 'POST':
@@ -251,6 +256,7 @@ def character(request, character=None):
             messages.success(request, 'Character details updated.')
             return HttpResponseRedirect(reverse('edit_character', args=(newcharacter.pk,)))
         else:  # bung an error
+            context['form'] = CharacterForm(request.POST, request.FILES, instance=ch)
             messages.error(request, 'There was an error - Look out below.')
             return render_to_response(template, context, context_instance=RequestContext(request))
     else:  # not in post, show them the scene
@@ -286,6 +292,7 @@ def location(request, location=None):
         context['location'] = lo
         context['form'] = LocationForm(instance=lo)
     else:
+        lo = Location(user=request.user)
         context['form'] = LocationForm()
 
     if request.method == 'POST':
@@ -299,6 +306,7 @@ def location(request, location=None):
             messages.success(request, 'Location details updated.')
             return HttpResponseRedirect(reverse('edit_location', args=(newlocation.pk,)))
         else:  # bung an error
+            context['form'] = LocationForm(request.POST, request.FILES, instance=lo)
             messages.error(request, 'There was an error - Look out below.')
 
             return render_to_response(template, context, context_instance=RequestContext(request))
@@ -334,6 +342,7 @@ def artifact(request, artifact=None):
         context['artifact'] = ar
         context['form'] = ArtifactForm(instance=ar, user=request.user)
     else:
+        ar = Artifact(user=request.user)
         context['form'] = ArtifactForm(user=request.user)
 
     if request.method == 'POST':
@@ -349,6 +358,8 @@ def artifact(request, artifact=None):
             messages.success(request, 'Artifact details updated.')
             return HttpResponseRedirect(reverse('edit_artifact', args=(newartifact.pk,)))
         else:  # bung an error
+            context['form'] = ArtifactForm(
+                request.POST, request.FILES, instance=ar, user=request.user)
             messages.error(request, 'There was an error - Look out below.')
             return render_to_response(template, context, context_instance=RequestContext(request))
     else:  # not in post, show them the artifact
