@@ -193,7 +193,12 @@ def chapter(request, chapter=None):
         context['chapter'] = ch
         context['form'] = ChapterForm(instance=ch, user=request.user)
     else:
-        context['form'] = ChapterForm(user=request.user)
+        active_story = get_active_story(request)
+        ch = Chapter(user=request.user)
+        if active_story:
+            ch.story = get_object_or_404(Story, pk=active_story, user=request.user)
+            print "%r" % ch.story
+        context['form'] = ChapterForm(instance=ch, user=request.user)
 
     if request.method == 'POST':
         if chapter:

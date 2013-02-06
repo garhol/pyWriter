@@ -9,7 +9,7 @@
 .full-width-input {
   padding: 0 12px 0 0;
 }
-.full-width-input input, .full-width-input textarea {
+.full-width-input input, .full-width-input textarea, .full-width-input select {
   width: 100%;
 }
 /* MOBILE FIRST */
@@ -31,6 +31,23 @@ body {
   font-size: 250%;
   padding-left: 20px;
   color: #444;
+}
+#write-button {
+  padding: 24px;
+  font-size: 180%;
+  margin-bottom: 20px;
+}
+article#intro p {
+  font-size: 130%;
+  line-height: 1.5;
+  margin-top: 0;
+}
+article#intro p span {
+  font-weight: bold;
+  font-size: 150%;
+}
+article#intro span.write {
+  color: #51a351;
 }
 section h2 {
   margin-top: 0;
@@ -118,16 +135,31 @@ form div.submit {
     text-align: right;
     padding-top: 10px;
   }
-  .publishedPod {
+  .story-wrapper {
+    float: left;
+  }
+  .story-wrapper p {
+    margin: 3px 0 0 0;
+    max-width: 147px;
+  }
+  .story-wrapper .publishedPod {
+    display: table;
     padding: 10px;
     background-color: white;
     border: 1px solid #cccccc;
-    float: left;
     position: relative;
     margin-right: 10px;
+    max-width: 147px;
+    max-height: 221px;
   }
-  .publishedPod p {
-    margin: 3px 0 0 0;
+  .story-wrapper .publishedPod div.content {
+    min-height: 221px;
+  }
+  .story-wrapper .publishedPod a.jacket {
+    width: 100%;
+    height: 221px;
+    display: table-cell;
+    vertical-align: middle;
   }
 }
 header.padded {

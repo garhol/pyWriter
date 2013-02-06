@@ -3,6 +3,7 @@
 <form enctype="multipart/form-data" action="" class='form' method="post">
     <div class='row'>
         {% csrf_token %}
+        {{ form.errors }}   
         <div class='span12'>
             <div class='padded'>
                 {% for field in form %}

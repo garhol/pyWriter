@@ -28,6 +28,29 @@ body {
 
 }
 
+#write-button {
+	padding:24px;
+	font-size:180%;
+	margin-bottom:20px;
+}
+
+article#intro {
+	p 	{ 
+		font-size:130%;
+		line-height:1.5;
+		margin-top:0;
+
+		span {
+			font-weight:bold;
+			font-size:150%;
+			}
+		}
+
+		span.write {
+			color:#51a351;
+		}
+}
+
 section h2 {
 	margin-top:0;
 	font-size:180%;
@@ -150,21 +173,39 @@ form {
 		padding-top:10px;
 	}
 
-	.publishedPod {
-
-		padding:10px;
-		background-color:white;
-		border:1px solid @border-color;
+	.story-wrapper {
 		float:left;
-		position:relative;
-		margin-right:10px;
-
-
 		p {
 			margin:3px 0 0 0;
+			max-width:147px;
 		}
 
+		.publishedPod {
+			display:table;
+			padding:10px;
+			background-color:white;
+			border:1px solid @border-color;
+			
+			position:relative;
+			margin-right:10px;
+			max-width:147px;
+			max-height:221px;
+
+			div.content {
+				min-height:221px;
+			}
+
+			a.jacket {
+				width:100%;
+				height:221px;
+				display:table-cell;
+				vertical-align:middle;
+			}
+
+		}
 	}
+
+
 
 }
 
