@@ -88,6 +88,18 @@ form div.submit {
 form label.required:after {
   content:" *"; 
 }
+ul.errorlist{
+    margin: 0px;
+    color: rgb(224, 3, 3);
+    list-style: none;
+}
+div.errorinput label{
+    color:rgb(224, 3, 3);
+}
+div.errorinput input{
+    border:1px solid rgb(224, 3, 3);
+}
+
 @media (min-width: 768px) {
   input[type='file'] {
     vertical-align: 10px;

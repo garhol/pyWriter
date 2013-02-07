@@ -30,30 +30,29 @@
        <div class='span4'>
             <fieldset>
                     <legend>Basic Info</legend>
-                <div class="control-group">
-                    {{ form.title.errors }}
-                    
+                <div class="control-group {% if form.title.errors %} errorinput{% endif %}">                  
+                        {{ form.title.errors }}
                     <label for="id_title" class="control-label {% if form.title.field.required %}required{% endif %}">{{ form.title.label }}</label>
                         <div class="controls">                     
                             {{ form.title|attr:"class:span4" }}
                         </div>
-                        <span class="help-block"></span>
+                        <span class="help-block">{{ form.title.help_text }}</span>
                 </div>
-                <div class="control-group">
-                    {{ form.author.errors }}
+                <div class="control-group {% if form.author.errors %} errorinput{% endif %}">
+                        {{ form.author.errors }}
                     <label for="id_author" class="control-label {% if form.author.field.required %}required{% endif %}">Author</label>
                         <div class="controls">                     
                             {{ form.author|attr:"class:span4" }}
                         </div>
-                        <span class="help-block"></span>
+                        <span class="help-block">{{ form.author.help_text }}</span>
                 </div>
-                <div class="control-group">
-                    {{ form.synopsis.errors }}
+                <div class="control-group {% if form.synopsis.errors %} errorinput{% endif %}">
+                        {{ form.synopsis.errors }}
                     <label for="id_synopsis" class="control-label {% if form.synopsis.field.required %}required{% endif %}">Synopsis</label>
                         <div class="controls">                     
                             {{ form.synopsis|attr:"rows:4"|attr:"class:span4" }}
                         </div>
-                        <span class="help-block"></span>
+                        <span class="help-block">{{ form.synopsis.help_text }}</span>
                 </div>
                 
             </fieldset> 
@@ -63,13 +62,13 @@
             <div class='padded last'>
                 <fieldset>
                     <legend>Classification</legend>
-                    <div class="control-group">
+                    <div class="control-group {% if form.genre.errors %} errorinput{% endif %}">
                         {{ form.genre.errors }}
                         <label for="id_genre" class="control-label{% if form.genre.field.required %}required{% endif %}">Genre</label>
                         <div class="controls">
                             {{ form.genre }}                            
                         </div>
-                        <span class="help-block"></span>
+                        <span class="help-block">{{ form.genre.help_text }}</span>
                     </div>
 
                     {{ form.fiction.errors }}
@@ -80,12 +79,14 @@
                 </fieldset>
                 <fieldset>
                     <legend>Access</legend>
+                    {{ form.registered_access.errors}}
                     <label class="checkbox {% if form.registered_access.field.required %}required{% endif %}" for="id_registered_access">
                         {{ form.registered_access}}
                         Registered access
                     </label>
                     <span class="help-block">{{ form.registered_access.help_text }}</span>
                         
+                    {{ form.public_access.errors}}
                     <label class="checkbox {% if form.publis_access.field.required %}required{% endif %}" for="id_public_access">
                         {{ form.public_access}}
                         Public Access
