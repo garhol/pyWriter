@@ -29,13 +29,13 @@ class Genre(models.Model):
 
 class Story(models.Model): 
     user = models.ForeignKey(User)
-    title = models.CharField(max_length=256)
-    author = models.CharField(max_length=128)
-    synopsis = models.TextField(blank=True)
-    genre = models.ForeignKey(Genre, null=True, blank=True)
-    fiction = models.BooleanField(default=True)
+    title = models.CharField(max_length=256,  help_text="Short and snappy? Verbose yet informative?")
+    author = models.CharField(max_length=128, help_text="A pseudonym? Remember, you can always change this later")
+    synopsis = models.TextField(blank=True, help_text="A brief summary, your salespitch. What are the main themes/points of your story?")
+    genre = models.ForeignKey(Genre, null=True, blank=True, help_text="If a genre is not listed then feel free to get in touch with suggestions")
+    fiction = models.BooleanField(default=True, help_text="Leave this blank if you are writing a factual account. If it's a tissue of lies however...")
     cover = models.ImageField(
-        upload_to='covers/%Y/%m/%d', null=True, blank=True)
+        upload_to='covers/%Y/%m/%d', null=True, blank=True, help_text="A picture is worth a thousand words. This doesn't mean we will add this to your word count")
     registered_access = models.BooleanField(default=False, help_text="When published make this story available to registered users")
     public_access = models.BooleanField(default=False, help_text="When published, make this story available to the public (Overrides registered user access)")
     

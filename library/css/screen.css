@@ -99,6 +99,11 @@ div.errorinput label{
 div.errorinput input, div.errorinput select{
     border:1px solid rgb(224, 3, 3);
 }
+.help-block {
+    font-size: 0.8em;
+    font-style: italic;
+    font-family: arial;
+}
 
 @media (min-width: 768px) {
   input[type='file'] {
