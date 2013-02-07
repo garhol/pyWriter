@@ -96,7 +96,7 @@ ul.errorlist{
 div.errorinput label{
     color:rgb(224, 3, 3);
 }
-div.errorinput input{
+div.errorinput input, div.errorinput select{
     border:1px solid rgb(224, 3, 3);
 }
 
