@@ -85,7 +85,7 @@ form legend {
 form div.submit {
   padding-top: 20px;
 }
-form span.required:after {
+form label.required:after {
   content:" *"; 
 }
 @media (min-width: 768px) {

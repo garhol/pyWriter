@@ -17,7 +17,7 @@
                     <legend>Jacket</legend>
                     <div class="control-group">
 
-                        <label for="{{ form.cover.html_name }}">Upload Image</label>
+                        <label for="{{ form.cover.html_name }}" {% if form.cover.field.required %}class="required"{% endif %}>Upload Image</label>
                         
                         <div class="controls">
                             {{ form.cover }}    
@@ -32,7 +32,8 @@
                     <legend>Basic Info</legend>
                 <div class="control-group">
                     {{ form.title.errors }}
-                    <label for="id_title" class="control-label">Title<span class="required">*</span></label>
+                    
+                    <label for="id_title" class="control-label {% if form.title.field.required %}required{% endif %}">{{ form.title.label }}</label>
                         <div class="controls">                     
                             {{ form.title|attr:"class:span4" }}
                         </div>
@@ -40,7 +41,7 @@
                 </div>
                 <div class="control-group">
                     {{ form.author.errors }}
-                    <label for="id_author" class="control-label">Author<span class="required">*</span></label>
+                    <label for="id_author" class="control-label {% if form.author.field.required %}required{% endif %}">Author</label>
                         <div class="controls">                     
                             {{ form.author|attr:"class:span4" }}
                         </div>
@@ -48,7 +49,7 @@
                 </div>
                 <div class="control-group">
                     {{ form.synopsis.errors }}
-                    <label for="id_synopsis" class="control-label">Synopsis<span class="required">*</span></label>
+                    <label for="id_synopsis" class="control-label {% if form.synopsis.field.required %}required{% endif %}">Synopsis</label>
                         <div class="controls">                     
                             {{ form.synopsis|attr:"rows:4"|attr:"class:span4" }}
                         </div>
@@ -64,7 +65,7 @@
                     <legend>Classification</legend>
                     <div class="control-group">
                         {{ form.genre.errors }}
-                        <label for="id_genre" class="control-label">Genre</label>
+                        <label for="id_genre" class="control-label{% if form.genre.field.required %}required{% endif %}">Genre</label>
                         <div class="controls">
                             {{ form.genre }}                            
                         </div>
@@ -72,20 +73,20 @@
                     </div>
 
                     {{ form.fiction.errors }}
-                    <label class="checkbox" for="id_fiction">
+                    <label class="checkbox {% if form.fiction.field.required %}required{% endif %}" for="id_fiction">
                                 {{ form.fiction }}
                                 Fiction
                     </label>
                 </fieldset>
                 <fieldset>
                     <legend>Access</legend>
-                    <label class="checkbox" for="id_registered_access">
+                    <label class="checkbox {% if form.registered_access.field.required %}required{% endif %}" for="id_registered_access">
                         {{ form.registered_access}}
                         Registered access
                     </label>
                     <span class="help-block">{{ form.registered_access.help_text }}</span>
                         
-                    <label class="checkbox" for="id_public_access">
+                    <label class="checkbox {% if form.publis_access.field.required %}required{% endif %}" for="id_public_access">
                         {{ form.public_access}}
                         Public Access
                     </label>
