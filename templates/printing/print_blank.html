@@ -1,0 +1,64 @@
+<html>
+<head>
+    <link href='http://fonts.googleapis.com/css?family=EB+Garamond' rel='stylesheet' type='text/css'>
+    <style type="text/css">
+            body{font-family: 'EB Garamond', serif;}
+            h1, h2, .authorsm{
+            text-align:center;
+            }
+            h1, h2, h3, h4, h5 {font-weight:400}
+            img {display:block; max-width:50%; max-height:50%; margin-left: auto; margin-right: auto }
+            div.breakhere {page-break-before: always}
+            div.breakafter {page-break-after: always}
+            .chapters ul{padding-left:0px; list-style:none;}
+            .chapters ul ul{padding-left:1em;
+    </style>   
+</head>
+<body>
+    <div class="printversion">
+        <h1>{{story.title}}</h1>
+        <p class="authorsm">by</p>
+        <h2>{{story.author}}</h2>
+        {% if story.cover %}
+            <img src="/static/media/{{story.cover}}" align="middle"/>
+        {% endif %}
+        <div class="breakhere chapters">
+        {% if story.get_chapters %}
+            <h4>Index:</h4>
+            <ul>
+            {% for c in story.get_chapters %}
+
+                {% if c.get_scenes %}
+                    <li>{{c}}</li>
+                    <ul>
+                    {% for sc in c.get_scenes %}
+                        <li>{{ sc }}</li>
+                    {% endfor %}
+                    </ul>
+                {% endif %}
+            {% endfor %}
+            </ul>
+        {% endif %}
+        </div>
+        {% if story.get_chapters %}
+            {% for c in story.get_chapters %}
+                {% if c.get_scenes %}
+                <div class="breakhere">
+                    <h1>{{c}}</h1>
+                
+                    {% for sc in c.get_scenes %}
+                        <div class="breakafter">
+                        <h2>{{sc}}</h2>
+                        <p>{{ sc.content|safe}}</p>
+                        </div>
+                    {% endfor %}
+                </div>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+
+    </div>
+</section>
+</div>
+</body>
+</html>

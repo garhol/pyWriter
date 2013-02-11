@@ -70,6 +70,8 @@ urlpatterns += patterns('',
                             'pyWriter.lib.apps.story.views.activate_story', name="activate_story"),
                         url(r'^story/print/(?P<story>\d+)/$',
                             'pyWriter.lib.apps.story.views.print_story', name="print_story"),
+                        url(r'^story/reallyprint/(?P<story>\d+)/$',
+                            'pyWriter.lib.apps.story.views.really_print_story', name="really_print_story"),
                         url(r'^story/print/epub/(?P<story>\d+)/$',
                             'pyWriter.lib.apps.epub.views.print_epub', name="print_epub"),
                         )
