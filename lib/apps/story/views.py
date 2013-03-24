@@ -6,6 +6,7 @@ from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .widgets import AgkaniCoverWidget
+from django.db.models import Q
 
 from .models import Story, Chapter, Scene, Character, Artifact, Location, Getfeed, Getissues
 from .forms import SceneForm, CharacterForm, ArtifactForm, LocationForm, StoryForm, ChapterForm
@@ -17,7 +18,12 @@ def index(request):
     context = {}
     template = 'index.html'
     published_books = []
-    for st in Story.objects.filter(public_access=True):
+    if request.user.is_authenticated():
+	q = Story.objects.filter(Q(public_access=True) | Q(registered_access=True))
+    else:
+	q = Story.objects.filter(Q(public_access=True))
+
+    for st in q:
         ebookpath = os.path.join(settings.STATIC_ROOT, "media", "epub", str(st.pk))
         filename  = "%s.epub" % st.title
         zippath = os.path.join(ebookpath, filename)
