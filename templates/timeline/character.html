@@ -1,0 +1,51 @@
+{% extends "base-templates/base.html" %}
+{% load thumbnail %}
+{% load story_tags %}
+
+{% block "css" %}
+    {{block.super}}
+    <link rel="stylesheet" href="{{ STATIC_URL }}js/jquery-ui-1.10.0/css/smoothness/jquery-ui-1.10.0.custom.min.css">
+{% endblock %}
+
+{% block "javascript" %}
+    {{block.super}}
+    <script type="text/javascript" src='{{ STATIC_URL }}js/jquery-ui-1.10.0/js/jquery-ui-1.10.0.custom.min.js'></script>
+{% endblock %}
+
+{% block "main" %}
+	{{ block.super }}
+	<section class='row' id='{{ story_action }}'>
+    <div class='span12 pod'>
+            {% if character.image %}
+                <img class="previewThumb" src="{% thumbnail character.image 120x120 %}"  alt="{{character}}" />
+            {% else %}
+                <img class="previewThumb noPreview" src="{{ STATIC_URL }}library/images/icons/nocharacter.png" alt="{{character}}" />
+            {% endif %}
+            <h3 class="previewName">{% if character.firstname %}{{character.firstname}}{% endif %}{% if character.middlename %} {{character.middlename}}{% endif %}{% if character.lastname %} {{character.lastname}}{% endif %}</h3>
+            {% if character.nicknames %}
+                <h4 class="previewAlias">aka {{character.nicknames}}</h4>
+            {% endif %}
+                {% if character.date_of_birth %}
+                <div style="border:1px solid grey; padding:0.5em; margin-right:1em;">
+                    <p><strong>Born:</strong> {{character.date_of_birth}}</p>
+                </div>
+                {% endif %}
+                
+                {% for s in timeline %}
+                
+                <div style="border:1px solid grey; padding:0.5em; margin-right:1em;">
+                    At{{s.get_scene_location}}<br />
+                    from {{s.scene_start_time}} until {{s.scene_end_time}}<br />
+                    for the Scene "<em>{{s}}</em>"
+                </div>
+                {% endfor %}
+                
+                {% if character.date_of_death %}
+                <div style="border:1px solid grey; padding:0.5em; margin-right:1em;">
+                    <p><strong>Died:</strong> {{character.date_of_death}}</p>
+                </div>
+                {% endif %}
+
+    </div>
+</section>
+{% endblock %}

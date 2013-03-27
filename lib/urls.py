@@ -99,6 +99,8 @@ urlpatterns += patterns('',
                             'pyWriter.lib.apps.story.views.character', name="edit_character"),
                         url(r'^character/preview/(?P<character>\d+)/$',
                             'pyWriter.lib.apps.story.views.preview_character', name="preview_character"),
+                        url(r'^timeline/character/(?P<character>\d+)/$',
+                            'pyWriter.lib.apps.story.views.timeline_character', name="timeline_character"),
                         )
 urlpatterns += patterns('',
                         url(

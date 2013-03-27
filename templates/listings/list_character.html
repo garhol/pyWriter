@@ -31,9 +31,14 @@
                         <a href="/character/{{ch.pk}}">
                         {{ ch.firstname }} {{ ch.middlename }} {{ ch.lastname }} {% if ch.nicknames %}({{ ch.nicknames}}){% endif %}
                         </a>
+                        
                         <span>{% if ch.date_of_birth %}{{ch.date_of_birth}}{% endif %}{% if ch.date_of_death %} - {{ch.date_of_death}}{% endif %}</span>
                         {% if ch.role %}<span>Role: {{ ch.role }}</span>{% endif %}              
-                    
+                        
+                        <span>
+                        <a href="/timeline/character/{{ch.pk}}">
+                                timeline
+                        </a></span>
                     </li>
                     {% endfor %}
                 </ul>

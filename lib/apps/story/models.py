@@ -195,6 +195,11 @@ class Scene(models.Model):
         return len(locationlist)
 
     @property
+    def get_scene_location(self):
+        scene_location = Location.objects.all()[0]
+        return scene_location
+        
+    @property
     def get_artifact_count(self):
         artifactlist = Artifact.objects.filter(scene=self)
         return len(artifactlist)
@@ -219,6 +224,11 @@ class Character(models.Model):
     date_of_birth = models.DateField(null=True, blank=True)
     date_of_death = models.DateField(null=True, blank=True)
     
+    def get_timeline(self):
+        t = Scene.objects.all().filter(characters=self).order_by('scene_start_time')
+        
+        return t;
+        
     def __unicode__(self):
         return "%s %s" % (self.firstname, self.lastname)
 

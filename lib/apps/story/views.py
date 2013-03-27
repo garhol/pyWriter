@@ -289,6 +289,20 @@ def preview_character(request, character):
         context['error'] = "Character matching query does not exist"
     return render_to_response(template, context, context_instance=RequestContext(request))
 
+@login_required
+def timeline_character(request, character=None):
+    context = {}
+    template = 'timeline/character.html'
+    if character:
+        ch = get_object_or_404(Character, pk=character, user=request.user)
+        context['character'] = ch
+        context['timeline'] = ch.get_timeline
+    else:
+        context['error'] = "Character matching query does not exist"
+    
+    return render_to_response(template, context, context_instance=RequestContext(request))
+    
+
 
 @login_required
 def locationlist(request):
