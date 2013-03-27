@@ -6,11 +6,16 @@
     {{block.super}}
     <link rel="stylesheet" href="{{ STATIC_URL }}js/jquery-ui-1.10.0/css/smoothness/jquery-ui-1.10.0.custom.min.css">
 {% endblock %}
-
 {% block "javascript" %}
     {{block.super}}
     <script type="text/javascript" src='{{ STATIC_URL }}js/jquery-ui-1.10.0/js/jquery-ui-1.10.0.custom.min.js'></script>
+    <script type="text/javascript">
+    	$(function(){
 
+    		$("#id_date_of_construction, #id_date_of_destruction").datepicker();
+
+    	})
+    </script>
 {% endblock %}
 
 {% block "main" %}

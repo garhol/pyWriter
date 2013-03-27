@@ -49,14 +49,18 @@ class CharacterForm(forms.ModelForm):
     
     class Meta:
         model = Character
-        fields = ('firstname', 'middlename', 'lastname', 'nicknames', 'role', 'major_character', 'description', 'image', 'bio', 'date_of_birth', 'date_of_death')
+        fields = (
+            'firstname', 'middlename', 'lastname', 'nicknames',
+            'role', 'major_character', 'description', 'image',
+            'bio', 'date_of_birth', 'date_of_death'
+            )
 
 
 class LocationForm(forms.ModelForm):
 
     class Meta:
         model = Location
-        fields = ('name', 'description', 'image')
+        fields = ('name', 'description', 'image', 'date_of_construction', 'date_of_destruction')
 
 
 class ArtifactForm(forms.ModelForm):
@@ -73,7 +77,7 @@ class ArtifactForm(forms.ModelForm):
 
     class Meta:
         model = Artifact
-        fields = ('name', 'description', 'image', 'owner', 'location')
+        fields = ('name', 'description', 'image', 'owner', 'location', 'date_of_construction', 'date_of_destruction')
 
 
 class StoryForm(forms.ModelForm):
