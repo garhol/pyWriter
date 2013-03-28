@@ -196,8 +196,11 @@ class Scene(models.Model):
 
     @property
     def get_scene_location(self):
-        scene_location = Location.objects.all()[0]
-        return scene_location
+        scene_location = Location.objects.filter(scene=self)
+        if scene_location:
+            return scene_location[0]
+        else:
+            return "an unknown location"
         
     @property
     def get_artifact_count(self):
