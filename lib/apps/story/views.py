@@ -102,11 +102,11 @@ def print_story(request, story=None):
     template = 'story/print_story.html'
     return render_to_response(template, context, context_instance=RequestContext(request))    
 
-@login_required
+#@login_required
 def really_print_story(request, story=None):
     context = {}
     if story:
-        st = get_object_or_404(Story, pk=story, user=request.user)
+        st = get_object_or_404(Story, pk=story)
         context['story'] = st
     template = 'printing/print_blank.html'
     return render_to_response(template, context, context_instance=RequestContext(request))    
