@@ -131,7 +131,7 @@ def story(request, story=None):
     
     if story:
         template = 'story/story.edit.html'
-        st = get_object_or_404(Story, pk=story, user=request.user)
+        st = get_object_or_404(Story, storyslug=story, user=request.user)
         context["story_action"] = "story_edit"
         context['story'] = st
         form = StoryForm(instance=st)

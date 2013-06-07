@@ -5,7 +5,7 @@ from django.contrib import admin
 class StoryAdmin(admin.ModelAdmin):
     list_display = ('title', 'genre', 'user',)
     list_filter = ('user',)
-
+    prepopulated_fields = {"storyslug": ("author", "title")}
 
 class ChapterAdmin(admin.ModelAdmin):
     list_display = ('title', 'story', 'user',)

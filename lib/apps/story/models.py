@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+from django.template.defaultfilters import slugify
+
 from django import forms
 import math
 
@@ -29,6 +31,7 @@ class Genre(models.Model):
 
 class Story(models.Model): 
     user = models.ForeignKey(User)
+    storyslug = models.SlugField(null=True, blank=True)
     title = models.CharField(max_length=256,  help_text="Short and snappy? Verbose yet informative?")
     author = models.CharField(max_length=128, help_text="A pseudonym? Remember, you can always change this later")
     synopsis = models.TextField(blank=True, help_text="A brief summary, your salespitch. What are the main themes/points of your story?")
@@ -39,6 +42,11 @@ class Story(models.Model):
     registered_access = models.BooleanField(default=False, help_text="When published make this story available to registered users")
     public_access = models.BooleanField(default=False, help_text="When published, make this story available to the public (Overrides registered user access)")
     
+    def save(self, *args, **kwargs):
+		uniquestring = "%s %s" % (self.title, self.author)
+		self.storyslug = slugify(uniquestring)
+		super(Story, self).save(*args, **kwargs)
+		
     @property
     def get_chapters(self):
         chapters = Chapter.objects.all().filter(story=self).order_by('weight')          
@@ -115,6 +123,7 @@ class Story(models.Model):
     
     def __unicode__(self):
         return self.title
+	
 
 
 class Chapter(models.Model):
